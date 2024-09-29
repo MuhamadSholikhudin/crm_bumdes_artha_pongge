@@ -1,0 +1,108 @@
+INSERT INTO user (username, password, nm_pengguna, level, status) VALUES
+('ulya', 'ulya', 'ulya', 'wakasiswa', 'active'),
+('guru', 'guru', 'guru', 'guru', 'active'),
+('bagus', 'bagus', 'bagus', 'wakasiswa', 'active'),
+('adi', 'adi123', 'adi', 'guru', 'active'),
+('budi', 'budi123', 'budi', 'guru', 'active'),
+('sita', 'sita123', 'sita', 'guru', 'active'),
+('dina', 'dina123', 'dina', 'guru', 'active'),
+('joni', 'joni123', 'joni', 'guru', 'active'),
+('putra', 'putra123', 'putra', 'guru', 'active'),
+('ana', 'ana123', 'ana', 'guru', 'active');
+
+INSERT INTO guru (nip, nm_guru, alamat_guru, jk_guru, tgl_lahir, no_hp_guru, foto) VALUES
+('1111', 'ulya', 'Jl. Merdeka No. 10', 'L', '1980-05-15', '081234567890', 'ahmad.png'),
+('1112', 'guru', 'Jl. Kembang No. 21', 'P', '1982-08-20', '081234567891', 'siti.png'),
+('1113', 'bagus', 'Jl. Mawar No. 3', 'L', '1975-03-22', '081234567892', 'budi.png'),
+('1114', 'adi', 'Jl. Melati No. 7', 'P', '1978-07-11', '081234567802','rina.png'),
+('1115', 'budi', 'Jl. Kenanga No. 5', 'P', '1983-02-14', '081234567893', 'dewi.png'),
+('1116', 'sita', 'Jl. Cempaka No. 8', 'L', '1984-12-24', '081234567894', 'tono.png'),
+('1117', 'dina', 'Jl. Anggrek No. 12', 'L', '1979-06-18', '081234567895', 'rudi.png'),
+('1118', 'joni', 'Jl. Flamboyan No. 16', 'P', '1985-04-29', '081234567896', 'maya.png'),
+('1119', 'putra', 'Jl. Dahlia No. 19', 'P', '1981-09-05', '081234567897', 'anita.png'),
+('1120', 'ana', 'Jl. Teratai No. 14', 'L', '1987-11-30', '081234567898', 'arief.png');
+
+
+INSERT INTO siswa (nis, nm_siswa, id_kelas, alamat_siswa, jk_siswa, tgl_lahir_siswa, no_hp, nm_wali, status_siswa) VALUES
+('101', 'Ali', 1, 'Jl. Kebon Jeruk No. 1', 'L', '2010-01-15', '081234567890', 'Bapak Ali', 'Aktif'),
+('102', 'Alya', 1, 'Jl. Kebon Jeruk No. 2', 'P', '2010-02-17', '081234567891', 'Bapak Alya', 'Aktif'),
+('103', 'Budi', 1, 'Jl. Kebon Jeruk No. 3', 'L', '2010-03-20', '081234567892', 'Bapak Budi', 'Aktif'),
+('104', 'Cici', 1, 'Jl. Kebon Jeruk No. 4', 'P', '2010-04-22', '081234567893', 'Bapak Cici', 'Aktif'),
+('105', 'Doni', 1, 'Jl. Kebon Jeruk No. 5', 'L', '2010-05-24', '081234567894', 'Bapak Doni', 'Aktif'),
+('106', 'Eva', 1, 'Jl. Kebon Jeruk No. 6', 'P', '2010-06-26', '081234567895', 'Bapak Eva', 'Aktif'),
+('107', 'Fahri', 1, 'Jl. Kebon Jeruk No. 7', 'L', '2010-07-28', '081234567896', 'Bapak Fahri', 'Aktif'),
+('108', 'Gita', 1, 'Jl. Kebon Jeruk No. 8', 'P', '2010-08-30', '081234567897', 'Bapak Gita', 'Aktif'),
+('109', 'Hana', 1, 'Jl. Kebon Jeruk No. 9', 'P', '2010-09-02', '081234567898', 'Bapak Hana', 'Aktif'),
+('110', 'Irfan', 1, 'Jl. Kebon Jeruk No. 10', 'L', '2010-10-04', '081234567899', 'Bapak Irfan', 'Aktif'),
+
+('201', 'Joko', 2, 'Jl. Melati No. 1', 'L', '2011-01-12', '081234567900', 'Bapak Joko', 'Aktif'),
+('202', 'Kiki', 2, 'Jl. Melati No. 2', 'P', '2011-02-14', '081234567901', 'Bapak Kiki', 'Aktif'),
+('203', 'Lina', 2, 'Jl. Melati No. 3', 'P', '2011-03-16', '081234567902', 'Bapak Lina', 'Aktif'),
+('204', 'Miko', 2, 'Jl. Melati No. 4', 'L', '2011-04-18', '081234567903', 'Bapak Miko', 'Aktif'),
+('205', 'Nina', 2, 'Jl. Melati No. 5', 'P', '2011-05-20', '081234567904', 'Bapak Nina', 'Aktif'),
+('206', 'Omar', 2, 'Jl. Melati No. 6', 'L', '2011-06-22', '081234567905', 'Bapak Omar', 'Aktif'),
+('207', 'Puti', 2, 'Jl. Melati No. 7', 'P', '2011-07-24', '081234567906', 'Bapak Puti', 'Aktif'),
+('208', 'Qori', 2, 'Jl. Melati No. 8', 'P', '2011-08-26', '081234567907', 'Bapak Qori', 'Aktif'),
+('209', 'Rian', 2, 'Jl. Melati No. 9', 'L', '2011-09-28', '081234567908', 'Bapak Rian', 'Aktif'),
+('210', 'Sari', 2, 'Jl. Melati No. 10', 'P', '2011-10-30', '081234567909', 'Bapak Sari', 'Aktif'),
+
+('301', 'Tina', 3, 'Jl. Mawar No. 1', 'P', '2012-01-10', '081234567910', 'Bapak Tina', 'Aktif'),
+('302', 'Udin', 3, 'Jl. Mawar No. 2', 'L', '2012-02-13', '081234567911', 'Bapak Udin', 'Aktif'),
+('303', 'Vina', 3, 'Jl. Mawar No. 3', 'P', '2012-03-15', '081234567912', 'Bapak Vina', 'Aktif'),
+('304', 'Wawan', 3, 'Jl. Mawar No. 4', 'L', '2012-04-17', '081234567913', 'Bapak Wawan', 'Aktif'),
+('305', 'Xena', 3, 'Jl. Mawar No. 5', 'P', '2012-05-19', '081234567914', 'Bapak Xena', 'Aktif'),
+('306', 'Yoga', 3, 'Jl. Mawar No. 6', 'L', '2012-06-21', '081234567915', 'Bapak Yoga', 'Aktif'),
+('307', 'Zara', 3, 'Jl. Mawar No. 7', 'P', '2012-07-23', '081234567916', 'Bapak Zara', 'Aktif'),
+('308', 'Agus', 3, 'Jl. Mawar No. 8', 'L', '2012-08-25', '081234567917', 'Bapak Agus', 'Aktif'),
+('309', 'Bella', 3, 'Jl. Mawar No. 9', 'P', '2012-09-27', '081234567918', 'Bapak Bella', 'Aktif'),
+('310', 'Candra', 3, 'Jl. Mawar No. 10', 'L', '2012-10-29', '081234567919', 'Bapak Candra', 'Aktif');
+
+
+INSERT INTO mapel (id_mapel, id_periode, nm_mapel) VALUES
+(2, 1, 'MATEMATIKA'),
+(3, 1, 'FISIKA'),
+(4, 1, 'KIMIA'),
+(5, 1, 'BIOLOGI'),
+(6, 1, 'SEJARAH'),
+(7, 1, 'GEOGRAFI'),
+(8, 1, 'EKONOMI'),
+(9, 1, 'BAHASA INGGRIS'),
+(10, 1, 'PENJAS');
+
+INSERT INTO ekstra (id_ekstra, id_periode, nm_ekstra, penanggung_jawab) VALUES
+(2, 1, 'Basket', 'Andi'),
+(3, 1, 'Futsal', 'Budi'),
+(4, 1, 'Paduan Suara', 'Citra'),
+(5, 1, 'Teater', 'Dewi'),
+(6, 1, 'Pramuka', 'Fajar');
+
+CREATE TABLE kehadiran_siswa (
+id_kehadiran int(11) NOT NULL AUTO_INCREMENT,
+id_siswa int(11) NOT NULL,
+tgl_masuk date NOT NULL,
+jam_masuk time NOT NULL,
+jam_pulang time NOT NULL,
+status enum('Masuk', 'Tidak Masuk', 'Izin') DEFAULT NULL,
+keterangan text DEFAULT NULL,
+    PRIMARY KEY(id_kehadiran)
+);
+
+CREATE TABLE nilai_mapel(
+id_nilai_mapel int(11) NOT NULL AUTO_INCREMENT,
+id_siswa int(11) NOT NULL,
+id_jadwal int(11) NOT NULL,
+nilai int(11) NOT NULL,
+ket_nilai text DEFAULT NULL,
+    PRIMARY KEY(id_nilai_mapel)
+);
+
+
+CREATE TABLE nilai_ekstra(
+id_nilai_ekstra int(11) NOT NULL AUTO_INCREMENT,
+id_siswa int(11) NOT NULL,
+id_ekstra_siswa int(11) NOT NULL,
+nilai_ekstra int(11) NOT NULL,
+ket_nilai text DEFAULT NULL,
+    PRIMARY KEY(id_nilai_ekstra)
+);
+
