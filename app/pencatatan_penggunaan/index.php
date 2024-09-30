@@ -46,12 +46,12 @@
                     $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM pencatatan_penggunaan 
                     LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan ORDER BY pemasangan.id_pemasangan DESC';
                     if($_SESSION['level'] == "pelanggan"){
-                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = '.$_SESSION['id_user'].'')->fetch_assoc();  
+                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
                         $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM
-                         pencatatan_penggunaan LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan WHERE pemasangan.id_pelanggan = '.$pel['id_pelanggan'].' ORDER BY pemasangan.id_pemasangan DESC';
+                         pencatatan_penggunaan LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan WHERE pemasangan.id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY pemasangan.id_pemasangan DESC';
                     }
                     foreach (QueryManyData($pencatat) as $row) {
-                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = '.$row['id_pelanggan'].'')->fetch_assoc();  
+                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
                     ?>
                         <tr>
                             <td>

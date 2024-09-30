@@ -4,7 +4,7 @@
 <?php
 
 
-$berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_berkas_pemasangan = ' . $_GET['id_berkas_pemasangan'] . '')->fetch_assoc();
+$berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_berkas_pemasangan = "' . $_GET['id_berkas_pemasangan'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -23,7 +23,7 @@ $berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_berk
                 <div class='mb-3 row' style='display:none;'>
                     <label for='inputid_berkas_pemasangan' class='col-sm-2 col-form-label'>Id Berkas Pemasangan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_berkas_pemasangan' name='id_berkas_pemasangan' value='<?= $berkas_pemasangan['id_berkas_pemasangan']; ?>' required>
+                        <input type='text' class='form-control' id='inputid_berkas_pemasangan' name='id_berkas_pemasangan' value='<?= $berkas_pemasangan['id_berkas_pemasangan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>

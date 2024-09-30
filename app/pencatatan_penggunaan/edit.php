@@ -4,7 +4,7 @@
 <?php
 
 
-$pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE id_pencatatan = ' . $_GET['id_pencatatan'] . '')->fetch_assoc();
+$pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE id_pencatatan = "' . $_GET['id_pencatatan'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -20,23 +20,21 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pencatatan_penggunaan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row' style="display: none;">
+                <div class='mb-3 row'>
                     <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>Id_Pencatatan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pencatatan' name='id_pencatatan' value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' required>
+                        <input type='text' class='form-control' id='inputid_pencatatan' name='id_pencatatan' value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id_Pemasangan
                     </label>
                     <div class='col-sm-10'>
-                        
-
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
-                                                    <?php
+                        <?php
                             $pemasangan = QueryManyData('SELECT * FROM pemasangan');
                             foreach ($pemasangan as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = '.$row['id_pemasangan'].'')->fetch_assoc();  
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
                                 if ($pencatatan_penggunaan['id_pemasangan'] ==  $row['id_pemasangan']) { ?>
                                 <option value='<?= $row['id_pemasangan'] ?>' selected><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                                 <?php } else { ?>

@@ -3,7 +3,7 @@
 <?php include_once '../template/navbar.php'; ?>
 <?php
 
-$berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = ' . $_GET['id_pemasangan'] . '')->fetch_assoc();
+$berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = "' . $_GET['id_pemasangan'] . '"')->fetch_assoc();
 if ($berkas_pemasangan == NULL) {
     $berkas_pemasangan = [
         'id_berkas_pemasangan' => NULL,

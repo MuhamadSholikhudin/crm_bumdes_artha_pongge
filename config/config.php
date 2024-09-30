@@ -184,6 +184,11 @@ function zen($url, $userkey, $passkey, $telepon, $message)
    curl_close($curlHandle);
    return $results;
 }
+
+function Rplc($code, $val_id){
+    $value = str_replace($code."00","", $val_id);
+    return $value;
+}
 /*
 ==========
 

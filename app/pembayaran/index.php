@@ -34,8 +34,9 @@
             <table id='example' class='table table-bordered dataTable' id='dataTable' width='100%' cellspacing='0' role='grid' aria-describedby='dataTable_info' style='width: 100%;'>
                 <thead>
                     <tr class='text-center'>
-                        <th>ID_PEMASANGAN</th>
-                        <th>TGL_BAYAR</th>
+                        <th>ID PEMBAYARAN</th>
+                        <th>ID PEMASANGAN</th>
+                        <th>TGL BAYAR</th>
                         <th>NOMINAL</th>
                         <th>KET_PEMBAYARAN</th>
                         <th>STATUS</th>
@@ -56,11 +57,13 @@
                         $pembayaran = 'SELECT pembayaran.id_pembayaran , pembayaran.id_pemasangan , pembayaran.nominal, pembayaran.ket_pembayaran, pembayaran.tgl_bayar, pembayaran.status, pemasangan.tgl_realisasi_pekerjaan, pelanggan.nm_pelanggan  FROM pembayaran 
                             LEFT JOIN pemasangan ON pembayaran.id_pemasangan = pemasangan.id_pemasangan 
                             LEFT JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan 
-                            WHERE pelanggan.id_user = ' . $_SESSION['id_user'] . '   ORDER BY pembayaran.id_pembayaran DESC                            ';
+                            WHERE pelanggan.id_user = "' . $_SESSION['id_user'] . '"   ORDER BY pembayaran.id_pembayaran DESC                            ';
                     }
                     foreach (QueryManyData($pembayaran) as $row) {
                     ?>
                         <tr>
+                            <td><?= $row['id_pembayaran'] ?></td>
+
                             <td>
                                 <?= $row['nm_pelanggan'] . ' // ' . $row['tgl_realisasi_pekerjaan'] ?>
                             </td>

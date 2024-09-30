@@ -4,7 +4,7 @@
 <?php
 
 
-$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = ' . $_GET['id_pelanggan'] . '')->fetch_assoc();
+$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = "' . $_GET['id_pelanggan'] . '"')->fetch_assoc();
 
 // $alamat_pelanggan = QueryOnedata('SELECT * FROM alamat_pelanggan WHERE id_pelanggan = ' . $_GET['id_pelanggan'] . '')->fetch_assoc();
 
@@ -26,11 +26,11 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = ' . $_GE
                 <div class='mb-3 row' style="display: none;">
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Id_Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
+                        <input type='text' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputid_user' class='col-sm-2 col-form-label'>Id_User
+                    <label for='inputid_user' class='col-sm-2 col-form-label'>Id User
                     </label>
                     <div class='col-sm-10'>
                         <?php ?>
@@ -50,13 +50,13 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = ' . $_GE
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputnm_pelanggan' class='col-sm-2 col-form-label'>Nm_Pelanggan</label>
+                    <label for='inputnm_pelanggan' class='col-sm-2 col-form-label'>Nm Pelanggan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' id='inputnm_pelanggan' name='nm_pelanggan' value='<?= $pelanggan['nm_pelanggan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputno_pelanggan' class='col-sm-2 col-form-label'>No_Pelanggan</label>
+                    <label for='inputno_pelanggan' class='col-sm-2 col-form-label'>No Pelanggan</label>
                     <div class='col-sm-10'>
                         <input type='number' class='form-control' id='inputno_pelanggan' name='no_pelanggan' value='<?= $pelanggan['no_pelanggan']; ?>' required>
                     </div>

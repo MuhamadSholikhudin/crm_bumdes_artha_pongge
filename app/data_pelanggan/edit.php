@@ -4,9 +4,9 @@
 <?php
 
 
-$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = ' . $_GET['id_pelanggan'] . '')->fetch_assoc();
+$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = "' . $_GET['id_pelanggan'] . '"')->fetch_assoc();
 
-$user = QueryOnedata('SELECT * FROM user WHERE id_user = ' . $pelanggan['id_user'] . '')->fetch_assoc();
+$user = QueryOnedata('SELECT * FROM user WHERE id_user = "' . $pelanggan['id_user'] . '"')->fetch_assoc();
 
 ?>
 <!-- Begin Page Content -->
@@ -26,7 +26,7 @@ $user = QueryOnedata('SELECT * FROM user WHERE id_user = ' . $pelanggan['id_user
                 <div class='mb-3 row' style="display: none;">
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Id_Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
+                        <input type='hidden' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
                         <input type='hidden' class='form-control' id='inputid_user' name='id_user' value='<?= $pelanggan['id_user']; ?>' required>
                     </div>
                 </div>

@@ -16,6 +16,22 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pembayaran.php' method='post' enctype='multipart/form-data'>
+                <?php 
+                    $id = 1;
+                    //cari data terakhir dari pelanggan
+                    // $terahir_pelanggan = "SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ";
+                    $terahir_pembayaran = QueryOnedata("SELECT * FROM pembayaran ORDER BY id_pembayaran DESC ");                  
+                    if($terahir_pembayaran->num_rows > 0 ){
+                        $id = Rplc("BY", $terahir_pembayaran->fetch_assoc()['id_pembayaran']) + $id;
+                    }
+                ?>
+                <div class='mb-3 row'>
+                    <label for='inputid_pembayaran' class='col-sm-2 col-form-label'>ID PEMASANANGN</label>
+                    <div class='col-sm-10'>
+                        <input type='text' class='form-control' value="BY00<?= $id ?>" readonly>
+                        <input type='hidden' class='form-control' id='inputid_pembayaran' name='id_pembayaran' value="BY00<?= $id ?>" required>
+                    </div>
+                </div>
                 <div class='mb-3 row'>
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
                     </label>
@@ -25,7 +41,7 @@
                             <?php
                             $pemasangan = QueryManyData('SELECT * FROM pemasangan');
                             foreach ($pemasangan as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = ' . $row['id_pemasangan'] . '')->fetch_assoc();
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
                             ?>
                                 <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                             <?php

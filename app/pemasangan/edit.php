@@ -4,7 +4,7 @@
 <?php
 
 
-$pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = ' . $_GET['id_pemasangan'] . '')->fetch_assoc();
+$pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = "' . $_GET['id_pemasangan'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -20,10 +20,10 @@ $pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = ' . $
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pemasangan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row' style='display:none;'>
+                <div class='mb-3 row' >
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id Pemasangan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pemasangan' name='id_pemasangan' value='<?= $pemasangan['id_pemasangan']; ?>' required>
+                        <input type='text' class='form-control' id='inputid_pemasangan' name='id_pemasangan' value='<?= $pemasangan['id_pemasangan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -36,9 +36,9 @@ $pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = ' . $
                             $pelanggans = QueryManyData('SELECT * FROM pelanggan');
                             foreach ($pelanggans  as  $row) {
                                 if ($pemasangan['id_pelanggan'] ==  $row['id_pelanggan']) { ?>
-                                    <option value='<?= $row['id_pelanggan'] ?>' selected><?= $row['nm_pelanggan'] ?></option>
+                                    <option value='<?= $row['id_pelanggan'] ?>' selected><?= $row['id_pelanggan'] ?> <?= $row['nm_pelanggan'] ?></option>
                                 <?php } else {
-                                ?><option value='<?= $row['id_pelanggan'] ?>'><?= $row['nm_pelanggan'] ?></option>
+                                ?><option value='<?= $row['id_pelanggan'] ?>'><?= $row['id_pelanggan'] ?> <?= $row['nm_pelanggan'] ?></option>
                             <?php
                                 }
                             }

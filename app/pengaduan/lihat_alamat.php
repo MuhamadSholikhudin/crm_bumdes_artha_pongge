@@ -2,8 +2,8 @@
 <?php include_once '../template/sidebar.php'; ?>
 <?php include_once '../template/navbar.php'; ?>
 <?php
-$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = ' .$_GET['id_pelanggan'] .'')->fetch_assoc();
-$alamat_pelanggan = QueryOnedata('SELECT * FROM alamat_pelanggan WHERE id_pelanggan = ' .$_GET['id_pelanggan'] .'')->fetch_assoc();
+$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan = "' .$_GET['id_pelanggan'] .'"')->fetch_assoc();
+$alamat_pelanggan = QueryOnedata('SELECT * FROM alamat_pelanggan WHERE id_pelanggan = "' .$_GET['id_pelanggan'] .'"')->fetch_assoc();
 if ($alamat_pelanggan == null) {
     $alamat_pelanggan = [
         'ket_alamat' => null,

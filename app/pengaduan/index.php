@@ -46,8 +46,8 @@
                         LEFT JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan';
                     }
                     foreach (QueryManyData($pengaduan) as $row) {
-                        $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = ' . $row['id_pemasangan'] . '')->fetch_assoc();
-                        $user = QueryOnedata('SELECT * FROM user where id_user = ' . $row['id_user'] . '')->fetch_assoc();
+                        $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
+                        $user = QueryOnedata('SELECT * FROM user where id_user = "' . $row['id_user'] . '"')->fetch_assoc();
                     ?>
                         <tr>
                             

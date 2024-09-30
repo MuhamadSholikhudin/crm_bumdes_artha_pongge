@@ -40,7 +40,7 @@
                 <tbody>
                     <?php
                     foreach (QueryManyData('SELECT * FROM berkas_pemasangan') as $row) {
-                        $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = ' . $row['id_pemasangan'] . '')->fetch_assoc();
+                        $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
                     ?>
                         <tr>
                             <td><?= $pemasangan['nm_pelanggan'] ?></td>

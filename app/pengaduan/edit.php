@@ -4,7 +4,7 @@
 <?php
 
 
-$pengaduan = QueryOnedata('SELECT * FROM pengaduan WHERE id_pengaduan = ' . $_GET['id_pengaduan'] . '')->fetch_assoc();
+$pengaduan = QueryOnedata('SELECT * FROM pengaduan WHERE id_pengaduan = "' . $_GET['id_pengaduan'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -20,10 +20,11 @@ $pengaduan = QueryOnedata('SELECT * FROM pengaduan WHERE id_pengaduan = ' . $_GE
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pengaduan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row' style='display:none;'>
-                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>Id_Pengaduan</label>
+                <div class='mb-3 row'>
+                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>Id Pengaduan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pengaduan' name='id_pengaduan' value='<?= $pengaduan['id_pengaduan']; ?>' required>
+                        <input type='text' class='form-control'  value='<?= $pengaduan['id_pengaduan']; ?>' readonly>
+                        <input type='text' class='form-control d-none' id='inputid_pengaduan' name='id_pengaduan' value='<?= $pengaduan['id_pengaduan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -35,12 +36,12 @@ $pengaduan = QueryOnedata('SELECT * FROM pengaduan WHERE id_pengaduan = ' . $_GE
                             <?php
                             $pelanggans = QueryManyData('SELECT * FROM pemasangan');
                             foreach ($pelanggans  as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = ' . $row['id_pemasangan'] . '')->fetch_assoc();
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
                                 if ($pengaduan['id_pemasangan'] ==  $row['id_pemasangan']) { ?>
-                                <option value='<?= $row['id_pemasangan'] ?>' selected><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
+                                <option value='<?= $row['id_pemasangan'] ?>' selected><?= $pepe['id_pemasangan'] ?> // <?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                                 <?php } else {
                                 ?>
-                                <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
+                                <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['id_pemasangan'] ?> // <?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                                 <?php
                                 }
                             }

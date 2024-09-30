@@ -2,7 +2,7 @@
 <?php include_once '../template/sidebar.php'; ?>
 <?php include_once '../template/navbar.php'; ?>
 <?php
-$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = ' . $_SESSION['id_user'] . '')->fetch_assoc();
+$pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSION['id_user'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -34,7 +34,7 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = ' . $_SESSION
                 <div class='mb-3 row' style="display: none;">
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
+                        <input type='texts' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = ' . $_SESSION
     </div>
 
     <?php
-    $alamat_pelanggan = QueryOnedata('SELECT * FROM alamat_pelanggan WHERE id_pelanggan = ' . $pelanggan['id_pelanggan'] . '')->fetch_assoc();
+    $alamat_pelanggan = QueryOnedata('SELECT * FROM alamat_pelanggan WHERE id_pelanggan = "' . $pelanggan['id_pelanggan'] . '"')->fetch_assoc();
     if ($alamat_pelanggan == NULL) {
         $alamat_pelanggan = [
             'ket_alamat' => NULL,

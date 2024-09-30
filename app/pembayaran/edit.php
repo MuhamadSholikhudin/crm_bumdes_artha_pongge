@@ -4,7 +4,7 @@
 <?php
 
 
-$pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = ' . $_GET['id_pembayaran'] . '')->fetch_assoc();
+$pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = "' . $_GET['id_pembayaran'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -23,7 +23,7 @@ $pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = ' . $
                 <div class='mb-3 row' style='display:none;'>
                     <label for='inputid_pembayaran' class='col-sm-2 col-form-label'>Id_Pembayaran</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pembayaran' name='id_pembayaran' value='<?= $pembayaran['id_pembayaran']; ?>' required>
+                        <input type='text' class='form-control' id='inputid_pembayaran' name='id_pembayaran' value='<?= $pembayaran['id_pembayaran']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -35,7 +35,7 @@ $pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = ' . $
                             <?php
                             $pemasangans = QueryManyData('SELECT * FROM pemasangan');
                             foreach ($pemasangans  as  $row) {
-                                $pel = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan ='.$row['id_pelanggan'].'' )->fetch_assoc();
+                                $pel = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan ="'.$row['id_pelanggan'].'"' )->fetch_assoc();
                                 if ($pencatatan_penggunaan['id_pemasangan'] ==  $row['id_pemasangan']) { 
                                     ?>
                                     <option value='<?= $row['id_pemasangan'] ?>' selected> <?= $pel['nm_pelanggan'] ?> // <?= $row['tgl_realisasi_pekerjaan'] ?></option>

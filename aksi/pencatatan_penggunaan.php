@@ -5,7 +5,6 @@ $lokasi_foto = 'C:/xampp/htdocs/crm_bumdes_artha_pongge/foto/foto_stand_meter/';
 $YMDhis = date('YMDhis');
 if (isset($_POST['simpanpencatatan_penggunaan'])) {
 
-
     $ekstensi_diperbolehkan = array('png', 'jpg');
     $nama_file = $_FILES['foto_stand_meter']['name'];
     $x = explode('.', $nama_file);
@@ -63,12 +62,12 @@ if (isset($_POST['simpanpencatatan_penggunaan'])) {
     // Data yang ingin Execution
     $data = ['id_pemasangan' => $_POST['id_pemasangan'], 'nomor_pasang' => $_POST['nomor_pasang'], 'nilai_stand_meter' => $_POST['nilai_stand_meter'], 'foto_stand_meter' => $nama_file,];
     // Update data berdasarkan
-    $process = UpdateOneData('pencatatan_penggunaan', $data, ' WHERE id_pencatatan =' . $_POST['id_pencatatan'] . '');
+    $process = UpdateOneData('pencatatan_penggunaan', $data, ' WHERE id_pencatatan ="' . $_POST['id_pencatatan'] . '"');
     $_SESSION['message'] = 'Data Pencatatan_Penggunaan' . $process['message'];
     header('Location: ' . $url . '/app/pencatatan_penggunaan/index.php');
     exit();
 } elseif ($_GET['action'] == 'delete') {
-    $process = DeleteOneData('pencatatan_penggunaan', 'WHERE id_pencatatan = ' . $_GET['id_pencatatan'] . '');
+    $process = DeleteOneData('pencatatan_penggunaan', 'WHERE id_pencatatan = "' . $_GET['id_pencatatan'] . '"');
     $_SESSION['message'] = 'Data Pencatatan_Penggunaan ' . $process['message'];
     header('Location: ' . $url . '/app/pencatatan_penggunaan/index.php');
     exit();

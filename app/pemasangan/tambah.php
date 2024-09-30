@@ -16,6 +16,21 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pemasangan.php' method='post' enctype='multipart/form-data'>
+            <?php 
+                    $id = 1;
+                    //cari data terakhir dari pelanggan
+                    // $terahir_pelanggan = "SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ";
+                    $terahir_pemasangan = QueryOnedata("SELECT * FROM pemasangan ORDER BY id_pemasangan DESC ");                  
+                    if($terahir_pemasangan->num_rows > 0 ){
+                        $id = Rplc("PS", $terahir_pemasangan->fetch_assoc()['id_pemasangan']) + $id;
+                    }
+                ?>
+                <div class='mb-3 row'>
+                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>ID PEMASANANGN</label>
+                    <div class='col-sm-10'>
+                        <input type='text' class='form-control' id='inputid_pemasangan' name='id_pemasangan' value="PS00<?= $id ?>" required>
+                    </div>
+                </div>
                 <div class='mb-3 row'>
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Pelanggan</label>
                     <div class='col-sm-10'>
@@ -24,7 +39,7 @@
                             $pelanggan = QueryManyData('SELECT * FROM pelanggan');
                             foreach ($pelanggan as  $row) {
                             ?>
-                                <option value='<?= $row['id_pelanggan'] ?>'><?= $row['nm_pelanggan'] ?></option>
+                                <option value='<?= $row['id_pelanggan'] ?>' ><?= $row['id_pelanggan'] ?> <?= $row['nm_pelanggan'] ?></option>
                             <?php
                             }
                             ?>

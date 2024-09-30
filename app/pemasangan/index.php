@@ -47,12 +47,12 @@
                     <?php
                     $pema = 'SELECT * FROM pemasangan ORDER BY id_pemasangan DESC';
                     if($_SESSION['level'] == "pelanggan"){
-                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = '.$_SESSION['id_user'].'')->fetch_assoc();  
-                        $pema = 'SELECT * FROM pemasangan where id_pelanggan = '.$pel['id_pelanggan'].' ORDER BY id_pemasangan DESC';
+                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
+                        $pema = 'SELECT * FROM pemasangan where id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY id_pemasangan DESC';
                     }
                     foreach (QueryManyData($pema) as $row) {
-                        $pelanggan = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = '.$row['id_pelanggan'].'')->fetch_assoc();  
-                        $user = QueryOnedata('SELECT * FROM user where id_user = '.$row['id_user'].'')->fetch_assoc();  
+                        $pelanggan = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
+                        $user = QueryOnedata('SELECT * FROM user where id_user = "'.$row['id_user'].'"')->fetch_assoc();  
                     ?>
                         <tr>
                             <?php if($_SESSION['level'] == "petugas lapangan"){ ?> 

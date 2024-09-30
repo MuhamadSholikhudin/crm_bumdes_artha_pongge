@@ -16,6 +16,21 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pengaduan.php' method='post' enctype='multipart/form-data'>
+                <?php 
+                    $id = 1;
+                    $terahir_pengaduan = QueryOnedata("SELECT * FROM pengaduan ORDER BY id_pengaduan DESC ");                  
+                    if($terahir_pengaduan->num_rows > 0 ){
+                        $id = Rplc("PD", $terahir_pengaduan->fetch_assoc()['id_pengaduan']) + $id;
+                    }
+
+                ?>
+                <div class='mb-3 row'>
+                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>ID PEMASANANGN</label>
+                    <div class='col-sm-10'>
+                        <input type='text' class='form-control'  value="PD00<?= $id ?>" readonly>
+                        <input type='hidden' class='form-control' id='inputid_pengaduan' name='id_pengaduan' value="PD00<?= $id ?>" required>
+                    </div>
+                </div> 
                 <div class='mb-3 row'>
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id Pemasangan
                     </label>
@@ -24,7 +39,7 @@
                             <?php
                             $pemasangan = QueryManyData('SELECT * FROM pemasangan');
                             foreach ($pemasangan as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = ' . $row['id_pemasangan'] . '')->fetch_assoc();
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
                             ?>
                                 <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                             <?php

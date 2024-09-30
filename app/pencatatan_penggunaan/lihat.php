@@ -2,7 +2,7 @@
 <?php include_once '../template/sidebar.php'; ?>
 <?php include_once '../template/navbar.php'; ?>
 <?php
-$pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE id_pencatatan = ' . $_GET['id_pencatatan'] . '')->fetch_assoc();
+$pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE id_pencatatan = "' . $_GET['id_pencatatan'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>

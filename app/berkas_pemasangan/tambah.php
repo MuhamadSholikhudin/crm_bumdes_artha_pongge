@@ -23,11 +23,11 @@
                         <?php ?>
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
                             <?php
-                            $pemasangan = QueryManyData('SELECT * FROM pemasangan');
+                            $pemasangan = QueryManyData('SELECT * FROM pemasangan order by id_pemasangan DESC');
                             foreach ($pemasangan as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = '.$row['id_pemasangan'].'')->fetch_assoc();  
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
                             ?>
-                                <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
+                                <option value='<?= $row['id_pemasangan'] ?>'><?= $row['id_pemasangan'] ?> // <?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                             <?php
                             }
                             ?>
