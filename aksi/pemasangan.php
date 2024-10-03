@@ -5,7 +5,7 @@ session_start();
 $lokasi_foto = 'C:/xampp/htdocs/crm_bumdes_artha_pongge/foto/foto_berkas/';
 $YMDhis = date('YMDhis');
 if (isset($_POST['simpanpemasangan'])) {
-    $data = ['id_pelanggan' => $_POST['id_pelanggan'], 'id_user' => $_POST['id_user'], 'tgl_permintaan_pemasangan' => $_POST['tgl_permintaan_pemasangan'], 'tgl_realisasi_pekerjaan' => $_POST['tgl_realisasi_pekerjaan'], 'tgl_tagihan' => $_POST['tgl_tagihan'], 'biaya' => $_POST['biaya'], 'status_pemasangan' => $_POST['status_pemasangan'],];
+    $data = ['id_pemasangan' => $_POST['id_pemasangan'],'id_pelanggan' => $_POST['id_pelanggan'], 'id_user' => $_POST['id_user'], 'tgl_permintaan_pemasangan' => $_POST['tgl_permintaan_pemasangan'], 'tgl_realisasi_pekerjaan' => $_POST['tgl_realisasi_pekerjaan'], 'tgl_tagihan' => $_POST['tgl_tagihan'], 'biaya' => $_POST['biaya'], 'status_pemasangan' => $_POST['status_pemasangan'],];
     // Insert satu data
     $process = InsertOnedata('pemasangan', $data);
     $_SESSION['message'] = 'Data Pemasangan ' . $process['message'];
@@ -15,7 +15,7 @@ if (isset($_POST['simpanpemasangan'])) {
     // Data yang ingin Execution
     $data = ['id_pelanggan' => $_POST['id_pelanggan'], 'id_user' => $_POST['id_user'], 'tgl_permintaan_pemasangan' => $_POST['tgl_permintaan_pemasangan'], 'tgl_realisasi_pekerjaan' => $_POST['tgl_realisasi_pekerjaan'], 'tgl_tagihan' => $_POST['tgl_tagihan'], 'biaya' => $_POST['biaya'], 'status_pemasangan' => $_POST['status_pemasangan'],];
     // Update data berdasarkan
-    $process = UpdateOneData('pemasangan', $data, ' WHERE id_pemasangan =' . $_POST['id_pemasangan'] . '');
+    $process = UpdateOneData('pemasangan', $data, ' WHERE id_pemasangan ="' . $_POST['id_pemasangan'] . '"');
     $_SESSION['message'] = 'Data Pemasangan ' . $process['message'];
     header('Location: ' . $url . '/app/pemasangan/index.php');
     exit();
@@ -27,8 +27,7 @@ if (isset($_POST['simpanpemasangan'])) {
         $x = explode('.', $nama_file);
         $ekstensi = strtolower(end($x));
         $ukuran   = $_FILES['foto_berkas']['size'];
-        $file_tmp = $_FILES['foto_berkas']['tmp_name'];
-    
+        $file_tmp = $_FILES['foto_berkas']['tmp_name'];    
     
         if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
             if ($ukuran < 1044070) {
@@ -78,7 +77,7 @@ if (isset($_POST['simpanpemasangan'])) {
         // Data yang ingin Execution
         $data = ['id_pemasangan' => $_POST['id_pemasangan'], 'nm_berkas' => $_POST['nm_berkas'], 'foto_berkas' => $nama_file];
         // Update data berdasarkan
-        $process = UpdateOneData('berkas_pemasangan', $data, ' WHERE id_berkas_pemasangan =' . $_POST['id_berkas_pemasangan'] . '');
+        $process = UpdateOneData('berkas_pemasangan', $data, ' WHERE id_berkas_pemasangan ="' . $_POST['id_berkas_pemasangan'] . '"');
     }
 
     $_SESSION['message'] = 'Data Berkas Pemasangan ' . $process['message'];
@@ -86,7 +85,7 @@ if (isset($_POST['simpanpemasangan'])) {
     exit();
 
 } elseif ($_GET['action'] == 'delete') {
-    $process = DeleteOneData('pemasangan', 'WHERE id_pemasangan = ' . $_GET['id_pemasangan'] . '');
+    $process = DeleteOneData('pemasangan', 'WHERE id_pemasangan ="' . $_GET['id_pemasangan'] . '"');
     $_SESSION['message'] = 'Data Pemasangan ' . $process['message'];
     header('Location: ' . $url . '/app/pemasangan/index.php');
     exit();

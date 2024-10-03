@@ -66,14 +66,17 @@ if (isset($_POST['simpanberkas_pemasangan'])) {
     }
 
     // Data yang ingin Execution
-    $data = ['id_pemasangan' => $_POST['id_pemasangan'], 'nm_berkas' => $_POST['nm_berkas'], 'foto_berkas' => $nama_file];
+    $data = [
+        'id_berkas_pemasangan' => $_POST['id_berkas_pemasangan'],
+        'id_pemasangan' => $_POST['id_pemasangan'],
+        'nm_berkas' => $_POST['nm_berkas'], 'foto_berkas' => $nama_file];
     // Update data berdasarkan
-    $process = UpdateOneData('berkas_pemasangan', $data, ' WHERE id_berkas_pemasangan =' . $_POST['id_berkas_pemasangan'] . '');
+    $process = UpdateOneData('berkas_pemasangan', $data, ' WHERE id_berkas_pemasangan ="' . $_POST['id_berkas_pemasangan'] . '"');
     $_SESSION['message'] = 'Data Berkas Pemasangan ' . $process['message'];
     header('Location: ' . $url . '/app/berkas_pemasangan/index.php');
     exit();
 } elseif ($_GET['action'] == 'delete') {
-    $process = DeleteOneData('berkas_pemasangan', 'WHERE id_berkas_pemasangan = ' . $_GET['id_berkas_pemasangan'] . '');
+    $process = DeleteOneData('berkas_pemasangan', 'WHERE id_berkas_pemasangan = "' . $_GET['id_berkas_pemasangan'] . '"');
     $_SESSION['message'] = 'Data Berkas Pemasangan ' . $process['message'];
     header('Location: ' . $url . '/app/berkas_pemasangan/index.php');
     exit();

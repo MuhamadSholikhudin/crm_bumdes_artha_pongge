@@ -16,6 +16,19 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/user.php' method='post' enctype='multipart/form-data'>
+            <?php 
+                    $id = 1;
+                    $terahir_user = QueryOnedata("SELECT * FROM user ORDER BY id_user DESC ");                  
+                    if($terahir_user->num_rows > 0 ){
+                        $id = Rplc("U", $terahir_user->fetch_assoc()['id_user'])+$id;
+                    }
+                ?>
+                <div class='mb-3 row'>
+                    <label for='inputid_user' class='col-sm-2 col-form-label'>ID User</label>
+                    <div class='col-sm-10'>
+                        <input type='text' class='form-control' id='inputid_user' name='id_user' value="U00<?= $id ?>" required>
+                    </div>
+                </div>
                 <div class='mb-3 row'>
                     <label for='inputusername' class='col-sm-2 col-form-label'>Username</label>
                     <div class='col-sm-10'>

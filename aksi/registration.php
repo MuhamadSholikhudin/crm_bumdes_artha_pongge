@@ -23,12 +23,33 @@ if(isset($_POST)){
                 header("Location: ".$url."/app/auth/registration.php");
                 exit(); 
         }else{
-                $data = ['username' => $_POST['username'], 'password' => $_POST['password'], 'nm_pengguna' => $_POST['nm_pengguna'], 'level' => 'pelanggan' ];
+                $id = 1;
+                $terahir_user = QueryOnedata("SELECT * FROM user ORDER BY id_user DESC ");                  
+                if($terahir_user->num_rows > 0 ){
+                    $id = Rplc("U", $terahir_user->fetch_assoc()['id_user'])+$id;
+                }
+                $data = [
+                        'id_user' => 'U00'.$id,
+                        'username' => $_POST['username'],
+                         'password' => $_POST['password'],
+                         'nm_pengguna' => $_POST['nm_pengguna'],
+                         'level' => 'pelanggan'
+                 ];
                 // Insert satu data
                 $process = InsertOnedata('user', $data);
                 $user = QueryOnedata('SELECT * FROM user ORDER BY id_user DESC LIMIT 1')->fetch_assoc();
 
-                $data = ['id_user' => $user['id_user'], 'nm_pelanggan' => $_POST['nm_pengguna']];
+                $id_p = 1;
+                $terahir_pelanggan = QueryOnedata("SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ");                  
+                if($terahir_pelanggan->num_rows > 0 ){
+                    $id_p = Rplc("PL", $terahir_pelanggan->fetch_assoc()['id_pelanggan'])+$id_p;
+                }
+
+                $data = [
+                        'id_pelanggan' => 'PL00'.$id_p, 
+                        'id_user' => $user['id_user'], 
+                        'nm_pelanggan' => $_POST['nm_pengguna']
+                ];
                 // Insert satu data
                 $process = InsertOnedata('pelanggan', $data);
                 $_SESSION['message'] = 'Data pelanggan '.$_POST['username'].' berhasil di buat !';                
