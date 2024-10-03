@@ -19,7 +19,7 @@
     }
     ?>
     <div class='d-sm-flex align-items-center justify-content-between mb-4'>    
-    <?php if ($_SESSION['level'] == "petugas bumdes") { ?>
+    <?php if ($_SESSION['level'] == "pelanggan") { ?>
         <a href='<?= $url ?>/app/pemasangan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pemasangan</a>
         <?php } ?>
     </div>
@@ -49,6 +49,8 @@
                     if($_SESSION['level'] == "pelanggan"){
                         $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
                         $pema = 'SELECT * FROM pemasangan where id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY id_pemasangan DESC';
+                    }elseif($_SESSION['level'] == "petugas lapangan"){
+                        $pema = 'SELECT * FROM pemasangan where status_pemasangan = "Proses" OR  status_pemasangan = "Realisasi"   ORDER BY id_pemasangan DESC';
                     }
                     foreach (QueryManyData($pema) as $row) {
                         $pelanggan = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
@@ -67,19 +69,28 @@
                             <td><?= intToRupiah($row['biaya']) ?></td>
                             <td><?= $row['status_pemasangan'] ?></td>
                             <td>                                
-                                <?php if ($_SESSION['level'] == "petugas bumdes") { ?>                                 
+                                <?php if ($_SESSION['level'] == "petugas bumdes") { ?>        
+                                    <?php if ($row['status_pemasangan'] == "Pengajuan" || $row['status_pemasangan'] == "Proses") { ?> 
+                                        <a href='<?= $url ?>/app/pemasangan/edit.php?id_pemasangan=<?= $row['id_pemasangan'] ?>' class='btn btn-success btn-icon-split btn-sm'>
+                                            <span class='icon text-white-50'>
+                                                <i class='fas fa-edit'></i>
+                                            </span>
+                                            <span class='text'>edit</span>
+                                        </a>
+                                    <?php  } ?>
+                                    <a href='<?= $url ?>/app/pemasangan/upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
+                                        <span class='icon text-white-50'>
+                                            <i class='fas fa-upload'></i>
+                                        </span>
+                                        <span class='text'>foto</span>
+                                    </a>
+                                <?php }elseif($_SESSION['level'] == "petugas lapangan") {  ?>
                                     <a href='<?= $url ?>/app/pemasangan/edit.php?id_pemasangan=<?= $row['id_pemasangan'] ?>' class='btn btn-success btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-edit'></i>
                                         </span>
                                         <span class='text'>edit</span>
                                     </a>
-                                    <button onclick="ConfirmDelete(<?= $row['id_pemasangan'] ?>)" class='btn btn-danger btn-icon-split btn-sm'>
-                                        <span class='icon text-white-50'>
-                                            <i class='fas fa-trash'></i>
-                                        </span>
-                                        <span class='text'>hapus</span>
-                                    </button>
                                     <a href='<?= $url ?>/app/pemasangan/upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-upload'></i>
@@ -93,8 +104,7 @@
                                         </span>
                                         <span class='text'>foto</span>
                                     </a>
-
-                                    <?php  } ?>
+                                <?php  } ?>
                             </td>
                         </tr>
                     <?php

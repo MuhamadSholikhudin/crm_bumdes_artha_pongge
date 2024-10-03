@@ -1,40 +1,12 @@
 <?php 
-function QueryManyData($sql){
-    $conn = new mysqli("localhost", "root", "", "danis");
-    // Memeriksa koneksi
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
-    $result = $conn->query($sql);
-    // Menutup koneksi database
-    $conn->close();
-    return $result;
-}
-
-function QueryOnedata($sql){
-    $conn = new mysqli("localhost", "root", "", "danis");
-
-    // Memeriksa koneksi
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
-    // Query SQL untuk mengambil data dari tabel "users"
-    $result = $conn->query($sql);
-
-    // Menutup koneksi database
-    $conn->close();
-    // return $row = $result->fetch_assoc();
-    return $result;
-}
+include '../../config/config.php';
+session_start();
 ?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Export Data Excel Data Laporan pengaduan</title>
 </head>
-
 <body>
     <style type="text/css">
         body {
@@ -61,16 +33,13 @@ function QueryOnedata($sql){
             border-radius: 2px;
         }
     </style>
-
     <?php
     header("Content-type: application/vnd-ms-excel");
     header("Content-Disposition: attachment; filename=Laporan data pengaduan.xls");
     ?>
-
     <center>
         <h1>Export Data Pengaduan </h1>
     </center>
-
     <table border="1">
         <tr class='text-center'>
             <th>ID PEMASANGAN</th>
@@ -83,11 +52,11 @@ function QueryOnedata($sql){
         </tr>
         <?php
         $pengaduan = 'SELECT * FROM pengaduan 
-                        LEFT JOIN pemasangan ON pengaduan.id_pemasangan = pemasangan.id_pemasangan 
-                        LEFT JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan';
+                    LEFT JOIN pemasangan ON pengaduan.id_pemasangan = pemasangan.id_pemasangan 
+                    LEFT JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan';
         foreach (QueryManyData($pengaduan) as $row) {
-            $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = ' . $row['id_pemasangan'] . '')->fetch_assoc();
-            $user = QueryOnedata('SELECT * FROM user where id_user = ' . $row['id_user'] . '')->fetch_assoc();
+            $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
+            $user = QueryOnedata('SELECT * FROM user where id_user = "' . $row['id_user'] . '"')->fetch_assoc();
         ?>
             <tr>
                 <td><?= $pemasangan['nm_pelanggan'] ?></td>
@@ -97,7 +66,6 @@ function QueryOnedata($sql){
                 <td><?= $row['ket_kendala'] ?></td>
                 <td><?= $row['foto_kendala'] ?></td>
                 <td><?= $row['status_pengaduan'] ?></td>
-
             </tr>
         <?php
         }

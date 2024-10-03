@@ -29,8 +29,8 @@ if ($alamat_pelanggan == null) {
                 <div class='mb-3 row' style='display: none;'>
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Id_pengguna</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $_GET['id_pelanggan'] ?>' required>
-                        <input type='number' class='form-control' id='inputid_alamat' name='id_alamat' value='<?= $alamat_pelanggan['id_alamat'] ?>'>
+                        <input type='text' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $_GET['id_pelanggan'] ?>' required>
+                        <input type='text' class='form-control' id='inputid_alamat' name='id_alamat' value='<?= $alamat_pelanggan['id_alamat'] ?>'>
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -40,13 +40,13 @@ if ($alamat_pelanggan == null) {
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputlat_alamat' class='col-sm-2 col-form-label'>Lat Alamat</label>
+                    <label for='inputlat_alamat' class='col-sm-2 col-form-label'>Latitude Alamat</label>
                     <div class='col-sm-10'>
                         <textarea class='form-control' id='inputlat_alamat' name='lat_alamat' required><?= $alamat_pelanggan['lat_alamat'] ?></textarea>
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputlong_alamat' class='col-sm-2 col-form-label'>Long Alamat</label>
+                    <label for='inputlong_alamat' class='col-sm-2 col-form-label'>Longtitude Alamat</label>
                     <div class='col-sm-10'>
                         <textarea class='form-control' id='inputlong_alamat' name='long_alamat' required><?= $alamat_pelanggan['long_alamat'] ?></textarea>
                     </div>

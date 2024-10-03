@@ -2,9 +2,6 @@
 include '../config/config.php';
 session_start();
 
-$lokasi_foto = 'C:/xampp/htdocs/crm_bumdes_artha_pongge/foto/foto_berkas/';
-$YMDhis = date('YMDhis');
-
 if (isset($_POST['simpanberkas_pemasangan'])) {
 
     $ekstensi_diperbolehkan = array('png', 'jpg');
@@ -18,7 +15,7 @@ if (isset($_POST['simpanberkas_pemasangan'])) {
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
         if ($ukuran < 1044070) {
             $nama_file = $YMDhis. $_FILES['foto_berkas']['name'];
-            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto . $nama_file);          
+            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto."/foto_berkas/" . $nama_file);          
             if ($upload_guru) {
                 // Data yang ingin Execution
                 $data = [
@@ -55,8 +52,8 @@ if (isset($_POST['simpanberkas_pemasangan'])) {
         if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
             if ($ukuran < 1044070) {
                 $nama_file = $YMDhis. $_FILES['foto_berkas']['name'];
-                unlink($lokasi_foto .  $_POST['foto_berkas_old']);
-                $upload_guru =  move_uploaded_file($file_tmp, $lokasi_foto . $nama_file);
+                unlink($lokasi_foto."/foto_berkas/" .  $_POST['foto_berkas_old']);
+                $upload_guru =  move_uploaded_file($file_tmp, $lokasi_foto."/foto_berkas/" . $nama_file);
             } else {
                 $nama_file = $_POST['foto_berkas_old'];
             }
