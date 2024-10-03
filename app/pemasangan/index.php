@@ -50,6 +50,7 @@
                         <th>TGL TAGIHAN</th>
                         <th>BIAYA</th>
                         <th>STATUS PEMASANGAN</th>                        
+                        <th>FOTO</th>                        
                         <th>AKSI</th>
                     </tr>
                 </thead>
@@ -60,6 +61,11 @@
                         $user['nm_pengguna'] = '';
                         if($row['id_user'] != NULL && $row['id_user'] == 0){
                             $user = QueryOnedata('SELECT * FROM user where id_user = "'.$row['id_user'].'"')->fetch_assoc();  
+                        }
+                        $berkas_pemasangan['foto_berkas'] = '';
+                        $berkas = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = "'.$row['id_pemasangan'].'" ');
+                        if($berkas->num_rows > 0){
+                            $berkas_pemasangan['foto_berkas'] = $berkas->fetch_assoc()['foto_berkas'];                            
                         }
                     ?>
                         <tr>
@@ -75,6 +81,10 @@
                             <td><?= $row['tgl_tagihan'] != NULL && $row['tgl_tagihan'] != 0 ? $row['tgl_tagihan'] : '' ?></td>
                             <td><?=  intToRupiah($row['biaya']) ?></td>
                             <td><?= $row['status_pemasangan'] ?></td>
+                            <td>
+                            <?= $berkas_pemasangan['foto_berkas'] ?>
+                                <img src="<?= $url."/foto/foto_berkas/". $berkas_pemasangan['foto_berkas'] ?>" alt="" width="50" height="50">
+                            </td>
                             <td>                                
                                 <?php if ($_SESSION['level'] == "petugas bumdes") { ?>        
                                     <?php if ($row['status_pemasangan'] == "Pengajuan" || $row['status_pemasangan'] == "Proses") { ?> 
@@ -98,20 +108,20 @@
                                         </span>
                                         <span class='text'>edit</span>
                                     </a>
-                                    <a href='<?= $url ?>/app/pemasangan/upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
+                                    <a href='<?= $url ?>/app/pemasangan/upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-primary btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-upload'></i>
                                         </span>
-                                        <span class='text'>foto</span>
+                                        <span class='text'>Upload Bukti</span>
                                     </a>
-                                <?php }elseif($_SESSION['level'] == "pelanggan") {  ?>
-                                    <a href='<?= $url ?>/app/pemasangan/upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
+                                <?php } ?>
+
+                                <a href='<?= $url ?>/app/pemasangan/lihat_upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-eye'></i>
                                         </span>
                                         <span class='text'>foto</span>
                                     </a>
-                                <?php  } ?>
                             </td>
                         </tr>
                     <?php

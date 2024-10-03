@@ -2,7 +2,6 @@
 <?php include_once '../template/sidebar.php'; ?>
 <?php include_once '../template/navbar.php'; ?>
 <?php
-$pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = "' . $_GET['id_pemasangan'] . '"')->fetch_assoc();
 
 $berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = "' . $_GET['id_pemasangan'] . '"')->fetch_assoc();
 if ($berkas_pemasangan == NULL) {
@@ -27,24 +26,16 @@ if ($berkas_pemasangan == NULL) {
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pemasangan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row'>
+                <div class='mb-3 row' style="display:none;">
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id Pemasangan</label>
                     <div class='col-sm-10'>
-                        <input type='text' class='form-control' value='<?= $_GET['id_pemasangan']; ?>' readonly>
-                        <input type='hidden' class='form-control' id='inputid_pemasangan' name='id_pemasangan' value='<?= $_GET['id_pemasangan']; ?>' >
+                        <input type='number' class='form-control' id='inputid_pemasangan' name='id_pemasangan' value='<?= $_GET['id_pemasangan']; ?>' >
                     </div>
                 </div>
-                <div class='mb-3 row'>
-                    <?php 
-                        $id = 1;
-                        $terahir_berkas_pemasangan = QueryOnedata("SELECT * FROM berkas_pemasangan ORDER BY id_berkas_pemasangan DESC ");                  
-                        if($terahir_berkas_pemasangan->num_rows > 0 ){
-                            $id = Rplc("BP", $terahir_berkas_pemasangan->fetch_assoc()['id_berkas_pemasangan']) + $id;
-                        }
-                    ?>
-                    <label for='inputberkas_pemasangan' class='col-sm-2 col-form-label'>Id Berkas Pemasangan</label>
+                <div class='mb-3 row' style="display:none;">
+                    <label for='inputberkas_pemasangan' class='col-sm-2 col-form-label'>Id berkas_pemasangan</label>
                     <div class='col-sm-10'>
-                        <input type='text' class='form-control' id='inputberkas_pemasangan' name='id_berkas_pemasangan' value='BP00<?= $id ?>' >
+                        <input type='number' class='form-control' id='inputberkas_pemasangan' name='id_berkas_pemasangan' value='<?= $berkas_pemasangan['id_berkas_pemasangan']; ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -61,6 +52,12 @@ if ($berkas_pemasangan == NULL) {
                         <input type='hidden' class='form-control' id='inputfoto_berkas' name='foto_berkas_old' value='<?= $berkas_pemasangan['foto_berkas']; ?>' >
                     </div>
                 </div>
+
+
+
+
+
+                
                 <div class='mb-3 row'>
                     <div class='col-sm-2'>
                         <a href='<?= $url ?>/app/pemasangan/index.php' class='btn btn-info btn-sm '>
@@ -69,10 +66,11 @@ if ($berkas_pemasangan == NULL) {
                     </div>
                     <div class='col-sm-10'>
                     <?php if ($_SESSION['level'] != "pelanggan") { ?>
-                        <button type='submit' name='uploadberkas_pemasangan' value='uploadberkas_pemasangan' class='btn btn-success btn-user btn-block'>
+                        <button type='submit' name='updateberkas_pemasangan' value='updateberkas_pemasangan' class='btn btn-success btn-user btn-block'>
                             <i class='fas fa-save'></i> UPDATE
                         </button>
-                    <?php } ?>
+                        <?php } ?>
+
                     </div>
                 </div>
             </form>

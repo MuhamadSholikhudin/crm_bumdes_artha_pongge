@@ -19,9 +19,13 @@ if (isset($_POST['simpanpemasangan'])) {
     $_SESSION['message'] = 'Data Pemasangan ' . $process['message'];
     header('Location: ' . $url . '/app/pemasangan/index.php');
     exit();
-} elseif (isset($_POST['updateberkas_pemasangan'])) {
+} elseif (isset($_POST['uploadberkas_pemasangan'])) {
 
-    if ($_POST['id_berkas_pemasangan'] == NULL) {
+    // Query check data pemasangan
+    $check_berkas = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_berkas_pemasangan = "'.$_POST['id_berkas_pemasangan'].'" ');
+
+    //jika belum ada berkas pemasangan maka insert data
+    if ($check_berkas->num_rows < 1) {
         $ekstensi_diperbolehkan = array('png', 'jpg');
         $nama_file = $_FILES['foto_berkas']['name'];
         $x = explode('.', $nama_file);
@@ -37,6 +41,7 @@ if (isset($_POST['simpanpemasangan'])) {
                     // Data yang ingin Execution
                     $data = [
                         'id_pemasangan' => $_POST['id_pemasangan'],
+                        'id_berkas_pemasangan' => $_POST['id_berkas_pemasangan'],
                         'nm_berkas' => $_POST['nm_berkas'],
                         'foto_berkas' => $nama_file
                     ];
@@ -52,6 +57,7 @@ if (isset($_POST['simpanpemasangan'])) {
             $process['message'] = 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
         }
 
+    // jika sudah ada berkas pemasangan maka di update
     }else{
         $nama_file = $_POST['foto_berkas_old'];
         if (isset($_FILES['foto_berkas'])) {

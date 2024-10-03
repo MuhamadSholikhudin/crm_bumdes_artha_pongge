@@ -18,8 +18,6 @@
             <form action='<?= $url ?>/aksi/pembayaran.php' method='post' enctype='multipart/form-data'>
                 <?php 
                     $id = 1;
-                    //cari data terakhir dari pelanggan
-                    // $terahir_pelanggan = "SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ";
                     $terahir_pembayaran = QueryOnedata("SELECT * FROM pembayaran ORDER BY id_pembayaran DESC ");                  
                     if($terahir_pembayaran->num_rows > 0 ){
                         $id = Rplc("BY", $terahir_pembayaran->fetch_assoc()['id_pembayaran']) + $id;
