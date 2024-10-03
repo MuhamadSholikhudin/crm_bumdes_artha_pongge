@@ -16,6 +16,19 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/layanan.php' method='post' enctype='multipart/form-data'>
+                <?php 
+                    $id = 1;
+                    $terahir_layanan = QueryOnedata("SELECT * FROM layanan ORDER BY id_layanan DESC ");                  
+                    if($terahir_layanan->num_rows > 0 ){
+                        $id = Rplc("LY", $terahir_layanan->fetch_assoc()['id_layanan']) + $id;
+                    }
+                ?>
+                <div class='mb-3 row'>
+                    <label for='inputid_layanan' class='col-sm-2 col-form-label'>Id Layanan</label>
+                    <div class='col-sm-10'>
+                        <input type='text' class='form-control' id='inputid_layanan' name='id_layanan' value="LY00<?= $id ?>" required>
+                    </div>
+                </div>
                 <div class='mb-3 row'>
                     <label for='inputnm_layanan' class='col-sm-2 col-form-label'>Nama Layanan</label>
                     <div class='col-sm-10'>

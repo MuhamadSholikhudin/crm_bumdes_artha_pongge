@@ -13,9 +13,11 @@
             </button>
         </div>
     <?php unset($_SESSION['message']); } ?>
+    <?php  if ($_SESSION['level'] == 'pelanggan') { ?>
     <div class='d-sm-flex align-items-center justify-content-between mb-4'>
         <a href='<?= $url ?>/app/pengaduan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pengaduan</a>
     </div>
+    <?php  } ?>
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
@@ -49,8 +51,7 @@
                         $pemasangan = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
                         $user = QueryOnedata('SELECT * FROM user where id_user = "' . $row['id_user'] . '"')->fetch_assoc();
                     ?>
-                        <tr>
-                            
+                        <tr>                            
                             <?php if($_SESSION['level'] == "petugas lapangan"){ ?> 
                                 <td>  <a href="<?= $url ?>/app/pengaduan/lihat_alamat.php?id_pelanggan=<?= $pemasangan['id_pelanggan'] ?>"><?= $pemasangan['nm_pelanggan'] ?></a>  </td>
                             <?php }else{ ?>
@@ -59,7 +60,9 @@
                             <td><?= DateNUll($row['tgl_pengaduan']) ?></td>
                             <td><?= DateNUll($row['tgl_perbaikan']) ?></td>
                             <td><?= $row['ket_kendala'] ?></td>
-                            <td><?= $row['foto_kendala'] ?></td>
+                            <td>
+                                <img src="<?= $url."/foto/foto_kendala/". $row['foto_kendala'] ?>" alt="" width="50" height="50">
+                            </td>
                             <td><?= $row['status_pengaduan'] ?></td>
                             <td>
                                 <?php if ($_SESSION['level'] == 'pelanggan') {

@@ -15,19 +15,19 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
-                Form Edit Data Pencatatan_Penggunaan
+                Form Edit Data Pencatatan Penggunaan
             </h5>
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pencatatan_penggunaan.php' method='post' enctype='multipart/form-data'>
                 <div class='mb-3 row'>
-                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>Id_Pencatatan</label>
+                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>Id Pencatatan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' id='inputid_pencatatan' name='id_pencatatan' value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id_Pemasangan
+                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id Pemasangan
                     </label>
                     <div class='col-sm-10'>
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
@@ -110,7 +110,7 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
                     </div>
                     <div class='col-sm-10'>
                         <button type='submit' name='updatepencatatan_penggunaan' value='updatepencatatan_penggunaan' class='btn btn-success btn-user btn-block'>
-                            <i class='fas fa-save'></i> UPDATE
+                            <i class='fas fa-   save'></i> UPDATE
                         </button>
                     </div>
                 </div>

@@ -25,7 +25,7 @@
 
                 ?>
                 <div class='mb-3 row'>
-                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>ID PEMASANANGN</label>
+                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>Id Pemasangan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control'  value="PD00<?= $id ?>" readonly>
                         <input type='hidden' class='form-control' id='inputid_pengaduan' name='id_pengaduan' value="PD00<?= $id ?>" required>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputket_kendala' class='col-sm-2 col-form-label'>Ket Kendala</label>
+                    <label for='inputket_kendala' class='col-sm-2 col-form-label'>Keterangan Kendala</label>
                     <div class='col-sm-10'>
                         <textarea class='form-control' id='inputket_kendala' name='ket_kendala' required></textarea>
                     </div>
@@ -95,7 +95,7 @@
                     <div class='col-sm-10 '>
                         <select class='form-control' name='status_pengaduan' id='inputstatus_pengaduan'>
                             <?php
-                            $status_pengaduan = ['Pengaduan', 'Proses', 'Terselesaikan'];
+                            $status_pengaduan = ['Pengaduan'];
                             foreach ($status_pengaduan    as $val) { ?>
                                 <option value='<?= $val ?>'><?= $val ?></option>
                             <?php

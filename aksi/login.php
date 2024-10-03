@@ -16,7 +16,7 @@ if(isset($_POST)){
                 exit(); 
         }else{
                 $_SESSION['unvalid_username'] = $_POST['username'];                
-                header("Location: ".$url."/app/login.php");
+                header("Location: ".$url."/app/auth/login.php");
                 exit(); 
         }
 }else{

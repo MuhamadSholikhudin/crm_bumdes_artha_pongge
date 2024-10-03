@@ -74,8 +74,8 @@
                     <div class="col-sm-10">
 
                         <select class="form-control" name="status" id="inputstatus">
-                            <?php
-                            $status = ['upload', 'tervalidasi'];
+                            <?php                          
+                            $status = ['upload'];
                             foreach ($status    as $val) { ?>
                                 <option value="<?= $val ?>"><?= $val ?></option>
                             <?php

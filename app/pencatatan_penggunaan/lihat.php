@@ -6,26 +6,24 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
-
     <!-- Page Heading -->
     <h1 class='h3 mb-4 text-gray-800'>Pencatatan Penggunaan page</h1>
-
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
-                Form Edit Data Pencatatan_Penggunaan
+                Data Pencatatan_Penggunaan
             </h5>
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pencatatan_penggunaan.php' method='post' enctype='multipart/form-data'>
                 <div class='mb-3 row' style="display: none;">
-                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>Id_Pencatatan</label>
+                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>Id Pencatatan</label>
                     <div class='col-sm-10'>
                         <input type='number' class='form-control' id='inputid_pencatatan' name='id_pencatatan' value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id_Pemasangan
+                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id Pemasangan
                     </label>
                     <div class='col-sm-10'>
                         <?php ?>
@@ -64,8 +62,7 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <div class='col-sm-2'>
-                        
+                    <div class='col-sm-2'>                        
                     </div>
                     <div class='col-sm-10'>
                     <a href='<?= $url ?>/app/pencatatan_penggunaan/index.php' class='btn btn-info btn-sm '>

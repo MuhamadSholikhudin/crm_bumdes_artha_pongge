@@ -18,7 +18,7 @@
         unset($_SESSION['message']);
     }
     ?>
-    <?php if ($_SESSION['level'] == "petugas bumdes") { ?>
+    <?php if ($_SESSION['level'] == "pelanggan") { ?>
         <div class='d-sm-flex align-items-center justify-content-between mb-4'>
             <a href='<?= $url ?>/app/pembayaran/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pembayaran</a>
         </div>
@@ -38,12 +38,9 @@
                         <th>ID PEMASANGAN</th>
                         <th>TGL BAYAR</th>
                         <th>NOMINAL</th>
-                        <th>KET_PEMBAYARAN</th>
+                        <th>KETERANGAN PEMBAYARAN</th>
                         <th>STATUS</th>
-                        <?php if ($_SESSION['level'] == "petugas bumdes") { ?>
-                            <th>AKSI</th>
-                        <?php } ?>
-
+                        <th>AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,16 +60,16 @@
                     ?>
                         <tr>
                             <td><?= $row['id_pembayaran'] ?></td>
-
                             <td>
-                                <?= $row['nm_pelanggan'] . ' // ' . $row['tgl_realisasi_pekerjaan'] ?>
+                                <?= $row['id_pemasangan'] . ' // ' .$row['nm_pelanggan'] . ' // ' . $row['tgl_realisasi_pekerjaan'] ?>
                             </td>
                             <td><?= $row['tgl_bayar'] ?></td>
                             <td><?= intToRupiah($row['nominal']) ?></td>
                             <td><?= $row['ket_pembayaran'] ?></td>
                             <td><?= $row['status'] ?></td>
-                            <?php if ($_SESSION['level'] == "petugas bumdes") { ?>
-                                <td><a href='<?= $url ?>/app/pembayaran/edit.php?id_pembayaran=<?= $row['id_pembayaran'] ?>' pembayaran class='btn btn-success btn-icon-split btn-sm'>
+                            <td>
+                                <?php if ($_SESSION['level'] == "pelanggan" && $row['status'] == 'upload') { ?>
+                                    <a href='<?= $url ?>/app/pembayaran/edit.php?id_pembayaran=<?= $row['id_pembayaran'] ?>' pembayaran class='btn btn-success btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-edit'></i>
                                         </span>
@@ -84,9 +81,15 @@
                                         </span>
                                         <span class='text'>hapus</span>
                                     </button>
-                                </td>
-                            <?php } ?>
-
+                                <?php } else if ($_SESSION['level'] == "petugas bumdes") { ?>
+                                    <a href='<?= $url ?>/app/pembayaran/edit.php?id_pembayaran=<?= $row['id_pembayaran'] ?>' pembayaran class='btn btn-success btn-icon-split btn-sm'>
+                                        <span class='icon text-white-50'>
+                                            <i class='fas fa-edit'></i>
+                                        </span>
+                                        <span class='text'>edit</span>
+                                    </a>
+                                <?php } ?>
+                            </td>
                         </tr>
                     <?php
                     }

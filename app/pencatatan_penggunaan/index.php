@@ -54,12 +54,12 @@
                         $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
                     ?>
                         <tr>
-                            <td>
-                                <?= $pel['nm_pelanggan'] ?>
-                            </td>
+                            <td><?= $pel['nm_pelanggan'] ?></td>
                             <td><?= $row['nomor_pasang'] ?></td>
                             <td><?= $row['nilai_stand_meter'] ?></td>
-                            <td><?= $row['foto_stand_meter'] ?></td>
+                            <td>
+                                <img src="<?= $url."/foto/foto_stand_meter/".$row['foto_stand_meter'] ?> ?>" alt="" width="50" height="50">                             
+                            </td>
                             <td>
                                 <a href='<?= $url ?>/app/pencatatan_penggunaan/lihat.php?id_pencatatan=<?= $row['id_pencatatan'] ?>' class='btn btn-info btn-icon-split btn-sm'>
                                     <span class='icon text-white-50'>
@@ -68,21 +68,19 @@
                                     <span class='text'>lihat</span>
                                 </a>
                                 <?php if ($_SESSION['level'] == "petugas lapangan") { ?>
-
-                                <a href='<?= $url ?>/app/pencatatan_penggunaan/edit.php?id_pencatatan=<?= $row['id_pencatatan'] ?>' class='btn btn-success btn-icon-split btn-sm'>
-                                    <span class='icon text-white-50'>
-                                        <i class='fas fa-edit'></i>
-                                    </span>
-                                    <span class='text'>edit</span>
-                                </a>
-                                <button onclick="ConfirmDelete(<?= $row['id_pencatatan'] ?>)" class='btn btn-danger btn-icon-split btn-sm'>
-                                    <span class='icon text-white-50'>
-                                        <i class='fas fa-trash'></i>
-                                    </span>
-                                    <span class='text'>hapus</span>
-                                </button>
+                                    <a href='<?= $url ?>/app/pencatatan_penggunaan/edit.php?id_pencatatan=<?= $row['id_pencatatan'] ?>' class='btn btn-success btn-icon-split btn-sm'>
+                                        <span class='icon text-white-50'>
+                                            <i class='fas fa-edit'></i>
+                                        </span>
+                                        <span class='text'>edit</span>
+                                    </a>
+                                    <button onclick="ConfirmDelete(<?= $row['id_pencatatan'] ?>)" class='btn btn-danger btn-icon-split btn-sm'>
+                                        <span class='icon text-white-50'>
+                                            <i class='fas fa-trash'></i>
+                                        </span>
+                                        <span class='text'>hapus</span>
+                                    </button>
                                 <?php } ?>
-
                             </td>
                         </tr>
                     <?php

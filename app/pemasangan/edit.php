@@ -87,7 +87,14 @@ $pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = "' . 
                     <div class="col-sm-10">
                         <select class="form-control" name="status_pemasangan" id="inputstatus_pemasangan">
                             <?php
-                            $status_pemasangan = ['Pengajuan', 'Proses', 'Realisasi'];
+                                $status_pemasangan = ['Pengajuan', 'Proses', 'Realisasi'];
+                                if ($_SESSION['level'] == "pelangan") {
+                                    $status_pemasangan = ['Pengajuan'];
+                                } elseif($_SESSION['level'] == "petugas bumdes") {
+                                    $status_pemasangan = ['Pengajuan', 'Proses'];
+                                } elseif($_SESSION['level'] == "petugas lapangan") {
+                                    $status_pemasangan = ['Proses', 'Realisasi'];
+                                }
                             foreach ($status_pemasangan  as $val) {
                                 if ($pemasangan['status_pemasangan'] ==  $val) { ?>
                                     <option value="<?= $val ?>" selected><?= $val ?></option>

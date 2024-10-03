@@ -18,10 +18,19 @@
         unset($_SESSION['message']);
     }
     ?>
+    <?php 
+        $pema = 'SELECT * FROM pemasangan ORDER BY id_pemasangan DESC';
+        if($_SESSION['level'] == "pelanggan"){
+            $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
+            $pema = 'SELECT * FROM pemasangan where id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY id_pemasangan DESC';
+        }elseif($_SESSION['level'] == "petugas lapangan"){
+            $pema = 'SELECT * FROM pemasangan where status_pemasangan = "Proses" OR  status_pemasangan = "Realisasi"   ORDER BY id_pemasangan DESC';
+        }
+    ?>
     <div class='d-sm-flex align-items-center justify-content-between mb-4'>    
-    <?php if ($_SESSION['level'] == "pelanggan") { ?>
+    <?php if ($_SESSION['level'] == "pelanggan" && QueryOnedata($pema)->num_rows < 1) { ?>
         <a href='<?= $url ?>/app/pemasangan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pemasangan</a>
-        <?php } ?>
+    <?php } ?>
     </div>
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
@@ -33,6 +42,7 @@
             <table id='example' class='table table-bordered dataTable' id='dataTable' width='100%' cellspacing='0' role='grid' aria-describedby='dataTable_info' style='width: 100%;'>
                 <thead>
                     <tr class='text-center'>
+                        <th>ID PEMASANGAN</th>
                         <th>PELANGGAN</th>
                         <th>PETUGAS LAPANGAN</th>
                         <th>TGL PERMINTAAN PEMASANGAN</th>
@@ -45,18 +55,15 @@
                 </thead>
                 <tbody>
                     <?php
-                    $pema = 'SELECT * FROM pemasangan ORDER BY id_pemasangan DESC';
-                    if($_SESSION['level'] == "pelanggan"){
-                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
-                        $pema = 'SELECT * FROM pemasangan where id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY id_pemasangan DESC';
-                    }elseif($_SESSION['level'] == "petugas lapangan"){
-                        $pema = 'SELECT * FROM pemasangan where status_pemasangan = "Proses" OR  status_pemasangan = "Realisasi"   ORDER BY id_pemasangan DESC';
-                    }
                     foreach (QueryManyData($pema) as $row) {
                         $pelanggan = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
-                        $user = QueryOnedata('SELECT * FROM user where id_user = "'.$row['id_user'].'"')->fetch_assoc();  
+                        $user['nm_pengguna'] = '';
+                        if($row['id_user'] != NULL && $row['id_user'] == 0){
+                            $user = QueryOnedata('SELECT * FROM user where id_user = "'.$row['id_user'].'"')->fetch_assoc();  
+                        }
                     ?>
                         <tr>
+                            <td><?= $row['id_pemasangan'] ?> --> <a href="<?= $url. "/app/pemasangan/barcode.php?id_pemasangan=" . $row['id_pemasangan'] ?>" target="_blank" rel="noopener noreferrer"><i class="fa fa-qrcode"></i>qrcode</a> </td>
                             <?php if($_SESSION['level'] == "petugas lapangan"){ ?> 
                                 <td>  <a href="<?= $url ?>/app/pemasangan/lihat_alamat.php?id_pelanggan=<?= $row['id_pelanggan'] ?>"><?= $pelanggan['nm_pelanggan'] ?></a>  </td>
                             <?php }else{ ?>
@@ -65,8 +72,8 @@
                             <td><?= $user['nm_pengguna'] ?></td>
                             <td><?= DateNUll($row['tgl_permintaan_pemasangan']) ?></td>
                             <td><?= DateNUll($row['tgl_realisasi_pekerjaan']) ?></td>
-                            <td><?= DateNUll($row['tgl_tagihan']) ?></td>
-                            <td><?= intToRupiah($row['biaya']) ?></td>
+                            <td><?= $row['tgl_tagihan'] != NULL && $row['tgl_tagihan'] != 0 ? $row['tgl_tagihan'] : '' ?></td>
+                            <td><?=  intToRupiah($row['biaya']) ?></td>
                             <td><?= $row['status_pemasangan'] ?></td>
                             <td>                                
                                 <?php if ($_SESSION['level'] == "petugas bumdes") { ?>        

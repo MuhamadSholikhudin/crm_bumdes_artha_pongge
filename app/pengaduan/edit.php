@@ -49,8 +49,12 @@ $pengaduan = QueryOnedata('SELECT * FROM pengaduan WHERE id_pengaduan = "' . $_G
                         </select>
                     </div>
                 </div>
-                <div class='mb-3 row'>
-                    <label for='inputid_user' class='col-sm-2 col-form-label'>PETUGAS LAPANGAN
+                <?php if($_SESSION['level'] == 'petugas lapangan'){ ?>
+                    <div class='mb-3 row'>
+                <?php } else{ ?>
+                    <div class='mb-3 row d-none'>
+                <?php } ?>
+                    <label for='inputid_user' class='col-sm-2 col-form-label'>Petugas Lapangan
                     </label>
                     <div class='col-sm-10'>
                         <?php ?>
@@ -58,7 +62,7 @@ $pengaduan = QueryOnedata('SELECT * FROM pengaduan WHERE id_pengaduan = "' . $_G
                             <?php
                             $users = QueryManyData('SELECT * FROM user where level = "petugas lapangan" ');
                             foreach ($users  as  $row) {
-                                if ($_SESSION['id_user'] ==  $row['id_user']) { ?>
+                                if ($pengaduan['id_user'] ==  $row['id_user']) { ?>
                                     <option value='<?= $row['id_user'] ?>' selected><?= $row['nm_pengguna'] ?></option>
                                 <?php } else {
                                 ?><option value='<?= $row['id_user'] ?>'><?= $row['nm_pengguna'] ?></option>

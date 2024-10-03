@@ -21,7 +21,6 @@ if($_POST){
 
     $pelanggan = QueryManyData('SELECT * FROM pelanggan ');
     foreach ($pelanggan as  $row) {
-
         $nomor = $row['no_pelanggan']; //diambil dari no di database
 
         $userkey = '9b85e05d0de7';

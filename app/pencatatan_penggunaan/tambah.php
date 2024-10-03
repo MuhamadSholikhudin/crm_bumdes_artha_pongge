@@ -40,7 +40,7 @@
                             foreach ($pemasangan as  $row) {
                                 $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
                         ?>
-                                <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['id_pelanggan'] ?> // <?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
+                            <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['id_pelanggan'] ?> // <?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
                         <?php
                             }
                         ?>
@@ -104,7 +104,7 @@
                 <div class='mb-3 row'>
                     <div class='col-sm-2'>
                         <a href='<?= $url ?>/app/pencatatan_penggunaan/index.php' class='btn btn-info btn-sm '>
-                            <i class='fas fa-arrow-left'></i> kembali
+                            <i class='fas fa-arrow-left'></i> Kembali
                         </a>
                     </div>
                     <div class='col-sm-10'>
