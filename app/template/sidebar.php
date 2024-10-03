@@ -6,11 +6,11 @@
 
             // Hak Akses memiliku sub menu
             $level = [
-                'petugas bumdes' => ["user", "pelanggan","pemasangan", "berkas_pemasangan", "pembayaran", "broadcast"],
-                'kepala bumdes' => ["user", "pelanggan","pemasangan","broadcast", "berkas_pemasangan", "pembayaran","laporan_pengaduan"],
+                'petugas bumdes' => [ "pelanggan","pemasangan",  "pembayaran", "broadcast"],
+                'kepala bumdes' => [ "pelanggan","pemasangan","broadcast",  "pembayaran","laporan_pengaduan"],
                 'petugas lapangan' => ["pemasangan","pencatatan_penggunaan","pengaduan",],
                 'ketua unit air' => ["user", "layanan", "pelanggan", "laporan_pengaduan", "laporan_pemasangan", "laporan_pencatatan_penggunaan"],
-                'pelanggan' => ["data_pelanggan", "layanan", "pemasangan","berkas_pemasangan","pencatatan_penggunaan","pembayaran","pengaduan"],
+                'pelanggan' => ["data_pelanggan", "layanan", "pemasangan","pencatatan_penggunaan","pembayaran","pengaduan"],
             ];
         ?> 
         <!-- Sidebar -->
@@ -38,7 +38,7 @@
             <div class="sidebar-heading">
                 Interface 
             </div>
-            <?php if($_SESSION['level'] == 'petugas bumdes'){  ?>
+            <?php if($_SESSION['level'] == 'ketua unit air'){  ?>
             <li class="nav-item <?php if(Menu_active($access) == "show") { echo "active"; } ?> ">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">

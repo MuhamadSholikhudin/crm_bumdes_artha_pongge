@@ -33,8 +33,8 @@
             <table id='example' class='table table-bordered dataTable' id='dataTable' width='100%' cellspacing='0' role='grid' aria-describedby='dataTable_info' style='width: 100%;'>
                 <thead>
                     <tr class='text-center'>
-                        <th>NM LAYANAN</th>
-                        <th>KET_LAYANAN</th>
+                        <th>NAMA LAYANAN</th>
+                        <th>KETERANGAN LAYANAN</th>
                         <th>HARGA LAYANAN</th>
                         <th>JENIS LAYANAN</th>
                         <?php if ($_SESSION['level'] == "ketua unit air") { ?>

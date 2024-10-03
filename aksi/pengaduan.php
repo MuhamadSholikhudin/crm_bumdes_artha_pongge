@@ -1,8 +1,6 @@
 <?php
 include '../config/config.php';
 session_start();
-$lokasi_foto = 'C:/xampp/htdocs/crm_bumdes_artha_pongge/foto/foto_kendala/';
-$YMDhis = date('YMDhis');
 if (isset($_POST['simpanpengaduan'])) {
 
     $ekstensi_diperbolehkan = array('png', 'jpg');
@@ -15,7 +13,7 @@ if (isset($_POST['simpanpengaduan'])) {
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
         if ($ukuran < 1044070) {
             $nama_file = $YMDhis. $_FILES['foto_kendala']['name'];
-            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto . $nama_file);          
+            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto."/foto_kendala/" . $nama_file);          
             if ($upload_guru) {
                 // Data yang ingin Execution
 
@@ -48,8 +46,8 @@ if (isset($_POST['simpanpengaduan'])) {
         if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
             if ($ukuran < 1044070) {
                 $nama_file = $YMDhis. $_FILES['foto_kendala']['name'];
-                unlink($lokasi_foto .  $_POST['foto_kendala_old']);
-                $upload_guru =  move_uploaded_file($file_tmp, $lokasi_foto . $nama_file);
+                unlink($lokasi_foto."/foto_kendala/" .  $_POST['foto_kendala_old']);
+                $upload_guru =  move_uploaded_file($file_tmp, $lokasi_foto."/foto_kendala/" . $nama_file);
             } else {
                 $nama_file = $_POST['foto_kendala_old'];
             }

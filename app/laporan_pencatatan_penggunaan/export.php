@@ -1,54 +1,11 @@
-<?php
-function QueryManyData($sql)
-{
-    $conn = new mysqli("localhost", "root", "", "danis");
-    // Memeriksa koneksi
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
-    $result = $conn->query($sql);
-    // Menutup koneksi database
-    $conn->close();
-    return $result;
-}
-
-function QueryOnedata($sql)
-{
-    $conn = new mysqli("localhost", "root", "", "danis");
-
-    // Memeriksa koneksi
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
-    // Query SQL untuk mengambil data dari tabel "users"
-    $result = $conn->query($sql);
-
-    // Menutup koneksi database
-    $conn->close();
-    // return $row = $result->fetch_assoc();
-    return $result;
-}
-
-function intToRupiah($angka)
-{
-    return "Rp " . number_format($angka, 0, ',', '.');
-}
-
-function DateNUll($tanggal)
-{
-    if ($tanggal != NULL && $tanggal != '0000-00-00') {
-        return $tanggal;
-    } else {
-        return '';
-    }
-}
+<?php 
+include '../../config/config.php';
+session_start();
 ?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Export Data Excel Data Laporan pengaduan</title>
+    <title>Export Data Excel  Laporan Pencatatan Penggunaan</title>
 </head>
 
 <body>
@@ -98,7 +55,7 @@ function DateNUll($tanggal)
         $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM pencatatan_penggunaan 
                     LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan ORDER BY pemasangan.id_pemasangan DESC';
         foreach (QueryManyData($pencatat) as $row) {
-            $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = ' . $row['id_pelanggan'] . '')->fetch_assoc();
+            $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "' . $row['id_pelanggan'] . '"')->fetch_assoc();
         ?>
             <tr>
                 <td>

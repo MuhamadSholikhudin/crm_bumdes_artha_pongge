@@ -56,7 +56,7 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSIO
                     </div>
                     <div class='col-sm-10'>
                         <a href='<?= $url ?>/app/data_pelanggan/edit.php?id_pelanggan=<?= $pelanggan['id_pelanggan']; ?>' class='btn btn-success btn-sm '>
-                            <i class='fas fa-share-square'></i> Edit
+                            <i class='fas fa-share-square'></i> Edit Data Kamu
                         </a>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSIO
                     </div>
                     <div class='col-sm-10'>
                         <a href='<?= $url ?>/app/data_pelanggan/edit_alamat.php?id_pelanggan=<?= $pelanggan['id_pelanggan'] ?>' class='btn btn-success btn-sm '>
-                            <i class='fas fa-share-square'></i> edit
+                            <i class='fas fa-share-square'></i> Edit Alamat Kamu
                         </a>
                     </div>
                 </div>

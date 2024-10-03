@@ -43,10 +43,9 @@
                 <tbody>
                 <?php
                     $pema = 'SELECT * FROM pemasangan ORDER BY id_pemasangan DESC';
-
                     foreach (QueryManyData($pema) as $row) {
-                        $pelanggan = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = '.$row['id_pelanggan'].'')->fetch_assoc();  
-                        $user = QueryOnedata('SELECT * FROM user where id_user = '.$row['id_user'].'')->fetch_assoc();  
+                        $pelanggan = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
+                        $user = QueryOnedata('SELECT * FROM user where id_user = "'.$row['id_user'].'"')->fetch_assoc();  
                     ?>
                         <tr>
                             <td><?= $pelanggan['nm_pelanggan'] ?></td>

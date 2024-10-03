@@ -18,9 +18,17 @@
         unset($_SESSION['message']);
     }
     ?>
-    <div class='d-sm-flex align-items-center justify-content-between mb-4'>
-        <a href='<?= $url ?>/app/pelanggan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pelanggan</a>
-    </div>
+
+
+
+    <?php if($_SESSION['level'] == "ketua unit air"){ ?> 
+
+    <?php }else{ ?>
+        <div class='d-sm-flex align-items-center justify-content-between mb-4'>
+            <a href='<?= $url ?>/app/pelanggan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pelanggan</a>
+        </div>
+    <?php } ?>
+
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
@@ -31,9 +39,9 @@
             <table id='example' class='table table-bordered dataTable' id='dataTable' width='100%' cellspacing='0' role='grid' aria-describedby='dataTable_info' style='width: 100%;'>
                 <thead>
                     <tr class='text-center'>
-                        <th>ID_PELANGGAN</th>
-                        <th>NM_PELANGGAN</th>
-                        <th>NO_PELANGGAN</th>
+                        <th>ID PELANGGAN</th>
+                        <th>NAMA PELANGGAN</th>
+                        <th>NO PELANGGAN</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
@@ -45,7 +53,8 @@
                             <td><?= $row['id_pelanggan'] ?></td>
                             <td><?= $row['nm_pelanggan'] ?></td>
                             <td><?= $row['no_pelanggan'] ?></td>
-                            <td><a href='<?= $url ?>/app/pelanggan/edit.php?id_pelanggan=<?= $row['id_pelanggan'] ?>' pelanggan class='btn btn-success btn-icon-split btn-sm'>
+                            <td>
+                                <a href='<?= $url ?>/app/pelanggan/edit.php?id_pelanggan=<?= $row['id_pelanggan'] ?>' pelanggan class='btn btn-success btn-icon-split btn-sm'>
                                     <span class='icon text-white-50'>
                                         <i class='fas fa-edit'></i>
                                     </span>

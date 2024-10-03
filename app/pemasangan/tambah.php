@@ -36,7 +36,7 @@
                     <div class='col-sm-10'>
                         <select class='form-control' name='id_pelanggan' id='inputid_pelanggan'>
                             <?php
-                            $pelanggan = QueryManyData('SELECT * FROM pelanggan');
+                            $pelanggan = QueryManyData('SELECT * FROM pelanggan WHERE id_user = "'.$_SESSION['id_user'].'" ');
                             foreach ($pelanggan as  $row) {
                             ?>
                                 <option value='<?= $row['id_pelanggan'] ?>' ><?= $row['id_pelanggan'] ?> <?= $row['nm_pelanggan'] ?></option>
@@ -46,7 +46,7 @@
                         </select>
                     </div>
                 </div>
-                <div class='mb-3 row'>
+                <div class='mb-3 row d-none'>
                     <label for='inputid_user' class='col-sm-2 col-form-label'>Petugas Lapangan
                     </label>
                     <div class='col-sm-10'>
@@ -66,25 +66,26 @@
                 <div class='mb-3 row'>
                     <label for='inputtgl_permintaan_pemasangan' class='col-sm-2 col-form-label'>Tgl Permintaan Pemasangan</label>
                     <div class='col-sm-10'>
-                        <input type='date' class='form-control' id='inputtgl_permintaan_pemasangan' name='tgl_permintaan_pemasangan' >
+                        <input type='date' class='form-control' id='inputtgl_permintaan_pemasangan' name='tgl_permintaan_pemasangan' value="<?= date('Y-m-d') ?>" >
                     </div>
                 </div>
-                <div class='mb-3 row'>
+                <div class='mb-3 row d-none'>
                     <label for='inputtgl_realisasi_pekerjaan' class='col-sm-2 col-form-label'>Tgl Realisasi Pekerjaan</label>
                     <div class='col-sm-10'>
-                        <input type='date' class='form-control' id='inputtgl_realisasi_pekerjaan' name='tgl_realisasi_pekerjaan' >
+                        <input type='date' class='form-control' id='inputtgl_realisasi_pekerjaan' name='tgl_realisasi_pekerjaan'  >
                     </div>
                 </div>
-                <div class='mb-3 row'>
+                <div class='mb-3 row d-none'>
                     <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tgl Tagihan</label>
                     <div class='col-sm-10'>
-                        <input type='date' class='form-control' id='inputtgl_tagihan' name='tgl_tagihan' >
+                        <input type='number' class='form-control' id='inputtgl_tagihan' value="<?= date('j') ?>" name='tgl_tagihan' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputbiaya' class='col-sm-2 col-form-label'>Biaya</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputbiaya' name='biaya' required>
+                        <input type='number' class='form-control' value="<?= date('j') ?>" readonly>
+                        <input type='number' class='form-control d-none' id='inputbiaya' name='biaya' value="<?= date('j') ?>" required>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -93,7 +94,7 @@
                     <div class="col-sm-10">
                         <select class="form-control" name="status_pemasangan" id="inputstatus_pemasangan">
                             <?php
-                            $status_pemasangan = ['Pengajuan', 'Proses', 'Realisasi'];
+                            $status_pemasangan = ['Pengajuan'];
                             foreach ($status_pemasangan    as $val) { ?>
                                 <option value="<?= $val ?>"><?= $val ?></option>
                             <?php
