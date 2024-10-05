@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2024 at 12:35 AM
+-- Generation Time: Oct 05, 2024 at 04:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -40,9 +40,7 @@ CREATE TABLE `alamat_pelanggan` (
 --
 
 INSERT INTO `alamat_pelanggan` (`id_alamat`, `id_pelanggan`, `ket_alamat`, `lat_alamat`, `long_alamat`) VALUES
-('AL002', 'PL002', '--llll-l-lllllllllllll', 'l-', '-ll-lll-l'),
-('AL004', 'PL001', '3', '-6.807328657508948', '110.84190284163057'),
-('AL005', 'PL001', '-', '-', '-');
+('AL001', 'PL001', '1', '-6.743714', '110.839350');
 
 -- --------------------------------------------------------
 
@@ -62,7 +60,7 @@ CREATE TABLE `berkas_pemasangan` (
 --
 
 INSERT INTO `berkas_pemasangan` (`id_berkas_pemasangan`, `id_pemasangan`, `nm_berkas`, `foto_berkas`) VALUES
-('BP001', 'PS001', 'PDAM', 0x32303234536570547565303732353336426572696b75742d496e692d436172612d43656b2d4d65746572616e2d5044414d2d59616e672d4261696b2d44616e2d42656e61722d31303234783537362e6a7067);
+('BP001', 'PS001', 'berkas pemasangan', 0x323032344f63744672693034333934307777772e706e67);
 
 -- --------------------------------------------------------
 
@@ -83,16 +81,9 @@ CREATE TABLE `layanan` (
 --
 
 INSERT INTO `layanan` (`id_layanan`, `nm_layanan`, `ket_layanan`, `harga_layanan`, `jenis_layanan`) VALUES
-('LY001', 'Pemasangan Pipa Baru', 'Pemasangan pipa distribusi air baru untuk pelanggan', 500000, 'Pemasangan Baru'),
-('LY0010', 'Penggantian Pipa Rusak', 'Penggantian pipa air yang rusak atau bocor', 400000, 'Perawatan'),
-('LY002', 'Pemasangan Meteran', 'Pemasangan meteran air untuk pelanggan baru', 250000, 'Pemasangan Baru'),
-('LY003', 'Biaya Penggunaan Air', 'Biaya bulanan penggunaan air minum', 100000, 'Biaya Pemakaian'),
-('LY004', 'Perawatan Pipa', 'Perawatan pipa distribusi air untuk mencegah kebocoran', 300000, 'Perawatan'),
-('LY005', 'Perbaikan Kebocoran', 'Perbaikan kebocoran pada pipa utama', 450000, 'Perawatan'),
-('LY006', 'Pembersihan Tangki Air', 'Pembersihan dan perawatan tangki penyimpanan air', 150000, 'Perawatan'),
-('LY007', 'Instalasi Ulang Meteran', 'Penggantian meteran yang rusak atau usang', 200000, 'Pemasangan Baru'),
-('LY008', 'Biaya Penggunaan Air Minum', 'Biaya bulanan penggunaan air minum bersih', 120000, 'Biaya Pemakaian'),
-('LY009', 'Pemasangan Filter Air', 'Pemasangan filter air untuk penyaringan tambahan', 350000, 'Pemasangan Baru');
+('LY001', 'Pemasangan Baru Alat Stan Meter', 'Pemasangan Baru', 1750000, 'Pemasangan Baru'),
+('LY002', 'Pemakaian Air', 'Pemakaian Air', 50000, 'Biaya Pemakaian'),
+('LY003', 'Perawatan Bulanan', 'Perawatan Bulanan', 10000, 'Perawatan');
 
 -- --------------------------------------------------------
 
@@ -104,7 +95,7 @@ CREATE TABLE `pelanggan` (
   `id_pelanggan` varchar(11) NOT NULL,
   `id_user` varchar(11) DEFAULT NULL,
   `nm_pelanggan` varchar(100) DEFAULT NULL,
-  `no_pelanggan` int(100) DEFAULT NULL
+  `no_pelanggan` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -112,11 +103,12 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `id_user`, `nm_pelanggan`, `no_pelanggan`) VALUES
-('PL001', 'U008', 'John Doe', 1),
-('PL002', 'U009', 'Mary jane', 2),
-('PL003', 'U0010', 'Fatimah', 3),
-('PL006', 'U0013', 'Imanuel', NULL),
-('PL007', 'U009', 'Mary Jane', 2147483647);
+('PL001', 'U008', 'John Doe', '82327591195'),
+('PL002', 'U009', 'Mary jane', '82327591195'),
+('PL003', 'U0010', 'Fatimah', '82327591195'),
+('PL006', 'U0013', 'Imanuel', '82327591195'),
+('PL007', 'U009', 'Mary Jane', '82327591195'),
+('PL008', 'U0014', 'ayuk', '89776788789');
 
 -- --------------------------------------------------------
 
@@ -130,7 +122,7 @@ CREATE TABLE `pemasangan` (
   `id_user` varchar(11) DEFAULT NULL,
   `tgl_permintaan_pemasangan` date DEFAULT NULL,
   `tgl_realisasi_pekerjaan` date DEFAULT NULL,
-  `tgl_tagihan` date DEFAULT NULL,
+  `tgl_tagihan` int(11) DEFAULT NULL,
   `biaya` int(11) DEFAULT NULL,
   `status_pemasangan` enum('Pengajuan','Proses','Realisasi') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -140,7 +132,7 @@ CREATE TABLE `pemasangan` (
 --
 
 INSERT INTO `pemasangan` (`id_pemasangan`, `id_pelanggan`, `id_user`, `tgl_permintaan_pemasangan`, `tgl_realisasi_pekerjaan`, `tgl_tagihan`, `biaya`, `status_pemasangan`) VALUES
-('PS001', 'PL001', 'U006', '2024-09-24', '2024-09-24', '0000-00-00', 50000, 'Realisasi');
+('PS001', 'PL001', 'U006', '2024-10-03', '0000-00-00', 5, 1750000, 'Proses');
 
 -- --------------------------------------------------------
 
@@ -157,13 +149,6 @@ CREATE TABLE `pembayaran` (
   `status` enum('upload','tervalidasi') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `pembayaran`
---
-
-INSERT INTO `pembayaran` (`id_pembayaran`, `id_pemasangan`, `tgl_bayar`, `nominal`, `ket_pembayaran`, `status`) VALUES
-('BY001', 'PS001', '2024-09-24', 100000, 'Bayar Pemasangan alat ukur', 'tervalidasi');
-
 -- --------------------------------------------------------
 
 --
@@ -177,13 +162,6 @@ CREATE TABLE `pencatatan_penggunaan` (
   `nilai_stand_meter` int(100) DEFAULT NULL,
   `foto_stand_meter` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pencatatan_penggunaan`
---
-
-INSERT INTO `pencatatan_penggunaan` (`id_pencatatan`, `id_pemasangan`, `nomor_pasang`, `nilai_stand_meter`, `foto_stand_meter`) VALUES
-('PC001', 'PS001', 'ABCDEFGH', 5000, 0x323032345365705475653130333733345374616e642d416b6869722d65313639363737363737353733372e706e67);
 
 -- --------------------------------------------------------
 
@@ -207,7 +185,7 @@ CREATE TABLE `pengaduan` (
 --
 
 INSERT INTO `pengaduan` (`id_pengaduan`, `id_pemasangan`, `id_user`, `tgl_pengaduan`, `tgl_perbaikan`, `ket_kendala`, `foto_kendala`, `status_pengaduan`) VALUES
-('PD001', 'PS001', 'U006', '2024-09-24', '2024-09-24', 'pemasangan kurang rapi', 0x323032345365705475653034303233387777772e706e67, 'Pengaduan');
+('PD001', 'PS001', 'U006', '2024-10-05', '2024-10-05', '1', 0x323032344f6374536174303333373533636f7665722e6a7067, 'Terselesaikan');
 
 -- --------------------------------------------------------
 
@@ -231,6 +209,7 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nm_pengguna`, `level`) V
 ('U001', 'bumdes1', '1', 'Andi Budi', 'petugas bumdes'),
 ('U0010', 'pelanggan3', '1', 'Fatimah Syah', 'pelanggan'),
 ('U0013', 'pelanggan4', '1', 'Imanuel', 'pelanggan'),
+('U0014', 'ayuk', 'ayuk', 'ayuk', 'pelanggan'),
 ('U002', 'bumdes2', '1', 'Ali Rahman', 'petugas bumdes'),
 ('U003', 'ketuabumdes1', '1', 'Siti Rahma', 'ketua bumdes'),
 ('U004', 'ketuaunit1', '1', 'Bambang Hartono', 'ketua unit air'),

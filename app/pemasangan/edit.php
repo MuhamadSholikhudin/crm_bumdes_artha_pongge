@@ -63,16 +63,24 @@ $pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = "' . 
                         <input type='date' class='form-control' id='inputtgl_permintaan_pemasangan' name='tgl_permintaan_pemasangan' value='<?= $pemasangan['tgl_permintaan_pemasangan']; ?>' >
                     </div>
                 </div>
-                <div class='mb-3 row'>
+                <?php  if($_SESSION['level'] == "petugas lapangan") { ?>
+                    <div class='mb-3 row'>
+                <?php }else{ ?>
+                        <div class='mb-3 row d-none'>
+                <?php } ?>  
                     <label for='inputtgl_realisasi_pekerjaan' class='col-sm-2 col-form-label'>Tgl Realisasi Pekerjaan</label>
                     <div class='col-sm-10'>
                         <input type='date' class='form-control' id='inputtgl_realisasi_pekerjaan' name='tgl_realisasi_pekerjaan' value='<?= $pemasangan['tgl_realisasi_pekerjaan']; ?>' >
                     </div>
                 </div>
-                <div class='mb-3 row'>
-                    <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tgl Tagihan</label>
+                <?php  if($_SESSION['level'] == "petugas bumdes") { ?>
+                    <div class='mb-3 row'>
+                <?php }else{ ?>
+                        <div class='mb-3 row d-none'>
+                <?php } ?>                
+                <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tgl Tagihan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputtgl_tagihan' name='tgl_tagihan' value='1' >
+                        <input type='number' class='form-control' id='inputtgl_tagihan' name='tgl_tagihan' value='<?= $pemasangan['tgl_tagihan']; ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -88,7 +96,7 @@ $pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = "' . 
                         <select class="form-control" name="status_pemasangan" id="inputstatus_pemasangan">
                             <?php
                                 $status_pemasangan = ['Pengajuan', 'Proses', 'Realisasi'];
-                                if ($_SESSION['level'] == "pelangan") {
+                                if ($_SESSION['level'] == "pelanggan") {
                                     $status_pemasangan = ['Pengajuan'];
                                 } elseif($_SESSION['level'] == "petugas bumdes") {
                                     $status_pemasangan = ['Pengajuan', 'Proses'];

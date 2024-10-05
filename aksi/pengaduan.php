@@ -11,7 +11,7 @@ if (isset($_POST['simpanpengaduan'])) {
     $file_tmp = $_FILES['foto_kendala']['tmp_name'];
 
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-        if ($ukuran < 1044070) {
+        if ($ukuran < 2084070) {
             $nama_file = $YMDhis. $_FILES['foto_kendala']['name'];
             $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto."/foto_kendala/" . $nama_file);          
             if ($upload_guru) {

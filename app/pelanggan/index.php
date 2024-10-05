@@ -18,17 +18,12 @@
         unset($_SESSION['message']);
     }
     ?>
-
-
-
     <?php if($_SESSION['level'] == "ketua unit air"){ ?> 
-
     <?php }else{ ?>
         <div class='d-sm-flex align-items-center justify-content-between mb-4'>
             <a href='<?= $url ?>/app/pelanggan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pelanggan</a>
         </div>
     <?php } ?>
-
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
@@ -60,12 +55,12 @@
                                     </span>
                                     <span class='text'>edit</span>
                                 </a>
-                                <button onclick="ConfirmDelete(<?= $row['id_pelanggan'] ?>)" class='btn btn-danger btn-icon-split btn-sm'>
+                                <!-- <button onclick="ConfirmDelete('<?= $row['id_pelanggan'] ?>')" class='btn btn-danger btn-icon-split btn-sm'>
                                     <span class='icon text-white-50'>
                                         <i class='fas fa-trash'></i>
                                     </span>
                                     <span class='text'>hapus</span>
-                                </button>
+                                </button> -->
                             </td>
                         </tr>
                     <?php

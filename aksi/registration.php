@@ -24,23 +24,23 @@ if(isset($_POST)){
                 exit(); 
         }else{
                 $id = 1;
-                $terahir_user = QueryOnedata("SELECT * FROM user ORDER BY id_user DESC ");                  
+                $terahir_user = QueryOnedata("SELECT * FROM user ORDER BY CAST(SUBSTRING(id_user, 2) AS UNSIGNED) DESC ");                  
                 if($terahir_user->num_rows > 0 ){
                     $id = Rplc("U", $terahir_user->fetch_assoc()['id_user'])+$id;
                 }
                 $data = [
                         'id_user' => 'U00'.$id,
                         'username' => $_POST['username'],
-                         'password' => $_POST['password'],
-                         'nm_pengguna' => $_POST['nm_pengguna'],
-                         'level' => 'pelanggan'
+                        'password' => $_POST['password'],
+                        'nm_pengguna' => $_POST['nm_pengguna'],
+                        'level' => 'pelanggan'
                  ];
                 // Insert satu data
                 $process = InsertOnedata('user', $data);
-                $user = QueryOnedata('SELECT * FROM user ORDER BY id_user DESC LIMIT 1')->fetch_assoc();
+                $user = QueryOnedata('SELECT * FROM user ORDER BY CAST(SUBSTRING(id_user, 2) AS UNSIGNED) DESC LIMIT 1')->fetch_assoc();
 
                 $id_p = 1;
-                $terahir_pelanggan = QueryOnedata("SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ");                  
+                $terahir_pelanggan = QueryOnedata("SELECT * FROM pelanggan ORDER BY CAST(SUBSTRING(id_pelanggan, 3) AS UNSIGNED) DESC  ");                  
                 if($terahir_pelanggan->num_rows > 0 ){
                     $id_p = Rplc("PL", $terahir_pelanggan->fetch_assoc()['id_pelanggan'])+$id_p;
                 }

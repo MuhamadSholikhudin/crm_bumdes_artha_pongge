@@ -48,16 +48,8 @@ if ($berkas_pemasangan == NULL) {
                     <label for='inputfoto_berkas' class='col-sm-2 col-form-label'>Foto Berkas</label>
                     <div class='col-sm-10'>
                         <img src="<?= $url ?>/foto/foto_berkas/<?= $berkas_pemasangan['foto_berkas']; ?>" alt="" width="100%">
-                        <input type='file' class='form-control' id='inputfoto_berkas' name='foto_berkas'>
-                        <input type='hidden' class='form-control' id='inputfoto_berkas' name='foto_berkas_old' value='<?= $berkas_pemasangan['foto_berkas']; ?>' >
                     </div>
                 </div>
-
-
-
-
-
-                
                 <div class='mb-3 row'>
                     <div class='col-sm-2'>
                         <a href='<?= $url ?>/app/pemasangan/index.php' class='btn btn-info btn-sm '>
@@ -65,11 +57,7 @@ if ($berkas_pemasangan == NULL) {
                         </a>
                     </div>
                     <div class='col-sm-10'>
-                    <?php if ($_SESSION['level'] != "pelanggan") { ?>
-                        <button type='submit' name='updateberkas_pemasangan' value='updateberkas_pemasangan' class='btn btn-success btn-user btn-block'>
-                            <i class='fas fa-save'></i> UPDATE
-                        </button>
-                        <?php } ?>
+                    
 
                     </div>
                 </div>

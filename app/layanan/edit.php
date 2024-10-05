@@ -4,7 +4,7 @@
 <?php
 
 
-$layanan = QueryOnedata('SELECT * FROM layanan WHERE id_layanan = ' . $_GET['id_layanan'] . '')->fetch_assoc();
+$layanan = QueryOnedata('SELECT * FROM layanan WHERE id_layanan = "' . $_GET['id_layanan'] . '"')->fetch_assoc();
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -21,19 +21,19 @@ $layanan = QueryOnedata('SELECT * FROM layanan WHERE id_layanan = ' . $_GET['id_
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/layanan.php' method='post' enctype='multipart/form-data'>
                 <div class='mb-3 row'>
-                    <label for='inputid_layanan' class='col-sm-2 col-form-label'>Id_Layanan</label>
+                    <label for='inputid_layanan' class='col-sm-2 col-form-label'>Id Layanan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputid_layanan' name='id_layanan' value='<?= $layanan['id_layanan']; ?>' required>
+                        <input type='text' class='form-control' id='inputid_layanan' name='id_layanan' value='<?= $layanan['id_layanan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputnm_layanan' class='col-sm-2 col-form-label'>Nm_Layanan</label>
+                    <label for='inputnm_layanan' class='col-sm-2 col-form-label'>Nama Layanan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' id='inputnm_layanan' name='nm_layanan' value='<?= $layanan['nm_layanan']; ?>' required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputket_layanan' class='col-sm-2 col-form-label'>Ket_Layanan</label>
+                    <label for='inputket_layanan' class='col-sm-2 col-form-label'>Keterangan Layanan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' id='inputket_layanan' name='ket_layanan' value='<?= $layanan['ket_layanan']; ?>' required>
                     </div>
@@ -53,14 +53,12 @@ $layanan = QueryOnedata('SELECT * FROM layanan WHERE id_layanan = ' . $_GET['id_
                             <?php
                             $jenis_layanan = ['Pemasangan Baru', 'Biaya Pemakaian', 'Perawatan'];
                             foreach ($jenis_layanan    as $val) { ?> <?php
-                                        if ($val == $layanan['jenis_layanan']) { ?>
+                                 if ($val == $layanan['jenis_layanan']) { ?>
                                     <option value='<?= $val ?>' selected><?= $val ?></option>
-                                <?php } else { ?> as $val) {
-                                    ?>
+                            <?php } else { ?> as $val) { ?>
                                     <option value="<?= $val ?>"><?= $val ?></option>
-                            <?php
-                                        }
-                                    }
+                            <?php }
+                            }
                             ?>
                         </select>
                     </div>

@@ -6,6 +6,7 @@ $alamat_pelanggan = QueryOnedata(
     'SELECT * FROM alamat_pelanggan WHERE id_pelanggan = "' .$_GET['id_pelanggan'] .'"')->fetch_assoc();
 if ($alamat_pelanggan == null) {
     $alamat_pelanggan = [
+        'id_alamat' => null,
         'ket_alamat' => null,
         'lat_alamat' => null,
         'long_alamat' => null,
@@ -14,10 +15,8 @@ if ($alamat_pelanggan == null) {
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
-
     <!-- Page Heading -->
     <h1 class='h3 mb-4 text-gray-800'>Alamat Pelanggan page</h1>
-
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
@@ -26,7 +25,7 @@ if ($alamat_pelanggan == null) {
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/data_pelanggan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row' style='display: none;'>
+                <div class='mb-3 row'>
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Id_pengguna</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $_GET['id_pelanggan'] ?>' required>
@@ -53,12 +52,77 @@ if ($alamat_pelanggan == null) {
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputlong_alamat' class='col-sm-2 col-form-label'>
-                        <a href="#" onclick="getLocation();" class='btn btn-danger btn-user btn-block btn-sm'>
-                            <i class='fas fa-search-location'></i>Map sekarang
-                        </a>
                     </label>
-                    <div class='col-sm-10' id="showmap">
-                        <!-- <iframe src="https://www.google.com/maps?q=<?= $alamat_pelanggan['lat_alamat'] ?>,<?= $alamat_pelanggan['long_alamat'] ?>&hl=es;z=14&output=embed" frameborder="0" style='width:100%;'></iframe> -->
+                    <div class='col-sm-10' >
+                        <div id="map"></div>
+                        <!-- Leaflet JS -->
+                        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+                        <script>
+                            // Inisialisasi peta dengan koordinat awal
+                            <?php if ($alamat_pelanggan['lat_alamat'] == null) { ?>
+                                var map = L.map('map').setView([-6.807797, 110.841735], 13); // Koordinat Jakarta
+                            <?php } else{ ?>
+                                    var map = L.map('map').setView([<?= $alamat_pelanggan['lat_alamat'] ?>, <?= $alamat_pelanggan['long_alamat'] ?>], 13); // Koordinat Database
+                            <?php } ?>       
+
+                            // Tambahkan tile layer dari OpenStreetMap
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+
+                            <?php if ($alamat_pelanggan['lat_alamat'] == null) { ?>
+                                // Menambahkan marker yang bisa di-drag
+                                var marker = L.marker([-6.807797, 110.841735], {
+                                    draggable: true // Aktifkan draggable
+                                }).addTo(map)
+                                    .bindPopup('Seret marker untuk memindahkan lokasi')
+                                    .openPopup();
+                            <?php } else{ ?>
+                                // Menambahkan marker yang bisa di-drag
+                                var marker = L.marker([<?= $alamat_pelanggan['lat_alamat'] ?>, <?= $alamat_pelanggan['long_alamat'] ?>], {
+                                    draggable: true // Aktifkan draggable
+                                }).addTo(map)
+                                    .bindPopup('Seret marker untuk memindahkan lokasi')
+                                    .openPopup();
+
+                            <?php } ?>
+
+                            // Update elemen HTML dengan latitude dan longitude baru
+                            function updateLatLng(lat, lng) {
+                                // document.getElementById('lat').textContent = lat.toFixed(6);s
+                                // document.getElementById('lng').textContent = lng.toFixed(6);
+                                document.getElementById("inputlat_alamat").value = lat.toFixed(6);
+                                document.getElementById("inputlong_alamat").value = lng.toFixed(6);
+                            }
+
+                            // Fungsi untuk mengirim data latitude dan longitude ke PHP
+                            function sendLatLngToServer(lat, lng) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "update_location.php", true);
+                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState === 4 && xhr.status === 200) {
+                                        console.log("Data successfully sent to the server.");
+                                        console.log(xhr.responseText); // Cek respons dari PHP
+                                    }
+                                };
+                                xhr.send("latitude=" + lat + "&longitude=" + lng);
+                            }
+
+                            // Fungsi untuk menangkap event saat marker di-drag
+                            marker.on('dragend', function (e) {
+                                var lat = marker.getLatLng().lat;
+                                var lng = marker.getLatLng().lng;
+                                updateLatLng(lat, lng); // Update tampilan koordinat
+                                sendLatLngToServer(lat, lng); // Kirim koordinat ke server PHP
+                            });
+
+                            // Mengaktifkan geolocation
+                            map.locate({setView: true, maxZoom: 13});
+                        </script>
+
+                        <?php /*
                         <div id="map"></div>
                         <script>
                             function initMap() {
@@ -98,6 +162,7 @@ if ($alamat_pelanggan == null) {
                             // Load the map when the page loads
                             window.onload = initMap;
                         </script>
+                     */ ?>
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -116,7 +181,7 @@ if ($alamat_pelanggan == null) {
         </div>
     </div>
 </div>
-
+<?php /*
 <script>
     //  getLocation();  
     function getLocation() {
@@ -130,18 +195,9 @@ if ($alamat_pelanggan == null) {
     function showPosition(position) {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-
-        // alert("Latitude: " + lat + "<br>Longitude: " + lng);
-        // Display the coordinates
-        // document.getElementById("showmap").innerHTML = "Latitude: " + lat + "<br>Longitude: " + lng;
-
         document.getElementById("inputlat_alamat").value = lat;
         document.getElementById("inputlong_alamat").value = lng;
         document.getElementById("showmap").innerHTML = '<iframe src="https://www.google.com/maps?q=' + lat + ',' + lng + '&hl=es;z=14&output=embed" frameborder="0" style="width:100%;"></iframe>';
-
-        // Optionally, send the data to a PHP script
-
-
     }
 
     function showError(error) {
@@ -162,5 +218,5 @@ if ($alamat_pelanggan == null) {
     }
 </script>
 <!-- /.container-fluid -->
-
+*/ ?>
 <?php include_once '../template/footer.php'; ?>

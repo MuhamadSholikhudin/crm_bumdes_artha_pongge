@@ -18,14 +18,13 @@
             <form action='<?= $url ?>/aksi/pengaduan.php' method='post' enctype='multipart/form-data'>
                 <?php 
                     $id = 1;
-                    $terahir_pengaduan = QueryOnedata("SELECT * FROM pengaduan ORDER BY id_pengaduan DESC ");                  
+                    $terahir_pengaduan = QueryOnedata("SELECT * FROM pengaduan ORDER BY CAST(SUBSTRING(id_pengaduan, 3) AS UNSIGNED) DESC  ");                  
                     if($terahir_pengaduan->num_rows > 0 ){
                         $id = Rplc("PD", $terahir_pengaduan->fetch_assoc()['id_pengaduan']) + $id;
                     }
-
                 ?>
                 <div class='mb-3 row'>
-                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>Id Pemasangan</label>
+                    <label for='inputid_pengaduan' class='col-sm-2 col-form-label'>Id Pengaduan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control'  value="PD00<?= $id ?>" readonly>
                         <input type='hidden' class='form-control' id='inputid_pengaduan' name='id_pengaduan' value="PD00<?= $id ?>" required>

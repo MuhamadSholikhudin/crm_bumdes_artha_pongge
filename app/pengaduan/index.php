@@ -74,7 +74,7 @@
                                         </span>
                                         <span class='text'>edit</span>
                                     </a>
-                                    <button onclick="ConfirmDelete(<?= $row['id_pengaduan'] ?>)" class='btn btn-danger btn-icon-split btn-sm'>
+                                    <button onclick="ConfirmDelete('<?= $row['id_pengaduan'] ?>')" class='btn btn-danger btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-trash'></i>
                                         </span>

@@ -9,19 +9,14 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSIO
 
     <!-- Page Heading -->
     <h1 class='h3 mb-4 text-gray-800'>Pelanggan page</h1>
-    <?php
-    if (isset($_SESSION['message'])) {
-    ?>
+    <?php if (isset($_SESSION['message'])) { ?>
         <div class='alert alert-warning alert-dismissible fade show' role='alert'>
             <strong>Success !</strong> <?= $_SESSION['message'] ?>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
             </button>
         </div>
-    <?php
-        unset($_SESSION['message']);
-    }
-    ?>
+    <?php unset($_SESSION['message']); } ?>
 
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
@@ -31,28 +26,31 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSIO
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pelanggan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row' style="display: none;">
-                    <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Pelanggan</label>
+                <div class='mb-3 row'>
+                    <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>ID Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='texts' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
+                        <input type='texts' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' readonly>
                     </div>
                 </div>
-
                 <div class='mb-3 row'>
                     <label for='inputnm_pelanggan' class='col-sm-2 col-form-label'>Nama Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='text' class='form-control' id='inputnm_pelanggan' name='nm_pelanggan' value='<?= $pelanggan['nm_pelanggan']; ?>' required>
+                        <input type='text' class='form-control' id='inputnm_pelanggan' name='nm_pelanggan' value='<?= $pelanggan['nm_pelanggan']; ?>' readonly>
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputno_pelanggan' class='col-sm-2 col-form-label'>No Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputno_pelanggan' name='no_pelanggan' value='<?= $pelanggan['no_pelanggan']; ?>' required>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">+62</div>
+                                </div>
+                                <input type='number' class='form-control' id='inputno_pelanggan' name='no_pelanggan' value='<?= $pelanggan['no_pelanggan']; ?>' readonly>
+                            </div>
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <div class='col-sm-2'>
-
                     </div>
                     <div class='col-sm-10'>
                         <a href='<?= $url ?>/app/data_pelanggan/edit.php?id_pelanggan=<?= $pelanggan['id_pelanggan']; ?>' class='btn btn-success btn-sm '>
@@ -68,6 +66,7 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSIO
     $alamat_pelanggan = QueryOnedata('SELECT * FROM alamat_pelanggan WHERE id_pelanggan = "' . $pelanggan['id_pelanggan'] . '"')->fetch_assoc();
     if ($alamat_pelanggan == NULL) {
         $alamat_pelanggan = [
+            'id_alamat' => NULL,
             'ket_alamat' => NULL,
             'lat_alamat' => NULL,
             'long_alamat' => NULL,
@@ -85,25 +84,27 @@ $pelanggan = QueryOnedata('SELECT * FROM pelanggan WHERE id_user = "' . $_SESSIO
                 <div class='mb-3 row'>
                     <label for='inputket_alamat' class='col-sm-2 col-form-label'>Keterangan Alamat</label>
                     <div class='col-sm-10'>
-                        <textarea class='form-control' id='inputket_alamat' name='ket_alamat' required><?= $alamat_pelanggan['ket_alamat'] ?></textarea>
+                        <textarea class='form-control' id='inputket_alamat' name='ket_alamat' readonly><?= $alamat_pelanggan['ket_alamat'] ?></textarea>
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputlat_alamat' class='col-sm-2 col-form-label'>Latitud Alamat</label>
                     <div class='col-sm-10'>
-                        <textarea class='form-control' id='inputlat_alamat' name='lat_alamat' required><?= $alamat_pelanggan['lat_alamat'] ?></textarea>
+                        <textarea class='form-control' id='inputlat_alamat' name='lat_alamat' readonly><?= $alamat_pelanggan['lat_alamat'] ?></textarea>
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputlong_alamat' class='col-sm-2 col-form-label'>Longtitude    Alamat</label>
                     <div class='col-sm-10'>
-                        <textarea class='form-control' id='inputlong_alamat' name='long_alamat' required><?= $alamat_pelanggan['long_alamat'] ?></textarea>
+                        <textarea class='form-control' id='inputlong_alamat' name='long_alamat' readonly><?= $alamat_pelanggan['long_alamat'] ?></textarea>
                     </div>
                 </div>
                  <div class='mb-3 row'>
                     <label for='inputlong_alamat' class='col-sm-2 col-form-label'>Maps Alamat</label>
                     <div class='col-sm-10'>
-                        <iframe src="https://www.google.com/maps?q=<?= $alamat_pelanggan['lat_alamat'] ?>,<?= $alamat_pelanggan['long_alamat'] ?>&hl=es;z=14&output=embed" frameborder="0" style='width:100%;'></iframe>
+                        <?php if($alamat_pelanggan['id_alamat'] != NULL){ ?>
+                            <iframe src="https://www.google.com/maps?q=<?= $alamat_pelanggan['lat_alamat'] ?>,<?= $alamat_pelanggan['long_alamat'] ?>&hl=es;z=14&output=embed" frameborder="0" style='width:100%; height:400px;'></iframe>
+                        <?php } ?>
                     </div> 
                 </div> 
                 <div class='mb-3 row'>

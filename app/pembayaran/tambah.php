@@ -18,7 +18,7 @@
             <form action='<?= $url ?>/aksi/pembayaran.php' method='post' enctype='multipart/form-data'>
                 <?php 
                     $id = 1;
-                    $terahir_pembayaran = QueryOnedata("SELECT * FROM pembayaran ORDER BY id_pembayaran DESC ");                  
+                    $terahir_pembayaran = QueryOnedata("SELECT * FROM pembayaran ORDER BY CAST(SUBSTRING(id_pembayaran, 3) AS UNSIGNED) DESC ");                  
                     if($terahir_pembayaran->num_rows > 0 ){
                         $id = Rplc("BY", $terahir_pembayaran->fetch_assoc()['id_pembayaran']) + $id;
                     }
