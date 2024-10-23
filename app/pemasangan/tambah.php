@@ -22,7 +22,7 @@
             <form action='<?= $url ?>/aksi/pemasangan.php' method='post' enctype='multipart/form-data'>
                 <?php 
                     $id = 1;
-                    $terahir_pemasangan = QueryOnedata("SELECT * FROM pemasangan ORDER BY id_pemasangan DESC ");                  
+                    $terahir_pemasangan = QueryOnedata("SELECT * FROM pemasangan ORDER BY CAST(SUBSTRING(id_pemasangan, 3) AS UNSIGNED) DESC ");                  
                     if($terahir_pemasangan->num_rows > 0 ){
                         $id = Rplc("PS", $terahir_pemasangan->fetch_assoc()['id_pemasangan']) + $id;
                     }

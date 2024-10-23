@@ -39,6 +39,7 @@ if (isset($_POST['simpanpelanggan'])) {
     header('Location: ' . $url . '/app/data_pelanggan/index.php');
     exit();
 } elseif (isset($_POST['updatealamat_pelanggan'])) {
+<<<<<<< HEAD
     if ($_POST['id_alamat'] == null) {
         $data = [
             'id_alamat' => $_POST['id_alamat'],
@@ -47,6 +48,18 @@ if (isset($_POST['simpanpelanggan'])) {
             'lat_alamat' => $_POST['lat_alamat'],
             'long_alamat' => $_POST['long_alamat'],
         ];
+=======
+
+    if ($_POST['id_alamat'] == NULL) {
+        $id = 1;
+        $terahir_alamat_pelanggan = QueryOnedata("SELECT * FROM alamat_pelanggan ORDER BY CAST(SUBSTRING(id_alamat, 3) AS UNSIGNED) DESC ");                  
+        if($terahir_alamat_pelanggan->num_rows > 0 ){
+            $id = Rplc("AL", $terahir_alamat_pelanggan->fetch_assoc()['id_alamat'])+$id;
+        }
+        $data = [
+            'id_alamat' => "AL00".$id, 
+        'id_pelanggan' => $_POST['id_pelanggan'], 'ket_alamat' => $_POST['ket_alamat'], 'lat_alamat' => $_POST['lat_alamat'], 'long_alamat' => $_POST['long_alamat'],];
+>>>>>>> 04071b7ebf238e98c4ba1afad3948e63aef91972
         // Insert satu data
         $process = InsertOnedata('alamat_pelanggan', $data);
         $_SESSION['message'] = 'Data Alamat Pelanggan ' . $process['message'];

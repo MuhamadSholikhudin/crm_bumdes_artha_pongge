@@ -78,11 +78,22 @@
                             <td><?= $user['nm_pengguna'] ?></td>
                             <td><?= DateNUll($row['tgl_permintaan_pemasangan']) ?></td>
                             <td><?= DateNUll($row['tgl_realisasi_pekerjaan']) ?></td>
-                            <td><?= $row['tgl_tagihan'] != NULL && $row['tgl_tagihan'] != 0 ? $row['tgl_tagihan'] : '' ?></td>
+                            <td>
+                                <?= $row['tgl_tagihan'] != NULL && $row['tgl_tagihan'] != 0 ? $row['tgl_tagihan'] : '' ?>
+                                <?php if ($_SESSION['level'] == "petugas bumdes") { ?>        
+                                    <?php if ($row['tgl_tagihan'] == date('j')) { ?>        
+                                        <a href='<?= $url ?>/aksi/pemasangan.php?id_pemasangan=<?= $row['id_pemasangan'] ?>&notif=true' class='btn btn-primary btn-icon-split btn-sm'>
+                                            <span class='icon text-white-50'>
+                                                <i class='fa fa-paper-plane'></i>
+                                            </span>
+                                            <span class='text'>Send</span>
+                                        </a>
+                                    <?php } ?>
+                                <?php } ?>
+                            </td>
                             <td><?=  intToRupiah($row['biaya']) ?></td>
                             <td><?= $row['status_pemasangan'] ?></td>
                             <td>
-                            <?= $berkas_pemasangan['foto_berkas'] ?>
                                 <img src="<?= $url."/foto/foto_berkas/". $berkas_pemasangan['foto_berkas'] ?>" alt="" width="50" height="50">
                             </td>
                             <td>                                
@@ -95,12 +106,6 @@
                                             <span class='text'>edit</span>
                                         </a>
                                     <?php  } ?>
-                                    <a href='<?= $url ?>/app/pemasangan/upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
-                                        <span class='icon text-white-50'>
-                                            <i class='fas fa-upload'></i>
-                                        </span>
-                                        <span class='text'>foto</span>
-                                    </a>
                                 <?php }elseif($_SESSION['level'] == "petugas lapangan") {  ?>
                                     <a href='<?= $url ?>/app/pemasangan/edit.php?id_pemasangan=<?= $row['id_pemasangan'] ?>' class='btn btn-success btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
@@ -114,14 +119,31 @@
                                         </span>
                                         <span class='text'>Upload Bukti</span>
                                     </a>
-                                <?php } ?>
-
-                                <a href='<?= $url ?>/app/pemasangan/lihat_upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
+                                <?php }elseif($_SESSION['level'] == "pelanggan") {  ?>                                    
+                                    <?php if($row['status_pemasangan'] == 'Pengajuan') {  ?>
+                                        <a href='<?= $url ?>/app/pemasangan/edit.php?id_pemasangan=<?= $row['id_pemasangan'] ?>' class='btn btn-success btn-icon-split btn-sm'>
+                                            <span class='icon text-white-50'>
+                                                <i class='fas fa-edit'></i>
+                                            </span>
+                                            <span class='text'>edit</span>
+                                        </a>
+                                        <button onclick="ConfirmDelete('<?= $row['id_pemasangan'] ?>')" class='btn btn-danger btn-icon-split btn-sm'>
+                                            <span class='icon text-white-50'>
+                                                <i class='fas fa-trash'></i>
+                                            </span>
+                                            <span class='text'>hapus</span>
+                                        </button>
+                                    <?php } ?>
+                                <?php } 
+                                if($berkas->num_rows > 0){ ?>
+                                    <a href='<?= $url ?>/app/pemasangan/lihat_upload.php?id_pemasangan=<?= $row['id_pemasangan'] ?>'  class='btn btn-warning btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-eye'></i>
                                         </span>
                                         <span class='text'>foto</span>
                                     </a>
+                                <?php } ?>
+                                    
                             </td>
                         </tr>
                     <?php

@@ -18,9 +18,7 @@
             <form action='<?= $url ?>/aksi/pelanggan.php' method='post' enctype='multipart/form-data'>
                 <?php 
                     $id = 1;
-                    //cari data terakhir dari pelanggan
-                    // $terahir_pelanggan = "SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ";
-                    $terahir_pelanggan = QueryOnedata("SELECT * FROM pelanggan ORDER BY id_pelanggan DESC ");                  
+                    $terahir_pelanggan = QueryOnedata("SELECT * FROM pelanggan ORDER BY CAST(SUBSTRING(id_pelanggan, 3) AS UNSIGNED) DESC ");                  
                     if($terahir_pelanggan->num_rows > 0 ){
                         $id = Rplc("PL", $terahir_pelanggan->fetch_assoc()['id_pelanggan'])+$id;
                     }
@@ -57,7 +55,12 @@
                 <div class='mb-3 row'>
                     <label for='inputno_pelanggan' class='col-sm-2 col-form-label'>No Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputno_pelanggan' name='no_pelanggan' required>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">+62</div>
+                                </div>
+                                <input type='number' class='form-control' id='inputno_pelanggan' name='no_pelanggan' required>
+                            </div>
                     </div>
                 </div>
                 <div class='mb-3 row'>

@@ -4,6 +4,7 @@ session_start();
 
 $lokasi_foto = 'C:/xampp/htdocs/crm_bumdes_artha_pongge/foto/foto_berkas/';
 $YMDhis = date('YMDhis');
+
 if (isset($_POST['simpanpemasangan'])) {
     $data = [
         'id_pemasangan' => $_POST['id_pemasangan'],
@@ -129,6 +130,30 @@ if (isset($_POST['simpanpemasangan'])) {
     }
 
     $_SESSION['message'] = 'Data Berkas Pemasangan ' . $process['message'];
+    header('Location: ' . $url . '/app/pemasangan/index.php');
+    exit();
+} elseif ($_GET['notif'] == 'true') {
+    $pemasangan = QueryOnedata('SELECT * FROM pemasangan LEFT JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan WHERE pemasangan.id_pemasangan = "'.$_GET['id_pemasangan'].'" ')->fetch_assoc();
+    $lay1 = QueryOnedata('SELECT * FROM layanan WHERE jenis_layanan ="Biaya Pemakaian" ')->fetch_assoc();
+    $lay2 = QueryOnedata('SELECT * FROM layanan WHERE jenis_layanan ="Perawatan" ')->fetch_assoc();
+    $m = "Pelanggan ".$pemasangan['nm_pelanggan']."
+    Berikut Tagihan anda pada bulan ini :
+    1. ".$lay1['nm_layanan']." : ".intToRupiah($lay1['harga_layanan'])."
+    2. ".$lay2['nm_layanan']." : ".intToRupiah($lay2['harga_layanan'])."
+    Total : ".intToRupiah(($lay1['harga_layanan']+$lay2['harga_layanan']))." 
+    \n
+    Agar anda dapat menggunakan layanan kami dimohon untuk membayar tagihan anda. 
+    ";
+
+    $url_wa = 'https://console.zenziva.net/wareguler/api/sendWA/';
+    $nomor = '0'.$pemasangan['no_pelanggan']; //diambil dari no di database
+    $userkey = '9b85e05d0de7';
+    $passkey = '83f0dd70ecb6c588f2ab2cc3';
+    $telepon =  $nomor;    
+    $message = $m;
+    $satu = zen($url_wa, $userkey, $passkey, $telepon, $message);
+
+    $_SESSION['message'] = 'Kirim Notifikasi ke pelanggan berhasil di proses ';
     header('Location: ' . $url . '/app/pemasangan/index.php');
     exit();
 } elseif ($_GET['action'] == 'delete') {

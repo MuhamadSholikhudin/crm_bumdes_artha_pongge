@@ -23,11 +23,12 @@ $user = QueryOnedata('SELECT * FROM user WHERE id_user = "' . $pelanggan['id_use
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/data_pelanggan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row' style="display: none;">
-                    <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Pelanggan</label>
+                <div class='mb-3 row'>
+                    <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>ID Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='hidden' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' required>
-                        <input type='hidden' class='form-control' id='inputid_user' name='id_user' value='<?= $pelanggan['id_user']; ?>' required>
+                        <input type='text' class='form-control' value='<?= $pelanggan['id_pelanggan']; ?>' readonly>
+                        <input type='hidden' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $pelanggan['id_pelanggan']; ?>' >
+                        <input type='hidden' class='form-control' id='inputid_user' name='id_user' value='<?= $pelanggan['id_user']; ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -46,7 +47,12 @@ $user = QueryOnedata('SELECT * FROM user WHERE id_user = "' . $pelanggan['id_use
                 <div class='mb-3 row'>
                     <label for='inputno_pelanggan' class='col-sm-2 col-form-label'>No Pelanggan</label>
                     <div class='col-sm-10'>
-                        <input type='text' class='form-control' id='inputno_pelanggan' name='no_pelanggan' value='<?= $pelanggan['no_pelanggan']; ?>' required>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">+62</div>
+                                </div>
+                                <input type='text' class='form-control' id='inputno_pelanggan' name='no_pelanggan' value='<?= $pelanggan['no_pelanggan']; ?>' required>
+                            </div>
                     </div>
                 </div>
                 <div class='mb-3 row'>

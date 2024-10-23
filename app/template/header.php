@@ -32,15 +32,24 @@ if(!isset($_SESSION['login'])){
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyGucOZmBUEyD6I6oOmxTDL_gO8kPWN7A"></script>
-    <style>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyGucOZmBUEyD6I6oOmxTDL_gO8kPWN7A"></script> -->
+    <!-- <style>
       #map {
         height: 400px;
         width: 100%;
       }
+    </style> -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+        }
+        .coordinates {
+            margin: 10px;
+        }
     </style>
 </head>
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">

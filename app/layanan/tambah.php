@@ -18,7 +18,7 @@
             <form action='<?= $url ?>/aksi/layanan.php' method='post' enctype='multipart/form-data'>
                 <?php 
                     $id = 1;
-                    $terahir_layanan = QueryOnedata("SELECT * FROM layanan ORDER BY id_layanan DESC ");                  
+                    $terahir_layanan = QueryOnedata("SELECT * FROM layanan ORDER BY CAST(SUBSTRING(id_layanan, 3) AS UNSIGNED) DESC ");                  
                     if($terahir_layanan->num_rows > 0 ){
                         $id = Rplc("LY", $terahir_layanan->fetch_assoc()['id_layanan']) + $id;
                     }

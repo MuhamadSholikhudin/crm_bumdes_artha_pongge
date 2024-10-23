@@ -1,2 +1,1 @@
-7. level petugas bumdes, Ketika pelanggan sudah mendaftarkan layanan pemasangan maka petugas memilih tgl tagihan dan pilih petugas lapangan unt memasang dan biaya otomatis diambil dari tb layanan (jenis layanan : biaya pemasangan awal) dan status berubah menjadi proses agar dpt dilihat petugas lapangan
 

@@ -3,7 +3,6 @@
 <?php include_once '../template/navbar.php'; ?>
 <?php
 $pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = "' . $_GET['id_pemasangan'] . '"')->fetch_assoc();
-
 $berkas_pemasangan = QueryOnedata('SELECT * FROM berkas_pemasangan WHERE id_pemasangan = "' . $_GET['id_pemasangan'] . '"')->fetch_assoc();
 if ($berkas_pemasangan == NULL) {
     $berkas_pemasangan = [
@@ -11,14 +10,20 @@ if ($berkas_pemasangan == NULL) {
         'nm_berkas' => NULL,
         'foto_berkas' => NULL,
     ];
+
+    // BP00
+    $id = 1;
+    $terahir_berkas_pemasangan = QueryOnedata("SELECT * FROM berkas_pemasangan ORDER BY id_berkas_pemasangan DESC ");                  
+    if($terahir_berkas_pemasangan->num_rows > 0 ){
+        $id = Rplc("BP", $terahir_berkas_pemasangan->fetch_assoc()['id_berkas_pemasangan']) + $id;
+    }
+    $berkas_pemasangan['id_berkas_pemasangan'] = 'BP00'.$id;
 }
 ?>
 <!-- Begin Page Content -->
 <div class='container-fluid'>
-
     <!-- Page Heading -->
     <h1 class='h3 mb-4 text-gray-800'>Berkas Pemasangan page</h1>
-
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
@@ -35,16 +40,9 @@ if ($berkas_pemasangan == NULL) {
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <?php 
-                        $id = 1;
-                        $terahir_berkas_pemasangan = QueryOnedata("SELECT * FROM berkas_pemasangan ORDER BY id_berkas_pemasangan DESC ");                  
-                        if($terahir_berkas_pemasangan->num_rows > 0 ){
-                            $id = Rplc("BP", $terahir_berkas_pemasangan->fetch_assoc()['id_berkas_pemasangan']) + $id;
-                        }
-                    ?>
                     <label for='inputberkas_pemasangan' class='col-sm-2 col-form-label'>Id Berkas Pemasangan</label>
                     <div class='col-sm-10'>
-                        <input type='text' class='form-control' id='inputberkas_pemasangan' name='id_berkas_pemasangan' value='BP00<?= $id ?>' >
+                        <input type='text' class='form-control' id='inputberkas_pemasangan' name='id_berkas_pemasangan' value='<?= $berkas_pemasangan['id_berkas_pemasangan'] ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>

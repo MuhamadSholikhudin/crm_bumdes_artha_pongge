@@ -16,15 +16,15 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pencatatan_penggunaan.php' method='post' enctype='multipart/form-data'>
-                 <?php 
+                <?php 
                     $id = 1;
-                    $terahir_pencatatan = QueryOnedata("SELECT * FROM pencatatan_penggunaan ORDER BY id_pencatatan DESC ");                  
+                    $terahir_pencatatan = QueryOnedata("SELECT * FROM pencatatan_penggunaan ORDER BY CAST(SUBSTRING(id_pencatatan, 3) AS UNSIGNED)  DESC ");                  
                     if($terahir_pencatatan->num_rows > 0 ){
                         $id = Rplc("PC", $terahir_pencatatan->fetch_assoc()['id_pencatatan']) + $id;
                     }
                 ?>
                 <div class='mb-3 row'>
-                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>ID PEMASANANGN</label>
+                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>ID Pencatatan</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' value="PC00<?= $id ?>" readonly>
                         <input type='hidden' class='form-control' id='inputid_pencatatan' name='id_pencatatan' value="PC00<?= $id ?>" required>
