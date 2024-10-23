@@ -7,7 +7,7 @@
             // Hak Akses memiliku sub menu
             $level = [
                 'petugas bumdes' => [ "pelanggan","pemasangan",  "pembayaran", "broadcast"],
-                'kepala bumdes' => [ "pelanggan","pemasangan","broadcast",  "pembayaran","laporan_pengaduan"],
+                'ketua bumdes' => [ "pelanggan","pemasangan","broadcast",  "pembayaran","laporan_pengaduan"],
                 'petugas lapangan' => ["pemasangan","pencatatan_penggunaan","pengaduan",],
                 'ketua unit air' => ["user", "layanan", "pelanggan", "laporan_pengaduan", "laporan_pemasangan", "laporan_pencatatan_penggunaan"],
                 'pelanggan' => ["data_pelanggan", "layanan", "pemasangan","pencatatan_penggunaan","pembayaran","pengaduan"],

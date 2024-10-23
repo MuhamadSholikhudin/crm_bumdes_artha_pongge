@@ -2,15 +2,12 @@
 function Url_web(){
     return "/crm_bumdes_artha_pongge";
 }
-
 $defaul_uri = Url_web();
-$url = "http://".$_SERVER['SERVER_NAME']."".$defaul_uri;
-
+$url = "http://".$_SERVER['SERVER_NAME'].":8080".$defaul_uri;
 $lokasi_foto = 'C:/xampp/htdocs/'.Url_web().'/foto';
 $YMDhis = date('YMDhis');
-
 function DB(){
-    return ["localhost", "root", "", "danis"];
+    return ["localhost", "root", "password_baru", "danis"];
 }
 
 function runQuery($sql) {
