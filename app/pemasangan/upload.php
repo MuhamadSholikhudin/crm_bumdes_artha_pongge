@@ -54,7 +54,7 @@ if ($berkas_pemasangan == NULL) {
                 <div class='mb-3 row'>
                     <label for='inputfoto_berkas' class='col-sm-2 col-form-label'>Foto Berkas</label>
                     <div class='col-sm-10'>
-                        <img src="<?= $url ?>/foto/foto_berkas/<?= $berkas_pemasangan['foto_berkas']; ?>" alt="" width="100%">
+                        <img src="<?= $url ?>/foto/foto_berkas/<?= $berkas_pemasangan['foto_berkas']; ?>" alt="" width="100%" accept="image/png, image/jpg, image/jpeg">
                         <input type='file' class='form-control' id='inputfoto_berkas' name='foto_berkas'>
                         <input type='hidden' class='form-control' id='inputfoto_berkas' name='foto_berkas_old' value='<?= $berkas_pemasangan['foto_berkas']; ?>' >
                     </div>

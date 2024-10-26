@@ -37,17 +37,18 @@
                         <th>PEMASANGAN</th>
                         <th>NOMOR PASANG</th>
                         <th>NILAI STAND METER</th>
+                        <th>TANGGAL PENCATATAN</th>
                         <th>FOTO STAND METER</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM pencatatan_penggunaan 
+                    $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.tanggal, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM pencatatan_penggunaan 
                     LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan ORDER BY pemasangan.id_pemasangan DESC';
                     if($_SESSION['level'] == "pelanggan"){
                         $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
-                        $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM
+                        $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.tanggal, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM
                          pencatatan_penggunaan LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan WHERE pemasangan.id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY pemasangan.id_pemasangan DESC';
                     }
                     foreach (QueryManyData($pencatat) as $row) {
@@ -57,6 +58,7 @@
                             <td><?= $pel['nm_pelanggan'] ?></td>
                             <td><?= $row['nomor_pasang'] ?></td>
                             <td><?= $row['nilai_stand_meter'] ?></td>
+                            <td><?= $row['tanggal'] ?></td>
                             <td>
                                 <img src="<?= $url."/foto/foto_stand_meter/".$row['foto_stand_meter'] ?> ?>" alt="" width="50" height="50">                             
                             </td>

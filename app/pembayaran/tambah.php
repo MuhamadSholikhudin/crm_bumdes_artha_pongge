@@ -34,6 +34,7 @@
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
                     </label>
                     <div class='col-sm-10'>
+                        <?php ?>
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
                             <?php
                             $pemasangan = QueryManyData('SELECT * FROM pemasangan');

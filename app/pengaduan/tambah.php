@@ -54,7 +54,7 @@
                         <?php ?>
                         <select class='form-control' name='id_user' id='inputid_user'>
                             <?php
-                            $user = QueryManyData('SELECT * FROM user where level = "petugas lapangan   " ');
+                            $user = QueryManyData('SELECT * FROM user where level = "petugas lapangan" ');
                             foreach ($user as  $row) {
                             ?>
                                 <option value='<?= $row['id_user'] ?>'><?= $row['nm_pengguna'] ?></option>

@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class='mb-3 row d-none'>
-                    <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tgl Tagihan</label>
+                    <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tanggal Tagihan</label>
                     <div class='col-sm-10'>
                         <input type='number' class='form-control' id='inputtgl_tagihan' name='tgl_tagihan' >
                     </div>

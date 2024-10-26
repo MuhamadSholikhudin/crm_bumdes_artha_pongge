@@ -33,6 +33,19 @@ if (isset($_POST['simpanpembayaran'])) {
     $_SESSION['message'] = 'Data Pembayaran ' . $process['message'];
     header('Location: ' . $url . '/app/pembayaran/index.php');
     exit();
+} elseif ($_GET['status'] == 'tervalidasi') {
+    $data = [
+        'status' => $_GET['status'],
+    ];
+
+    $process = UpdateOneData(
+        'pembayaran',
+        $data,
+        ' WHERE id_pembayaran ="' . $_GET['id_pembayaran'] . '"'
+    );
+    $_SESSION['message'] = 'Data Pembayaran Berhasil di konfirmasi';
+    header('Location: ' . $url . '/app/pembayaran/index.php');
+    exit();
 } elseif ($_GET['action'] == 'delete') {
     $process = DeleteOneData(
         'pembayaran',

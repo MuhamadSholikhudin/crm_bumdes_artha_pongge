@@ -25,7 +25,7 @@ if ($alamat_pelanggan == null) {
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/data_pelanggan.php' method='post' enctype='multipart/form-data'>
-                <div class='mb-3 row'>
+                <div class='mb-3 row d-none'>
                     <label for='inputid_pelanggan' class='col-sm-2 col-form-label'>Id_pengguna</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' id='inputid_pelanggan' name='id_pelanggan' value='<?= $_GET['id_pelanggan'] ?>' required>

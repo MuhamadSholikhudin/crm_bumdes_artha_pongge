@@ -78,7 +78,7 @@ $pemasangan = QueryOnedata('SELECT * FROM pemasangan WHERE id_pemasangan = "' . 
                 <?php }else{ ?>
                         <div class='mb-3 row d-none'>
                 <?php } ?>                
-                <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tgl Tagihan</label>
+                <label for='inputtgl_tagihan' class='col-sm-2 col-form-label'>Tanggal Tagihan</label>
                     <div class='col-sm-10'>
                         <input type='number' class='form-control' id='inputtgl_tagihan' name='tgl_tagihan' value='<?= $pemasangan['tgl_tagihan']; ?>' >
                     </div>

@@ -95,10 +95,16 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
                     </div>
                 </div>
                 <div class='mb-3 row'>
+                    <label for='inputtanggal' class='col-sm-2 col-form-label'>Tanggal Pencatatan</label>
+                    <div class='col-sm-10'>
+                        <input type='date' class='form-control' id='inputtanggal' name='tanggal' value='<?= $pencatatan_penggunaan['tanggal']; ?>' required>
+                    </div>
+                </div>
+                <div class='mb-3 row'>
                     <label for='inputfoto_stand_meter' class='col-sm-2 col-form-label'>Foto Stand Meter</label>
                     <div class='col-sm-10'>
                     <img src="<?= $url."/foto/foto_stand_meter/". $pencatatan_penggunaan['foto_stand_meter']; ?>" alt="<?= $url."/foto/foto_stand_meter/". $pencatatan_penggunaan['foto_stand_meter']; ?>" width="100%">
-                        <input type='file' class='form-control' id='inputfoto_stand_meter' name='foto_stand_meter'>
+                        <input type='file' class='form-control' id='inputfoto_stand_meter' name='foto_stand_meter' accept="image/png, image/jpg, image/jpeg">
                         <input type='hidden' class='form-control' id='inputfoto_stand_meter' name='foto_stand_meter_old' value='<?= $pencatatan_penggunaan['foto_stand_meter']; ?>'>
                     </div>
                 </div>
