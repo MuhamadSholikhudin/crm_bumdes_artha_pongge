@@ -21,7 +21,7 @@ $pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = "' . 
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pembayaran.php' method='post' enctype='multipart/form-data'>
                 <div class='mb-3 row'>
-                    <label for='inputid_pembayaran' class='col-sm-2 col-form-label'>Id Pembayaran</label>
+                    <label for='inputid_pembayaran' class='col-sm-2 col-form-label'>ID Pembayaran</label>
                     <div class='col-sm-10'>
                         <input type='text' class='form-control' value='<?= $pembayaran['id_pembayaran']; ?>' readonly>
                         <input type='text' class='form-control d-none' id='inputid_pembayaran' name='id_pembayaran' value='<?= $pembayaran['id_pembayaran']; ?>' required>
@@ -31,17 +31,24 @@ $pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = "' . 
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
                     </label>
                     <div class='col-sm-10'>
-                        
+
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
                             <?php
-                            $pemasangans = QueryManyData('SELECT * FROM pemasangan');
+                            $pasang = 'SELECT * FROM pemasangan';
+                            if ($_SESSION['level'] == 'pelanggan') {
+                                $pasang = 'SELECT * FROM pemasangan 
+                                    LEFT JOIN  pelanggan ON pelanggan.id_pelanggan = pemasangan.id_pelanggan 
+                                    WHERE pelanggan.id_user = "' . $_SESSION['id_user'] . '" ';
+                            }
+
+                            $pemasangans = QueryManyData($pasang);
                             foreach ($pemasangans  as  $row) {
-                                $pel = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan ="'.$row['id_pelanggan'].'"' )->fetch_assoc();
-                                if ($pencatatan_penggunaan['id_pemasangan'] ==  $row['id_pemasangan']) { 
-                                    ?>
-                                    <option value='<?= $row['id_pemasangan'] ?>' selected><?= $row['id_pemasangan'] ?> // <?= $pel['nm_pelanggan'] ?> // <?= $row['tgl_realisasi_pekerjaan'] ?></option>
+                                $pel = QueryOnedata('SELECT * FROM pelanggan WHERE id_pelanggan ="' . $row['id_pelanggan'] . '"')->fetch_assoc();
+                                if ($pencatatan_penggunaan['id_pemasangan'] ==  $row['id_pemasangan']) {
+                            ?>
+                                    <option value='<?= $row['id_pemasangan'] ?>' selected><?= $row['id_pemasangan'] ?> [ <?= $pel['nm_pelanggan'] ?> | <?= $row['tgl_realisasi_pekerjaan'] ?>]</option>
                                 <?php } else {
-                                ?><option value='<?= $row['id_pemasangan'] ?>'> <?= $row['id_pemasangan'] ?> // <?= $pel['nm_pelanggan'] ?> // <?= $row['tgl_realisasi_pekerjaan'] ?></option>
+                                ?><option value='<?= $row['id_pemasangan'] ?>'> <?= $row['id_pemasangan'] ?> [ <?= $pel['nm_pelanggan'] ?> <?= $row['tgl_realisasi_pekerjaan'] ?>]</option>
                             <?php
                                 }
                             }
@@ -50,7 +57,7 @@ $pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = "' . 
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputtgl_bayar' class='col-sm-2 col-form-label'>Tgl Bayar</label>
+                    <label for='inputtgl_bayar' class='col-sm-2 col-form-label'>Tanggal Bayar</label>
                     <div class='col-sm-10'>
                         <input type='date' class='form-control' id='inputtgl_bayar' name='tgl_bayar' value='<?= $pembayaran['tgl_bayar']; ?>' required>
                     </div>
@@ -73,20 +80,20 @@ $pembayaran = QueryOnedata('SELECT * FROM pembayaran WHERE id_pembayaran = "' . 
                     <div class="col-sm-10">
                         <select class="form-control" name="status" id="inputstatus">
                             <?php
-                            if ($_SESSION['level'] == "pelanggan") { 
+                            if ($_SESSION['level'] == "pelanggan") {
                                 $status = ['upload'];
-                            }else{
+                            } else {
                                 $status = ['upload', 'tervalidasi'];
-                            }                            
+                            }
                             foreach ($status  as $val) { ?> <?php
-                                if ($val == $pembayaran['status']) { ?>
+                                                            if ($val == $pembayaran['status']) { ?>
                                     <option value='<?= $val ?>' selected><?= $val ?></option>
                                 <?php } else { ?> as $val) {
                                     ?>
                                     <option value="<?= $val ?>"><?= $val ?></option>
                             <?php
-                                }
-                            }
+                                                            }
+                                                        }
                             ?>
                         </select>
                     </div>

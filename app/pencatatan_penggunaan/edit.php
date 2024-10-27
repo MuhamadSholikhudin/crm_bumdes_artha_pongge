@@ -21,29 +21,10 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pencatatan_penggunaan.php' method='post' enctype='multipart/form-data'>
                 <div class='mb-3 row'>
-                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>Id Pencatatan</label>
+                    <label for='inputid_pencatatan' class='col-sm-2 col-form-label'>ID Pencatatan</label>
                     <div class='col-sm-10'>
-                        <input type='text' class='form-control' id='inputid_pencatatan' name='id_pencatatan' value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' >
-                    </div>
-                </div>
-                <div class='mb-3 row'>
-                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Id Pemasangan
-                    </label>
-                    <div class='col-sm-10'>
-                        <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
-                        <?php
-                            $pemasangan = QueryManyData('SELECT * FROM pemasangan');
-                            foreach ($pemasangan as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
-                                if ($pencatatan_penggunaan['id_pemasangan'] ==  $row['id_pemasangan']) { ?>
-                                <option value='<?= $row['id_pemasangan'] ?>' selected><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
-                                <?php } else { ?>
-                                <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
-                        <?php
-                                }
-                            }
-                        ?>
-                        </select>
+                        <input type='text' class='form-control'  value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' readonly>
+                        <input type='text' class='form-control d-none' id='inputid_pencatatan' name='id_pencatatan' value='<?= $pencatatan_penggunaan['id_pencatatan']; ?>' >
                     </div>
                 </div>
                 <div class='mb-3 row'>
@@ -79,6 +60,7 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
                             scanner.render(success, error);
                             function success(result) {
                                 document.getElementById('inputnomor_pasang').value = result;  // Isi input dengan hasil scan
+                                document.getElementById('inputid_pemasangan').value = result;  // Isi input dengan hasil scan
                                 scanner.clear();                            
                             }
                             function error(err) {
@@ -89,11 +71,32 @@ $pencatatan_penggunaan = QueryOnedata('SELECT * FROM pencatatan_penggunaan WHERE
                     </div>
                 </div>
                 <div class='mb-3 row'>
+                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
+                    </label>
+                    <div class='col-sm-10'>
+                        <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
+                        <?php
+                            $pemasangan = QueryManyData('SELECT * FROM pemasangan');
+                            foreach ($pemasangan as  $row) {
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
+                                if ($pencatatan_penggunaan['id_pemasangan'] ==  $row['id_pemasangan']) { ?>
+                                    <option value='<?= $row['id_pemasangan'] ?>' selected> <?= $row['id_pemasangan'] ?> [<?= $pepe['id_pelanggan'] ?> | <?= $pepe['nm_pelanggan'] ?> | <?= $pepe['tgl_permintaan_pemasangan'] ?>]</option>
+                                <?php } else { ?>
+                                    <option value='<?= $row['id_pemasangan'] ?>'> <?= $row['id_pemasangan'] ?> [<?= $pepe['id_pelanggan'] ?> | <?= $pepe['nm_pelanggan'] ?> | <?= $pepe['tgl_permintaan_pemasangan'] ?>]</option>
+                        <?php
+                                }
+                            }
+                        ?>
+                        </select>
+                    </div>
+                </div>
+                <div class='mb-3 row'>
                     <label for='inputnilai_stand_meter' class='col-sm-2 col-form-label'>Nilai Stand Meter</label>
                     <div class='col-sm-10'>
                         <input type='number' class='form-control' id='inputnilai_stand_meter' name='nilai_stand_meter' value='<?= $pencatatan_penggunaan['nilai_stand_meter']; ?>' required>
                     </div>
                 </div>
+
                 <div class='mb-3 row'>
                     <label for='inputtanggal' class='col-sm-2 col-form-label'>Tanggal Pencatatan</label>
                     <div class='col-sm-10'>

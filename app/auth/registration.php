@@ -82,28 +82,19 @@ session_start(); //Memulai session
 
 
 
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            DAFTAR PELANGGAN
+                                        <button type="submit" class="btn btn-sm btn-primary  btn-block">
+                                            <i class="fa fa-user-alt"></i>
+                                            Daftar Pelanggan
                                         </button>
 
-                                        <hr>
-                                        <a href="<?= $url . "/app/auth/login.php" ?>" class="btn btn-google btn-user btn-block">
-                                            <i class="fa fa-sign-in fa-fw"></i> sudah punya akun ! Login
+                                        <hr style="border: 1px solid;">
+                                        <a href="<?= $url . "/app/auth/login.php" ?>" class="btn btn-google btn-sm btn-block">
+                                            <i class="fa fa-arrow-left"></i> sudah punya akun ! Login
                                         </a>
-                                        <!-- <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>  -->
+                                        
 
                                     </form>
-                                    <hr>
-                                    <!--
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div> 
-                                    -->
+                                
                                 </div>
                             </div>
                         </div>

@@ -18,47 +18,59 @@
         unset($_SESSION['message']);
     }
     ?>
-    <?php if ($_SESSION['level'] == "pelanggan") { 
-        
-        // menampilkan data pencatatan bulan ini
-        $pelanggan = QueryOnedata("SELECT * FROM pelanggan WHERE id_user ='".$_SESSION['id_user']."' ");
+    <?php if ($_SESSION['level'] == "pelanggan") {
 
-        $catatan = "SELECT * FROM pencatatan_penggunaan 
-            LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan 
-            WHERE MONTH(pencatatan_penggunaan.tanggal) = '" . date('m') . "' AND YEAR(pencatatan_penggunaan.tanggal) = '" . date('Y') . "' AND pemasangan.id_pelanggan ='".$pelanggan->fetch_assoc()['id_pelanggan']."'  ";
-        
-        $catatan_bulan_ini = QueryOnedata($catatan);
+        $data_pelanggan = [];
         $data = [];
         $metaran_sekarang = 0;
         $metaran_lalu = 0;
         $metaran_tagihan = 0;
         $tagihan = 0;
-        
-        if ($catatan_bulan_ini->num_rows > 0) { //jika ada catatan bulan ini
-            array_push($data, $catatan_bulan_ini->fetch_assoc());
-            $metaran_sekarang = intval($data[0]['nilai_stand_meter']);
-            $metaran_tagihan = $metaran_sekarang;
-            $catatan_bulan_lalu = QueryOnedata("SELECT * FROM pencatatan_penggunaan WHERE tanggal < '" . $data[0]['tanggal'] . "' ORDER BY tanggal DESC");
-            
-            if ($catatan_bulan_lalu->num_rows > 0) { // Jika Bulan lalu juga ada catatan
-                array_push($data, $catatan_bulan_lalu->fetch_assoc());
-                $metaran_lalu = intval($data[1]['nilai_stand_meter']);
-                $metaran_tagihan = $metaran_tagihan - $metaran_lalu;
+
+        // menampilkan data pencatatan bulan ini
+        $pelanggan = QueryOnedata("SELECT * FROM pelanggan WHERE id_user ='" . $_SESSION['id_user'] . "' ");
+        array_push($data_pelanggan, $pelanggan->fetch_assoc());
+
+        //Cari pembayaran bulan ini
+        $bay = "SELECT * FROM pembayaran 
+            LEFT JOIN pemasangan ON pembayaran.id_pemasangan = pemasangan.id_pemasangan 
+            WHERE MONTH(pembayaran.tgl_bayar) = '" . date('m') . "' AND YEAR(pembayaran.tgl_bayar) = '" . date('Y') . "' AND pemasangan.id_pelanggan ='" . $data_pelanggan[0]['id_pelanggan'] . "'  ";
+
+        $bayar = QueryOnedata($bay);
+        if ($bayar->num_rows < 1) { //jika tidak ada pembayaran bulan ini
+
+            $catatan = "SELECT * FROM pencatatan_penggunaan 
+                LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan 
+                WHERE MONTH(pencatatan_penggunaan.tanggal) = '" . date('m') . "' AND YEAR(pencatatan_penggunaan.tanggal) = '" . date('Y') . "' AND pemasangan.id_pelanggan ='" . $data_pelanggan[0]['id_pelanggan'] . "'  ";
+            $catatan_bulan_ini = QueryOnedata($catatan);
+
+            if ($catatan_bulan_ini->num_rows > 0) { //jika ada catatan bulan ini
+                array_push($data, $catatan_bulan_ini->fetch_assoc());
+                $metaran_sekarang = intval($data[0]['nilai_stand_meter']);
+                $metaran_tagihan = $metaran_sekarang;
+                $catatan_bulan_lalu = QueryOnedata("SELECT * FROM pencatatan_penggunaan WHERE tanggal < '" . $data[0]['tanggal'] . "' ORDER BY tanggal DESC");
+
+                if ($catatan_bulan_lalu->num_rows > 0) { // Jika Bulan lalu juga ada catatan
+                    array_push($data, $catatan_bulan_lalu->fetch_assoc());
+                    $metaran_lalu = intval($data[1]['nilai_stand_meter']);
+                    $metaran_tagihan = $metaran_tagihan - $metaran_lalu;
+                }
             }
         }
-        
-        ?>
+
+    ?>
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            <strong>INFO !</strong> 
-                Perhitungan penggunaan pembayaran seprti berikut = ( [Nilai Meteran bulan bulan sekarang] - [Nilai Meteran bulan bulan sebelumnya] ) * 800/m3 + 5000[biaya operasional].
+            <strong>INFO !</strong>
+            Perhitungan penggunaan pembayaran seprti berikut = ( [Nilai Meteran bulan bulan sekarang] - [Nilai Meteran bulan bulan sebelumnya] ) * 800/m3 + 5000[biaya operasional].
+            <br>
+            Pembayaran bisa di transfer ke Rekening Bank BNI : <span id="textToCopy" onclick="copyText()"> <i class="fa fa-copy" style="color:azure;"></i> 88888888</span>
+            <?php if ($metaran_tagihan > 0) { ?>
                 <br>
-                Pembayaran bisa di transfer ke Rekening Bank BNI : <span id="textToCopy" onclick="copyText()" > <i class="fa fa-copy" style="color:azure;"></i> 88888888</span>
-                <?php if($metaran_tagihan > 0){ ?>
-                    <br>
-                    Nilai Meteran bulan sebelumnya : <?= $metaran_lalu ?>,
-                    Nilai Meteran bulan sekarang : <?= $metaran_sekarang ?>,
-                    Tagihan anda : 
-                <?php echo $tagihan = ($metaran_tagihan * 800 + 5000); } ?>
+                Nilai Meteran bulan sebelumnya : <?= $metaran_lalu ?>,
+                Nilai Meteran bulan sekarang : <?= $metaran_sekarang ?>,
+                Tagihan anda :
+            <?php echo $tagihan = ($metaran_tagihan * 800 + 5000);
+            } ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -121,7 +133,7 @@
                         <tr>
                             <td><?= $row['id_pembayaran'] ?></td>
                             <td>
-                                <?= $row['id_pemasangan'] . ' // ' .$row['nm_pelanggan'] . ' // ' . $row['tgl_realisasi_pekerjaan'] ?>
+                                <?= $row['id_pemasangan'] . ' [ ' . $row['nm_pelanggan'] . ' | ' . $row['tgl_realisasi_pekerjaan'] ?>]
                             </td>
                             <td><?= $row['tgl_bayar'] ?></td>
                             <td><?= intToRupiah($row['nominal']) ?></td>
@@ -142,14 +154,14 @@
                                         <span class='text'>hapus</span>
                                     </button>
                                 <?php } else if ($_SESSION['level'] == "petugas bumdes") { ?>
-                                <?php  if ($row['status'] == 'upload') { ?>
-                                    <a href='<?= $url ?>/aksi/pembayaran.php?id_pembayaran=<?= $row['id_pembayaran'] ?>&status=tervalidasi' pembayaran class='btn btn-primary btn-icon-split btn-sm'>
-                                        <span class='icon text-white-50'>
-                                            <i class='fas fa-check-double'></i>
-                                        </span>
-                                        <span class='text'>Konfirmasi</span>
-                                    </a>
-                                <?php } ?>
+                                    <?php if ($row['status'] == 'upload') { ?>
+                                        <a href='<?= $url ?>/aksi/pembayaran.php?id_pembayaran=<?= $row['id_pembayaran'] ?>&status=tervalidasi' pembayaran class='btn btn-primary btn-icon-split btn-sm'>
+                                            <span class='icon text-white-50'>
+                                                <i class='fas fa-check-double'></i>
+                                            </span>
+                                            <span class='text'>Konfirmasi</span>
+                                        </a>
+                                    <?php } ?>
                                     <a href='<?= $url ?>/app/pembayaran/edit.php?id_pembayaran=<?= $row['id_pembayaran'] ?>' pembayaran class='btn btn-success btn-icon-split btn-sm'>
                                         <span class='icon text-white-50'>
                                             <i class='fas fa-edit'></i>

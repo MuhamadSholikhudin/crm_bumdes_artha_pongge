@@ -3,7 +3,7 @@ include '../config/config.php';
 session_start();
 if (isset($_POST['simpanpengaduan'])) {
 
-    $ekstensi_diperbolehkan = array('png', 'jpg');
+    $ekstensi_diperbolehkan = array('png', 'jpg','jpeg');
     $nama_file = $_FILES['foto_kendala']['name'];
     $x = explode('.', $nama_file);
     $ekstensi = strtolower(end($x));
@@ -17,7 +17,7 @@ if (isset($_POST['simpanpengaduan'])) {
             if ($upload_guru) {
                 // Data yang ingin Execution
 
-                $data = [ 'id_pengaduan' => $_POST['id_pengaduan'], 'id_pemasangan' => $_POST['id_pemasangan'], 'id_user' => $_POST['id_user'], 'tgl_pengaduan' => $_POST['tgl_pengaduan'], 'tgl_perbaikan' => $_POST['tgl_perbaikan'], 'ket_kendala' => $_POST['ket_kendala'], 'foto_kendala' =>$nama_file, 'status_pengaduan' => $_POST['status_pengaduan'],];
+                $data = [ 'id_pengaduan' => $_POST['id_pengaduan'], 'id_pemasangan' => $_POST['id_pemasangan'], 'id_user' => $_POST['id_user'], 'tgl_pengaduan' => $_POST['tgl_pengaduan'], 'tgl_perbaikan' => $_POST['tgl_perbaikan'], 'ket_kendala' => $_POST['ket_kendala'], 'foto_kendala' =>$nama_file, 'status_pengaduan' => $_POST['status_pengaduan'],'lat_alamat' => $_POST['lat_alamat'], 'long_alamat' => $_POST['long_alamat']];
                 // Insert satu data
                 $process = InsertOnedata('pengaduan', $data);
             } else {
@@ -36,7 +36,7 @@ if (isset($_POST['simpanpengaduan'])) {
 
     $nama_file = $_POST['foto_kendala_old'];
     if (isset($_FILES['foto_kendala'])) {
-        $ekstensi_diperbolehkan = array('png', 'jpg');
+        $ekstensi_diperbolehkan = array('png', 'jpg', 'jpeg');
         $nama_file = $_FILES['foto_kendala']['name'];
         $x = explode('.', $nama_file);
         $ekstensi = strtolower(end($x));
@@ -57,7 +57,7 @@ if (isset($_POST['simpanpengaduan'])) {
     }
 
     // Data yang ingin Execution
-    $data = ['id_pemasangan' => $_POST['id_pemasangan'], 'id_user' => $_POST['id_user'], 'tgl_pengaduan' => $_POST['tgl_pengaduan'], 'tgl_perbaikan' => $_POST['tgl_perbaikan'], 'ket_kendala' => $_POST['ket_kendala'], 'foto_kendala' => $nama_file, 'status_pengaduan' => $_POST['status_pengaduan'],];
+    $data = ['id_pemasangan' => $_POST['id_pemasangan'], 'id_user' => $_POST['id_user'], 'tgl_pengaduan' => $_POST['tgl_pengaduan'], 'tgl_perbaikan' => $_POST['tgl_perbaikan'], 'ket_kendala' => $_POST['ket_kendala'], 'foto_kendala' => $nama_file, 'status_pengaduan' => $_POST['status_pengaduan'],'lat_alamat' => $_POST['lat_alamat'], 'long_alamat' => $_POST['long_alamat']];
     // Update data berdasarkan
     $process = UpdateOneData('pengaduan', $data, ' WHERE id_pengaduan ="' . $_POST['id_pengaduan'] . '"');
     $_SESSION['message'] = 'Data Pengaduan ' . $process['message'];

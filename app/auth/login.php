@@ -33,7 +33,7 @@ session_start(); //Memulai session
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block" style="background: url('<?= $url.'/assets/img/' ?>image-7-1-1024x576.webp');"></div>
+                            <div class="col-lg-6 d-none d-lg-block" style="background: url('<?= $url.'/assets/img/' ?>CRM-THEME.png');"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -68,28 +68,18 @@ session_start(); //Memulai session
                                             <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password" required>
                                         </div>
                                         
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-sm btn-block">
+                                            <i class="fa fa-arrow-alt-circle-right"></i>
                                             Login
-                                        </button>
-                                        
-                                        <hr>
-                                        <a href="<?= $url . "/app/auth/registration.php" ?>" class="btn btn-google btn-user btn-block">
-                                            <i class="fa fa-sign-in fa-fw"></i> Belum punya akun ! Daftar sekarang
+                                        </button>                                        
+                                        <hr style="border: 1px solid;">
+                                        <a href="<?= $url . "/app/auth/registration.php" ?>" class="btn btn-google btn-sm btn-block">
+                                            <i class="fa fa-user-alt"></i> Belum punya akun ! Daftar sekarang
                                         </a>
-                                        <!-- <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>  -->
                                         
                                     </form>
                                     <hr>
-                                    <!--
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div> 
-                                    -->
+
                                 </div>
                             </div>
                         </div>

@@ -46,8 +46,8 @@ include_once '../template/navbar.php';
                     <form action="<?= $url ?>/aksi/broadcast.php" method="POST" enctype="multipart/form-data" >       
                         <p>Masukkan pesan yang akan di kirim ke pelanggan !</p>
                         <div class='mb-3 row' >
-                            <label for='inputno_pelanggan' class='col-sm-3 col-form-label'>Kirim ke Pelanggan</label>
-                            <div class='col-sm-9'>
+                            <label for='inputno_pelanggan' class='col-sm-4 col-form-label'>Kirim ke Pelanggan</label>
+                            <div class='col-sm-8'>
                                 <select class='form-control js-example-basic-single' name='no_pelanggan' id='inputno_pelanggan'>
                                     <?php
                                     $pelanggan = QueryManyData('SELECT * FROM pelanggan  ');
@@ -62,7 +62,7 @@ include_once '../template/navbar.php';
                         </div>
                         <textarea class="form-control" name="broadcast" id="" cols="30" rows="8"></textarea>
                         <div class="my-2"></div>
-                        <button type="submit" value="BTN_POST_BROADCAST" name="BTN_POST_BROADCAST" class="btn btn-primary btn-icon-split btn-lg">
+                        <button type="submit" value="BTN_POST_ONE" name="BTN_POST_ONE" class="btn btn-primary btn-icon-split btn-lg">
                             <span class="icon text-white-50">
                                 <i class="fa fa-paper-plane"></i>
                             </span>

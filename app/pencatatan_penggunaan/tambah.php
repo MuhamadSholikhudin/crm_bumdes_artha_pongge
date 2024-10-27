@@ -31,23 +31,6 @@
                     </div>
                 </div> 
                 <div class='mb-3 row'>
-                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
-                    </label>
-                    <div class='col-sm-10'>
-                        <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
-                        <?php
-                            $pemasangan = QueryManyData('SELECT * FROM pemasangan');
-                            foreach ($pemasangan as  $row) {
-                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
-                        ?>
-                            <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['id_pelanggan'] ?> // <?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
-                        <?php
-                            }
-                        ?>
-                        </select>
-                    </div>
-                </div>
-                <div class='mb-3 row'>
                     <label for='inputnomor_pasang' class='col-sm-2 col-form-label'>Nomor Pasang</label>
                     <div class='col-sm-10'>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -79,14 +62,32 @@
                             });
                             scanner.render(success, error);
                             function success(result) {
+                                document.getElementById('inputid_pemasangan').value = result;  // Isi input dengan hasil scan
                                 document.getElementById('inputnomor_pasang').value = result;  // Isi input dengan hasil scan
-                                scanner.clear();                            
+                                scanner.clear();                                                            
                             }
                             function error(err) {
                                 console.error(err);
                             }
                         </script>   
                        <input type='text' class='form-control' id='inputnomor_pasang' name='nomor_pasang' required>
+                    </div>
+                </div>
+                <div class='mb-3 row'>
+                    <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
+                    </label>
+                    <div class='col-sm-10'>
+                        <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
+                        <?php
+                            $pemasangan = QueryManyData('SELECT * FROM pemasangan');
+                            foreach ($pemasangan as  $row) {
+                                $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "'.$row['id_pemasangan'].'"')->fetch_assoc();  
+                        ?>
+                            <option value='<?= $row['id_pemasangan'] ?>'> <?= $row['id_pemasangan'] ?> [<?= $pepe['id_pelanggan'] ?> | <?= $pepe['nm_pelanggan'] ?> | <?= $pepe['tgl_permintaan_pemasangan'] ?>]</option>
+                        <?php
+                            }
+                        ?>
+                        </select>
                     </div>
                 </div>
                 <div class='mb-3 row'>

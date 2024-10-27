@@ -3,11 +3,11 @@ function Url_web(){
     return "/crm_bumdes_artha_pongge";
 }
 $defaul_uri = Url_web();
-$url = "http://".$_SERVER['SERVER_NAME'].":8080".$defaul_uri;
+$url = "http://".$_SERVER['SERVER_NAME']."".$defaul_uri;
 $lokasi_foto = 'C:/xampp/htdocs/'.Url_web().'/foto';
 $YMDhis = date('YMDhis');
 function DB(){
-    return ["localhost", "root", "password_baru", "danis"];
+    return ["localhost", "root", "", "danis"];
 }
 
 function runQuery($sql) {
@@ -64,6 +64,8 @@ function InsertOnedata($tabel, $data){
     $values = "'" . implode("', '", array_values($data)) . "'";
     // Query SQL untuk menambahkan data ke dalam tabel "users"
     $sql = "INSERT INTO $tabel ($keys) VALUES ($values)";
+    // var_dump($sql);
+    // die();
     if ($conn->query($sql) === TRUE) {
         echo "Berhasil ditambahkan.";
         return ["code" => 200, "message" =>  "Berhasil di Tambahkan"];

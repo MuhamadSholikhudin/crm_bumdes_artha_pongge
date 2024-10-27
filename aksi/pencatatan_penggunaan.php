@@ -1,8 +1,6 @@
 <?php
 include '../config/config.php';
 session_start();
-$lokasi_foto = 'C:/xampp/htdocs/crm_bumdes_artha_pongge/foto/foto_stand_meter/';
-$YMDhis = date('YMDhis');
 if (isset($_POST['simpanpencatatan_penggunaan'])) {
 
     $ekstensi_diperbolehkan = array('png', 'jpg', 'jpeg');
@@ -15,7 +13,7 @@ if (isset($_POST['simpanpencatatan_penggunaan'])) {
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
         if ($ukuran < 1044070) {
             $nama_file = $YMDhis. $_FILES['foto_stand_meter']['name'];
-            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto . $nama_file);          
+            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto ."/foto_stand_meter/". $nama_file);          
             if ($upload_guru) {
                 $data = ['id_pencatatan' => $_POST['id_pencatatan'],'id_pemasangan' => $_POST['id_pemasangan'], 'nomor_pasang' => $_POST['nomor_pasang'], 'nilai_stand_meter' => $_POST['nilai_stand_meter'], 'tanggal' => $_POST['tanggal'], 'foto_stand_meter' => $nama_file];
                 // Insert satu data
@@ -47,8 +45,8 @@ if (isset($_POST['simpanpencatatan_penggunaan'])) {
         if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
             if ($ukuran < 1044070) {
                 $nama_file = $YMDhis. $_FILES['foto_stand_meter']['name'];
-                unlink($lokasi_foto .  $_POST['foto_stand_meter_old']);
-                $upload_guru =  move_uploaded_file($file_tmp, $lokasi_foto . $nama_file);
+                unlink($lokasi_foto ."/foto_stand_meter/".  $_POST['foto_stand_meter_old']);
+                $upload_guru =  move_uploaded_file($file_tmp, $lokasi_foto ."/foto_stand_meter/". $nama_file);
             } else {
                 $nama_file = $_POST['foto_stand_meter_old'];
             }

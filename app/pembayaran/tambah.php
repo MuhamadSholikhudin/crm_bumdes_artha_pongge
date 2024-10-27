@@ -2,6 +2,7 @@
 <?php include_once '../template/sidebar.php'; ?>
 <?php include_once '../template/navbar.php'; ?>
 
+
 <!-- Begin Page Content -->
 <div class='container-fluid'>
 
@@ -16,12 +17,12 @@
         </div>
         <div class='card-body'>
             <form action='<?= $url ?>/aksi/pembayaran.php' method='post' enctype='multipart/form-data'>
-                <?php 
-                    $id = 1;
-                    $terahir_pembayaran = QueryOnedata("SELECT * FROM pembayaran ORDER BY CAST(SUBSTRING(id_pembayaran, 3) AS UNSIGNED) DESC ");                  
-                    if($terahir_pembayaran->num_rows > 0 ){
-                        $id = Rplc("BY", $terahir_pembayaran->fetch_assoc()['id_pembayaran']) + $id;
-                    }
+                <?php
+                $id = 1;
+                $terahir_pembayaran = QueryOnedata("SELECT * FROM pembayaran ORDER BY CAST(SUBSTRING(id_pembayaran, 3) AS UNSIGNED) DESC ");
+                if ($terahir_pembayaran->num_rows > 0) {
+                    $id = Rplc("BY", $terahir_pembayaran->fetch_assoc()['id_pembayaran']) + $id;
+                }
                 ?>
                 <div class='mb-3 row'>
                     <label for='inputid_pembayaran' class='col-sm-2 col-form-label'>ID PEMASANANGN</label>
@@ -34,14 +35,22 @@
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
                     </label>
                     <div class='col-sm-10'>
-                        <?php ?>
+
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
                             <?php
-                            $pemasangan = QueryManyData('SELECT * FROM pemasangan');
+                            // menampilkan data pencatatan bulan ini
+                            $pasang = 'SELECT * FROM pemasangan';
+                            if($_SESSION['level'] == 'pelanggan'){                               
+                                $pasang = 'SELECT * FROM pemasangan 
+                                    LEFT JOIN  pelanggan ON pelanggan.id_pelanggan = pemasangan.id_pelanggan 
+                                    WHERE pelanggan.id_user = "'.$_SESSION['id_user'].'" ';
+                            }
+
+                            $pemasangan = QueryManyData($pasang);
                             foreach ($pemasangan as  $row) {
                                 $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
                             ?>
-                                <option value='<?= $row['id_pemasangan'] ?>'><?= $pepe['nm_pelanggan'] ?> // <?= $pepe['tgl_permintaan_pemasangan'] ?></option>
+                                <option value='<?= $row['id_pemasangan'] ?>'> <?= $row['id_pemasangan'] ?> [<?= $pepe['nm_pelanggan'] ?> <?= $pepe['tgl_permintaan_pemasangan'] ?> ]</option>
                             <?php
                             }
                             ?>
@@ -49,7 +58,7 @@
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputtgl_bayar' class='col-sm-2 col-form-label'>Tgl Bayar</label>
+                    <label for='inputtgl_bayar' class='col-sm-2 col-form-label'>Tanggal Bayar</label>
                     <div class='col-sm-10'>
                         <input type='date' class='form-control' id='inputtgl_bayar' name='tgl_bayar' required>
                     </div>
@@ -61,7 +70,7 @@
                     </div>
                 </div>
                 <div class='mb-3 row'>
-                    <label for='inputket_pembayaran' class='col-sm-2 col-form-label'>Ket Pembayaran</label>
+                    <label for='inputket_pembayaran' class='col-sm-2 col-form-label'>Keterangan Pembayaran</label>
                     <div class='col-sm-10'>
                         <textarea class='form-control' id='inputket_pembayaran' name='ket_pembayaran' required></textarea>
                     </div>
@@ -72,7 +81,7 @@
                     <div class="col-sm-10">
 
                         <select class="form-control" name="status" id="inputstatus">
-                            <?php                          
+                            <?php
                             $status = ['upload'];
                             foreach ($status    as $val) { ?>
                                 <option value="<?= $val ?>"><?= $val ?></option>
