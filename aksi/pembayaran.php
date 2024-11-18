@@ -7,7 +7,7 @@ if (isset($_POST['simpanpembayaran'])) {
         'id_pemasangan' => $_POST['id_pemasangan'],
         'tgl_bayar' => $_POST['tgl_bayar'],
         'nominal' => $_POST['nominal'],
-        'ket_pembayaran' => $_POST['ket_pembayaran'],
+        'ket_pembayaran' => $_POST['jenis_pembayaran'].$_POST['ket_pembayaran'],
         'status' => $_POST['status'],
     ];
     // Insert satu data

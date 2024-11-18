@@ -1,7 +1,14 @@
 <?php include_once '../template/header.php'; ?>
 <?php include_once '../template/sidebar.php'; ?>
 <?php include_once '../template/navbar.php'; ?>
+<?php 
+$jenis_pembayaran = "";
+$expl = ["", ""];
+if(isset($_GET['jenis_pembayaran'])){
+    $expl = explode(":;", $_GET['jenis_pembayaran']);
+}
 
+?>
 
 <!-- Begin Page Content -->
 <div class='container-fluid'>
@@ -12,7 +19,7 @@
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>
-                Form Tambah Data Pembayaran
+                Form Tambah Data Pembayaran <?= $expl[0] ?> Tanggal <?= $expl[1] ?>
             </h5>
         </div>
         <div class='card-body'>
@@ -35,7 +42,6 @@
                     <label for='inputid_pemasangan' class='col-sm-2 col-form-label'>Pemasangan
                     </label>
                     <div class='col-sm-10'>
-
                         <select class='form-control' name='id_pemasangan' id='inputid_pemasangan'>
                             <?php
                             // menampilkan data pencatatan bulan ini
@@ -45,7 +51,6 @@
                                     LEFT JOIN  pelanggan ON pelanggan.id_pelanggan = pemasangan.id_pelanggan 
                                     WHERE pelanggan.id_user = "'.$_SESSION['id_user'].'" ';
                             }
-
                             $pemasangan = QueryManyData($pasang);
                             foreach ($pemasangan as  $row) {
                                 $pepe = QueryOnedata('SELECT * FROM pemasangan JOIN pelanggan ON pemasangan.id_pelanggan = pelanggan.id_pelanggan  where pemasangan.id_pemasangan = "' . $row['id_pemasangan'] . '"')->fetch_assoc();
@@ -60,13 +65,24 @@
                 <div class='mb-3 row'>
                     <label for='inputtgl_bayar' class='col-sm-2 col-form-label'>Tanggal Bayar</label>
                     <div class='col-sm-10'>
-                        <input type='date' class='form-control' id='inputtgl_bayar' name='tgl_bayar' required>
+                        <input type='date' class='form-control' id='inputtgl_bayar' name='tgl_bayar' value="<?=date('Y-m-d') ?>" required>
                     </div>
                 </div>
                 <div class='mb-3 row'>
                     <label for='inputnominal' class='col-sm-2 col-form-label'>Nominal</label>
                     <div class='col-sm-10'>
-                        <input type='number' class='form-control' id='inputnominal' name='nominal' required>
+                        <input type='number' class='form-control' id='inputnominal' name='nominal' value="<?= intval($expl[2]) ?>" required>
+                    </div>
+                </div>
+                <div class='mb-3 row'>
+                    <label for='inputjenis_pembayaran' class='col-sm-2 col-form-label'>Jenis Pembayaran</label>
+                    <input type="hidden" class='form-control' id='inputjenis_pembayaran' name='jenis_pembayaran' value="<?= $expl[0].":;".$expl[1].":;" ?>" required>
+                    <div class='col-sm-4'>
+                        <input type="text" class='form-control' value="<?= $expl[0] ?>" readonly>
+                    </div>
+                    <label for='inputjenis_pembayaran' class='col-sm-2 col-form-label text-right'>Tanggal <?= $expl[0] == 'pencatatan_penggunaan' ? 'Pencatatan' : 'Pemasangan' ?> </label>
+                    <div class='col-sm-4'>
+                        <input type="text" class='form-control' value="<?= $expl[1] ?>" readonly>
                     </div>
                 </div>
                 <div class='mb-3 row'>
