@@ -1,13 +1,14 @@
 <?php
 function Url_web(){
-    return "/crm_bumdes_artha_pongge";
+    $xplode = explode("/", $_SERVER['REQUEST_URI']);
+    return $xplode[1];
 }
 $defaul_uri = Url_web();
-$url = "http://".$_SERVER['SERVER_NAME']."".$defaul_uri;
+$url = "http://".$_SERVER['SERVER_NAME'].":8080/".$defaul_uri;
 $lokasi_foto = 'C:/xampp/htdocs/'.Url_web().'/foto';
 $YMDhis = date('YMDhis');
 function DB(){
-    return ["localhost", "root", "", "danis"];
+    return ["localhost", "root", "password_baru", "danis"];
 }
 
 function runQuery($sql) {
@@ -21,7 +22,6 @@ function runQuery($sql) {
         return $result;
     } catch (Exception $e) {
         // Tangani pengecualian
-        // Di sini Anda dapat menampilkan pesan kesalahan atau melakukan penanganan lainnya
         echo 'Error: ' . $e->getMessage();
         return false;
     }
