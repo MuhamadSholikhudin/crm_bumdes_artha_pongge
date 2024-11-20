@@ -19,9 +19,9 @@
     }
     ?>
     <?php if ($_SESSION['level'] == "petugas lapangan") { ?>
-    <div class='d-sm-flex align-items-center justify-content-between mb-4'>
-        <a href='<?= $url ?>/app/pencatatan_penggunaan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pencatatan penggunaan</a>
-    </div>
+        <div class='d-sm-flex align-items-center justify-content-between mb-4'>
+            <a href='<?= $url ?>/app/pencatatan_penggunaan/tambah.php' class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'><i class='fas fa-plus fa-sm text-white-50'></i> Tambah data pencatatan penggunaan</a>
+        </div>
     <?php } ?>
 
     <div class='card shadow mb-4'>
@@ -36,7 +36,9 @@
                     <tr class='text-center'>
                         <th>PEMASANGAN</th>
                         <th>NOMOR PASANG</th>
-                        <th>NILAI STAND METER</th>
+                        <th>NILAI STAND METER (A)</th>
+                        <th>NILAI STAND METER (BULAN SEBELUMNYA) (B)</th>
+                        <th>PENGGUNAAN = (A) - (B)</th>
                         <th>TANGGAL PENCATATAN</th>
                         <th>FOTO STAND METER</th>
                         <th>AKSI</th>
@@ -46,21 +48,33 @@
                     <?php
                     $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.tanggal, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM pencatatan_penggunaan 
                     LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan ORDER BY pemasangan.id_pemasangan DESC';
-                    if($_SESSION['level'] == "pelanggan"){
-                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "'.$_SESSION['id_user'].'"')->fetch_assoc();  
+                    if ($_SESSION['level'] == "pelanggan") {
+                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_user = "' . $_SESSION['id_user'] . '"')->fetch_assoc();
                         $pencatat = 'SELECT  pemasangan.id_pelanggan, pencatatan_penggunaan.nomor_pasang, pencatatan_penggunaan.nilai_stand_meter, pencatatan_penggunaan.tanggal, pencatatan_penggunaan.foto_stand_meter, pencatatan_penggunaan.id_pencatatan FROM
-                         pencatatan_penggunaan LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan WHERE pemasangan.id_pelanggan = "'.$pel['id_pelanggan'].'" ORDER BY pemasangan.id_pemasangan DESC';
+                         pencatatan_penggunaan LEFT JOIN pemasangan ON pencatatan_penggunaan.id_pemasangan = pemasangan.id_pemasangan WHERE pemasangan.id_pelanggan = "' . $pel['id_pelanggan'] . '" ORDER BY pemasangan.id_pemasangan DESC';
                     }
                     foreach (QueryManyData($pencatat) as $row) {
-                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "'.$row['id_pelanggan'].'"')->fetch_assoc();  
+                        $pel = QueryOnedata('SELECT * FROM pelanggan where id_pelanggan = "' . $row['id_pelanggan'] . '"')->fetch_assoc();
                     ?>
                         <tr>
                             <td><?= $pel['nm_pelanggan'] ?></td>
                             <td><?= $row['nomor_pasang'] ?></td>
                             <td><?= $row['nilai_stand_meter'] ?></td>
+                            <td>
+                                <?php
+                                $query_nilai_stand_meter_sebelumnya = 'SELECT * FROM pencatatan_penggunaan WHERE id_pemasangan = "' . $row['nomor_pasang'] . '" AND tanggal < "' . $row['tanggal'] . '" ORDER BY id_pencatatan DESC LIMIT 1';
+                                $nilai_stand_meter_sebelumnya = QueryOnedata($query_nilai_stand_meter_sebelumnya);
+                                $stand_bulan_lalu = 0;
+                                if ($nilai_stand_meter_sebelumnya->num_rows > 0) {
+                                    $stand_bulan_lalu = $nilai_stand_meter_sebelumnya->fetch_assoc()['nilai_stand_meter'];
+                                }
+                                ?>
+                                <?= $stand_bulan_lalu ?>
+                            </td>
+                            <td><?= ($row['nilai_stand_meter'] - $stand_bulan_lalu) ?></td>
                             <td><?= $row['tanggal'] ?></td>
                             <td>
-                                <img src="<?= $url."/foto/foto_stand_meter/".$row['foto_stand_meter'] ?> ?>" alt="" width="50" height="50">                             
+                                <img src="<?= $url . "/foto/foto_stand_meter/" . $row['foto_stand_meter'] ?> ?>" alt="" width="50" height="50">
                             </td>
                             <td>
                                 <a href='<?= $url ?>/app/pencatatan_penggunaan/lihat.php?id_pencatatan=<?= $row['id_pencatatan'] ?>' class='btn btn-info btn-icon-split btn-sm'>

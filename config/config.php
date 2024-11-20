@@ -3,9 +3,9 @@ function Url_web(){
     $xplode = explode("/", $_SERVER['REQUEST_URI']);
     return $xplode[1];
 }
-$defaul_uri = Url_web();
-$url = "http://".$_SERVER['SERVER_NAME'].":8080/".$defaul_uri;
-$lokasi_foto = 'C:/xampp/htdocs/'.Url_web().'/foto';
+$defaul_uri = "/".Url_web();
+$url = "http://".$_SERVER['SERVER_NAME']."".$defaul_uri;
+$lokasi_foto = $_SERVER['DOCUMENT_ROOT'].$defaul_uri.'/foto';
 $YMDhis = date('YMDhis');
 function DB(){
     return ["localhost", "root", "password_baru", "danis"];
@@ -118,7 +118,7 @@ function DeleteOneData($table, $where){
 }
 
 function Sub_menu_active($sub_menu){                
-    $string = str_replace(Url_web()."/app/", "", $_SERVER['REQUEST_URI']);
+    $string = str_replace('/'.Url_web()."/app/", "", $_SERVER['REQUEST_URI']);
     $expl = explode("/", $string);
     $output = "";
     if($expl[0] == $sub_menu){
@@ -128,7 +128,7 @@ function Sub_menu_active($sub_menu){
 }
 
 function Menu_active($menus){ //$menus array
-    $string = str_replace(Url_web()."/app/", "", $_SERVER['REQUEST_URI']);
+    $string = str_replace('/'.Url_web()."/app/", "", $_SERVER['REQUEST_URI']);
     $expl = explode("/", $string);
     $result = "";
     for($x = 0 ; $x < count($menus); $x ++){

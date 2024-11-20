@@ -32,7 +32,6 @@
             $catatan_bulan_ini = QueryOnedata($catatan);
             $data = [];
             $metaran_tagihan = 0;
-            
             if ($catatan_bulan_ini->num_rows > 0) { //jika ada catatan bulan ini
                 array_push($data, $catatan_bulan_ini->fetch_assoc());
                 $metaran_tagihan = intval($data[0]['nilai_stand_meter']);

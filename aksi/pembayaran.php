@@ -7,7 +7,7 @@ if (isset($_POST['simpanpembayaran'])) {
         'id_pemasangan' => $_POST['id_pemasangan'],
         'tgl_bayar' => $_POST['tgl_bayar'],
         'nominal' => $_POST['nominal'],
-        'ket_pembayaran' => $_POST['ket_pembayaran'],
+        'ket_pembayaran' => $_POST['jenis_pembayaran'].$_POST['ket_pembayaran'],
         'status' => $_POST['status'],
     ];
     // Insert satu data
@@ -21,15 +21,11 @@ if (isset($_POST['simpanpembayaran'])) {
         'id_pemasangan' => $_POST['id_pemasangan'],
         'tgl_bayar' => $_POST['tgl_bayar'],
         'nominal' => $_POST['nominal'],
-        'ket_pembayaran' => $_POST['ket_pembayaran'],
+        'ket_pembayaran' => $_POST['jenis_pembayaran'].$_POST['ket_pembayaran'],
         'status' => $_POST['status'],
     ];
     // Update data berdasarkan
-    $process = UpdateOneData(
-        'pembayaran',
-        $data,
-        ' WHERE id_pembayaran ="' . $_POST['id_pembayaran'] . '"'
-    );
+    $process = UpdateOneData('pembayaran', $data,' WHERE id_pembayaran ="' . $_POST['id_pembayaran'] . '"');
     $_SESSION['message'] = 'Data Pembayaran ' . $process['message'];
     header('Location: ' . $url . '/app/pembayaran/index.php');
     exit();
@@ -38,11 +34,7 @@ if (isset($_POST['simpanpembayaran'])) {
         'status' => $_GET['status'],
     ];
 
-    $process = UpdateOneData(
-        'pembayaran',
-        $data,
-        ' WHERE id_pembayaran ="' . $_GET['id_pembayaran'] . '"'
-    );
+    $process = UpdateOneData('pembayaran', $data,' WHERE id_pembayaran ="' . $_GET['id_pembayaran'] . '"');
     $_SESSION['message'] = 'Data Pembayaran Berhasil di konfirmasi';
     header('Location: ' . $url . '/app/pembayaran/index.php');
     exit();
