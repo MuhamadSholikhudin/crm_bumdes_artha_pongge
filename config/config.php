@@ -8,7 +8,7 @@ $url = "http://".$_SERVER['SERVER_NAME']."".$defaul_uri;
 $lokasi_foto = $_SERVER['DOCUMENT_ROOT'].$defaul_uri.'/foto';
 $YMDhis = date('YMDhis');
 function DB(){
-    return ["localhost", "root", "password_baru", "danis"];
+    return ["localhost", "root", "", "danis"];
 }
 
 function runQuery($sql) {

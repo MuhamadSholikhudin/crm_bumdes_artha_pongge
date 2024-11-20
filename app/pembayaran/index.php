@@ -8,32 +8,53 @@
     <?php
     if (isset($_SESSION['message'])) {
     ?>
-    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-        <strong>Success !</strong> <?= $_SESSION['message'] ?>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>
+        <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+            <strong>Success !</strong> <?= $_SESSION['message'] ?>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
     <?php
         unset($_SESSION['message']);
     }
-    function Extrade($string){
+    function Extrade($string)
+    {
         $expl = explode(":;", $string);
         return $expl;
     }
     if ($_SESSION['level'] == "pelanggan") {
 
-    //================ PERHITUNGAN BIAYA BULANAN ================
         $data_pelanggan = [];
+        $pelanggan = QueryOnedata("SELECT * FROM pelanggan WHERE id_user ='" . $_SESSION['id_user'] . "' ");
+        array_push($data_pelanggan, $pelanggan->fetch_assoc());
+
+        //================ TAGIHAN BIAYA PEMASANGAN ================
+        // Cari Data Pembayaran Pemasangan yang sudah di pasang pada pelanggan
+        $pemasangan = [];
+        $pembayaran_pemasangan = [];
+        $biaya_pemasangan = 0;
+        $query_check_pemasangan = "SELECT * FROM pemasangan WHERE id_pelanggan = '" . $data_pelanggan[0]['id_pelanggan'] . "'  ";
+        $check_pemasangan = QueryOnedata($query_check_pemasangan); // Check Data Pemasangan pada pelanggan
+        if ($check_pemasangan->num_rows > 0) { // Jika ada pemasangan
+            array_push($pemasangan, $check_pemasangan->fetch_assoc());
+
+            $biaya_pemasangan = 1700000;
+            //Check data pembayaran pada pelanggan
+            $query_check_pembayaran = "SELECT * FROM pembayaran WHERE status = 'tervalidasi' AND id_pemasangan = '" . $pemasangan[0]['id_pemasangan'] . "' AND ket_pembayaran LIKE '%pemasangan%' ";
+            $check_pembayaran_pemasangan = QueryOnedata($query_check_pembayaran); // Check Data Pembayaran pemasangan pada pelanggan
+            if ($check_pembayaran_pemasangan->num_rows > 0) {
+                $biaya_pemasangan = 0;
+                array_push($pembayaran_pemasangan, $check_pembayaran_pemasangan->fetch_assoc());
+            }
+        }
+        //================ TAGIHAN BIAYA PEMASANGAN ================
+
+        //================ PERHITUNGAN BIAYA BULANAN ================
         $data = [];
         $metaran_sekarang = 0;
         $metaran_lalu = 0;
         $metaran_tagihan = 0;
         $tagihan = 0;
-
-        // menampilkan data pencatatan bulan ini
-        $pelanggan = QueryOnedata("SELECT * FROM pelanggan WHERE id_user ='" . $_SESSION['id_user'] . "' ");
-        array_push($data_pelanggan, $pelanggan->fetch_assoc());
 
         //Cari pembayaran bulan ini
         $bay = "SELECT * FROM pembayaran 
@@ -44,8 +65,8 @@
             AND pembayaran.ket_pembayaran LIKE '%pencatatan_penggunaan%'
             AND pembayaran.status = 'tervalidasi'
             ";
-            
-            // echo $metaran_tagihan;
+
+        // echo $metaran_tagihan;
         $bayar = QueryOnedata($bay);
         if ($bayar->num_rows < 1) { //jika tidak ada pembayaran bulan ini
 
@@ -70,32 +91,13 @@
                 }
             }
         }
-    //================ PERHITUNGAN BIAYA BULANAN ================
-
-    //================ TAGIHAN BIAYA PEMASANGAN ================
-    // Cari Data Pembayaran Pemasangan yang sudah di pasang pada pelanggan
-    $pemasangan = [];
-    $pembayaran_pemasangan = [];
-    $biaya_pemasangan = 0;
-    $query_check_pemasangan = "SELECT * FROM pemasangan WHERE id_pelanggan = '".$data_pelanggan[0]['id_pelanggan']."'  ";
-    $check_pemasangan = QueryOnedata($query_check_pemasangan); // Check Data Pemasangan pada pelanggan
-    if($check_pemasangan->num_rows > 0){ // Jika ada pemasangan
-        array_push($pemasangan, $check_pemasangan->fetch_assoc());
-
-        $biaya_pemasangan = 1700000;
-        //Check data pembayaran pada pelanggan
-        $query_check_pembayaran = "SELECT * FROM pembayaran WHERE status = 'tervalidasi' AND id_pemasangan = '".$pemasangan[0]['id_pemasangan']."' AND ket_pembayaran LIKE '%pemasangan%' ";
-        $check_pembayaran_pemasangan = QueryOnedata($query_check_pembayaran); // Check Data Pembayaran pemasangan pada pelanggan
-        if($check_pembayaran_pemasangan->num_rows > 0){
-            $biaya_pemasangan = 0;
-            array_push($pembayaran_pemasangan, $check_pembayaran_pemasangan->fetch_assoc());
-        }
-    }
-    //================ TAGIHAN BIAYA PEMASANGAN ================
+        //================ PERHITUNGAN BIAYA BULANAN ================
     ?>
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
             <strong>INFO !</strong>
             Perhitungan penggunaan pembayaran seprti berikut = ( [Nilai Meteran bulan bulan sekarang] - [Nilai Meteran bulan bulan sebelumnya] ) * 800/m3 + 5000[biaya operasional].
+            <br>
+            Pembayaran penggunaan terakhir tanggal 20 per bulannya. 
             <br>
             Pembayaran bisa di transfer ke Rekening Bank BNI : <span id="textToCopy" onclick="copyText()"> <i class="fa fa-copy" style="color:azure;"></i> 88888888</span>
             <?php if ($metaran_tagihan > 0) { ?>
@@ -132,9 +134,11 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?php if($pembayaran_pemasangan == []){ ?>
-                                            Pembayaran Pemasangan Alat <br> <span style="color: black;"> ( dalam prosess Validasi ) </span>
-                                    <?php }else{ ?>
+                                    <?php
+                                    $query_check_upload = QueryOnedata("SELECT * FROM pembayaran WHERE status = 'upload' AND id_pemasangan = '" . $pemasangan[0]['id_pemasangan'] . "' AND ket_pembayaran LIKE '%pemasangan%' ");
+                                    if ($query_check_upload->num_rows > 0) { ?>
+                                        Pembayaran Pemasangan Alat <br> <span style="color: black;"> ( dalam prosess Validasi ) </span>
+                                    <?php } else { ?>
                                         <a href="<?= $url ?>/app/pembayaran/tambah.php?jenis_pembayaran=pemasangan:;<?= $pemasangan[0]['tgl_realisasi_pekerjaan'] ?>:;<?= ($biaya_pemasangan) ?>">
                                             Tagihan Pemasangan Alat
                                         </a>
@@ -161,15 +165,20 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    <?php 
-                                        $check_pemb_status = QueryOnedata("SELECT * FROM pembayaran WHERE id_pemasangan = '' AND MONTH(tgl_bayar) = '' ");
-                                        if($check_pemb_status->num_rows > 0){
-
-                                        }    
-                                    ?>
-                                    <a href="<?= $url ?>/app/pembayaran/tambah.php?jenis_pembayaran=pencatatan_penggunaan:;<?= $data[0]['tanggal'] ?>:;<?= (($metaran_tagihan * 800) + 5000) ?>">
+                                    <?php
+                                    $ghyj = "SELECT * FROM pembayaran WHERE  status = 'upload' AND id_pemasangan = '" . $pemasangan[0]['id_pemasangan'] . "' AND MONTH(tgl_bayar) = '" . date('m') . "' AND ket_pembayaran LIKE '%pencatatan_penggunaan%'  ";
+                                    $check_pemb_status = QueryOnedata($ghyj);
+                                    
+                                    if ($check_pemb_status->num_rows > 0) { ?>
+                                        Pembayaran Tagihan (dalam proses validasi)
+                                    <?php    } else { ?>
+                                        <a href="<?= $url ?>/app/pembayaran/tambah.php?jenis_pembayaran=pencatatan_penggunaan:;<?= $data[0]['tanggal'] ?>:;<?= (($metaran_tagihan * 800) + 5000) ?>">
                                         Tagihan Penggunaan
                                     </a>
+
+                                    <?php    }
+                                    ?>
+                                    
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= intToRupiah((($metaran_tagihan * 800) + 5000)) ?></div>
                             </div>
@@ -179,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
         <?php
         }
         ?>
@@ -189,6 +198,12 @@
         </div> 
         -->
     <?php } ?>
+
+    <?php 
+    if ($_SESSION['level'] == "ketua bumdes" || $_SESSION['level'] == "petugas bumdes") {
+       
+    }
+    ?>
     <div class='card shadow mb-4'>
         <div class='card-header py-3'>
             <h5 class='m-0 font-weight-bold text-primary text-center'>

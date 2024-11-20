@@ -24,7 +24,8 @@ include_once '../template/navbar.php';
                 </div>
                 <div class="card-body">    
                     <form action="<?= $url ?>/aksi/broadcast.php" method="POST" enctype="multipart/form-data" >       
-                        <p>Masukkan pesan yang akan di kirim ke pelanggan !</p>
+                        <p>Masukkan pesan yang akan di kirim ke semua pelanggan !</p>
+                        <p> <input type="checkbox" name="telat" id=""> Masukkan pesan yang akan di kirim hanya ke  pelanggan yang telat bayar !</p>
                         <textarea class="form-control" name="broadcast" id="" cols="30" rows="10"></textarea>
                         <div class="my-2"></div>
                         <button type="submit" value="BTN_POST_BROADCAST" name="BTN_POST_BROADCAST" class="btn btn-primary btn-icon-split btn-lg">

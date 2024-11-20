@@ -13,8 +13,8 @@ if (isset($_POST['simpanpencatatan_penggunaan'])) {
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
         if ($ukuran < 1044070) {
             $nama_file = $YMDhis. $_FILES['foto_stand_meter']['name'];
-            $upload_guru = move_uploaded_file($file_tmp, $lokasi_foto ."/foto_stand_meter/". $nama_file);          
-            if ($upload_guru) {
+            $upload_pencatatan = move_uploaded_file($file_tmp, $lokasi_foto ."/foto_stand_meter/". $nama_file);          
+            if ($upload_pencatatan) {
                 $data = ['id_pencatatan' => $_POST['id_pencatatan'],'id_pemasangan' => $_POST['id_pemasangan'], 'nomor_pasang' => $_POST['nomor_pasang'], 'nilai_stand_meter' => $_POST['nilai_stand_meter'], 'tanggal' => $_POST['tanggal'], 'foto_stand_meter' => $nama_file];
                 // Insert satu data
                 $process = InsertOnedata('pencatatan_penggunaan', $data);
