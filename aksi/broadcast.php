@@ -16,14 +16,16 @@ if ($_POST) {
     $url_wa = 'https://console.zenziva.net/wareguler/api/sendWA/';
     $userkey = '9b85e05d0de7';
     $passkey = '83f0dd70ecb6c588f2ab2cc3';
-    if (isset($_POST['BTN_POST_BROADCAST'])) {      
+    
+    if (isset($_POST['BTN_POST_BROADCAST'])) { 
         if (isset($_POST['telat'])) { // hanya ke pelanggan yang telat saja
             $pelanggan_id = [];
             foreach(QueryManyData("SELECT * FROM pemasangan") as $row){
                 $query_check_pemb = "SELECT * FROM pembayaran 
                     LEFT JOIN pencatatan_penggunaan ON pembayaran.id_pemasangan = pencatatan_penggunaan.id_pemasangan 
                     WHERE pembayaran.id_pemasangan = '".$row['id_pemasangan']."' 
-                    AND MONTH(pembayaran.tgl_bayar) = '".date('m')."' 
+                    AND pembayaran.ket_pembayaran LIKE '%pencatatan_penggunaan%' 
+                    AND YEAR(pembayaran.tgl_bayar) = '".date('Y')."' 
                     AND YEAR(pembayaran.tgl_bayar) = '".date('Y')."' 
     
                     AND MONTH(pencatatan_penggunaan.tanggal) = '".date('m')."' 
@@ -39,6 +41,7 @@ if ($_POST) {
                     }
                 }            
             }
+           
             // var_dump($pelanggan_id); 
             for($rt = 0 ; $rt < count($pelanggan_id); $rt++){
                 echo "<br>".$pelanggan_id[0];

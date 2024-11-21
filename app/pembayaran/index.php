@@ -33,12 +33,13 @@
         $pemasangan = [];
         $pembayaran_pemasangan = [];
         $biaya_pemasangan = 0;
-        $query_check_pemasangan = "SELECT * FROM pemasangan WHERE id_pelanggan = '" . $data_pelanggan[0]['id_pelanggan'] . "'  ";
+        $query_check_pemasangan = "SELECT * FROM pemasangan WHERE id_pelanggan = '" . $data_pelanggan[0]['id_pelanggan'] . "'  AND status_pemasangan = 'Realisasi' ";
+        
         $check_pemasangan = QueryOnedata($query_check_pemasangan); // Check Data Pemasangan pada pelanggan
         if ($check_pemasangan->num_rows > 0) { // Jika ada pemasangan
             array_push($pemasangan, $check_pemasangan->fetch_assoc());
 
-            $biaya_pemasangan = 1700000;
+            $biaya_pemasangan = $pemasangan[0]['biaya'];
             //Check data pembayaran pada pelanggan
             $query_check_pembayaran = "SELECT * FROM pembayaran WHERE status = 'tervalidasi' AND id_pemasangan = '" . $pemasangan[0]['id_pemasangan'] . "' AND ket_pembayaran LIKE '%pemasangan%' ";
             $check_pembayaran_pemasangan = QueryOnedata($query_check_pembayaran); // Check Data Pembayaran pemasangan pada pelanggan
@@ -76,13 +77,13 @@
                 AND YEAR(pencatatan_penggunaan.tanggal) = '" . date('Y') . "' 
                 AND pemasangan.id_pelanggan ='" . $data_pelanggan[0]['id_pelanggan'] . "' 
                  ";
-            $catatan_bulan_ini = QueryOnedata($catatan);
+                 $catatan_bulan_ini = QueryOnedata($catatan);
 
             if ($catatan_bulan_ini->num_rows > 0) { //jika ada catatan bulan ini
                 array_push($data, $catatan_bulan_ini->fetch_assoc());
                 $metaran_sekarang = intval($data[0]['nilai_stand_meter']);
                 $metaran_tagihan = $metaran_sekarang;
-                $catatan_bulan_lalu = QueryOnedata("SELECT * FROM pencatatan_penggunaan WHERE tanggal < '" . $data[0]['tanggal'] . "' ORDER BY tanggal DESC");
+                $catatan_bulan_lalu = QueryOnedata("SELECT * FROM pencatatan_penggunaan WHERE tanggal < '" . $data[0]['tanggal'] . "' AND id_pemasangan = '" . $data[0]['id_pemasangan'] . "' ORDER BY tanggal DESC");
 
                 if ($catatan_bulan_lalu->num_rows > 0) { // Jika Bulan lalu juga ada catatan
                     array_push($data, $catatan_bulan_lalu->fetch_assoc());
@@ -91,6 +92,7 @@
                 }
             }
         }
+
         //================ PERHITUNGAN BIAYA BULANAN ================
     ?>
         <div class="alert alert-primary alert-dismissible fade show" role="alert">

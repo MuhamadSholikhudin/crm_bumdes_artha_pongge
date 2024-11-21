@@ -4,11 +4,11 @@ function Url_web(){
     return $xplode[1];
 }
 $defaul_uri = "/".Url_web();
-$url = "http://".$_SERVER['SERVER_NAME']."".$defaul_uri;
+$url = "http://".$_SERVER['SERVER_NAME'].":8080".$defaul_uri;
 $lokasi_foto = $_SERVER['DOCUMENT_ROOT'].$defaul_uri.'/foto';
 $YMDhis = date('YMDhis');
 function DB(){
-    return ["localhost", "root", "", "danis"];
+    return ["localhost", "root", "password_baru", "danis"];
 }
 
 function runQuery($sql) {
